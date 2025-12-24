@@ -19,6 +19,7 @@ HephaestusEngine/
     HephaestusEngine.exe.bak
     imgui.ini
     settings.ini
+    redistributable.json
     assets/
       meshes/
       textures/
