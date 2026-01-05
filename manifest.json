@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2025-12-24T11:30:00Z",
+  "products": [
+    {
+      "name": "HephaestusEngine",
+      "displayName": "Hephaestus Engine",
+      "description": "A high-performance, Vulkan-based game engine with integrated editor and development tools. Includes runtime assets, shaders, and editor configuration for cross-platform game development.",
+      "tags": ["engine", "vulkan", "graphics"],
+      "versions": [
+        {
+          "version": "0.0.9",
+          "platform": "windows-x64",
+          "entry": "HephaestusEngine.exe",
+          "downloadUrl": "https://github.com/Olympus-Game-Studios/redistributables/releases/download/Release/Hephaestus-Engine-009-win.tar",
+          "size": 157286400,
+          "build_date": "2025-12-24T11:30:00Z",
+          "tags": ["release", "patch", "windows"]
+        }
+      ]
+    }
+  ]
+}
