@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Hephaestus-Engine",
+    "type": "dir",
+    "children": [
+      {
+        "name": "editor-controls.md",
+        "type": "file"
+      },
+      {
+        "name": "editor-overview.md",
+        "type": "file"
+      },
+      {
+        "name": "getting-started.md",
+        "type": "file"
+      },
+      {
+        "name": "README.md",
+        "type": "file"
+      },
+      {
+        "name": "Scripting",
+        "type": "dir",
+        "children": [
+          {
+            "name": "CREATE_LUA_SCRIPTS_UI.md",
+            "type": "file"
+          },
+          {
+            "name": "Example-Scripts",
+            "type": "dir",
+            "children": [
+              {
+                "name": "UpDownRotate_lua.md",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "FILE_MANIFEST_SCRIPTING.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_INSTALLATION_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_INTEGRATION_ROADMAP.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_INTEGRATION_SUMMARY.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_SCRIPTING_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_SCRIPT_ATTACHMENT_UI.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "scripting-api.md",
+        "type": "file"
+      },
+      {
+        "name": "scripting-overview.md",
+        "type": "file"
+      }
+    ]
+  },
+  {
+    "name": "readme.md",
+    "type": "file"
+  }
+]
