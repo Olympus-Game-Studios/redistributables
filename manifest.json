@@ -23,7 +23,7 @@
     {
       "name": "AtlasCore",
       "displayName": "Atlas Core",
-      "description": "Core shared libraries and assets for Atlas.",
+      "description": "Atlas Core is a secure, user-friendly desktop application that centralizes downloads, documentation, and SDK distribution. It streamlines one-click updates, versioned asset delivery, and access to project resources so teams and users stay up to date with minimal effort.",
       "tags": ["core", "library"],
       "versions": [
         {
