@@ -1,0 +1,2766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source Control - Atlas Core</title>
+    <link rel="stylesheet" href="content.css">
+    <style>
+        /* GitHub Connection Banner */
+        .github-connect-banner {
+            background: linear-gradient(135deg, #24292e 0%, #1a1e22 100%);
+            border: 1px solid #3d444d;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .github-connect-banner h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .github-connect-banner p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .btn-github-connect {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
+            background: #238636;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-github-connect:hover {
+            background: #2ea043;
+        }
+
+        .btn-github-connect svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Loading States */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 13, 15, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            z-index: 10;
+        }
+
+        .loading-overlay[hidden] {
+            display: none !important;
+        }
+
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .git-section {
+            position: relative;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 32px 16px;
+            color: var(--text-muted);
+        }
+
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+        }
+
+        /* Section Actions */
+        .section-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Scan Results */
+        .scan-progress {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .scan-progress .loading-spinner {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .scan-progress-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .scan-results-list {
+            max-height: 350px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .scan-result-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .scan-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .scan-result-item:hover {
+            background: var(--bg-hover);
+        }
+
+        .scan-result-item.matched {
+            background: rgba(35, 134, 54, 0.1);
+        }
+
+        .scan-result-item.matched:hover {
+            background: rgba(35, 134, 54, 0.2);
+        }
+
+        .scan-result-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .scan-result-item.matched .scan-result-icon {
+            color: #238636;
+        }
+
+        .scan-result-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .scan-result-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scan-result-path {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .scan-match-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+            background: rgba(35, 134, 54, 0.15);
+            color: #238636;
+        }
+
+        .scan-stats {
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .scan-stats strong {
+            color: var(--text-primary);
+        }
+
+        .scan-warning {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            color: #ffc107;
+        }
+
+        .scan-warning svg {
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .scan-warning strong {
+            display: block;
+            color: #ffc107;
+            margin-bottom: 4px;
+        }
+
+        .scan-warning p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Clone Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body {
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+        }
+
+        /* Repo List in Clone Modal */
+        .repo-list {
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .repo-list-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .repo-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .repo-list-item:hover {
+            background: var(--bg-hover);
+        }
+
+        .repo-list-item.selected {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .repo-list-item svg {
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .repo-list-item.selected svg {
+            color: var(--accent);
+        }
+
+        .repo-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .repo-name {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .repo-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 12px;
+            margin-top: 2px;
+        }
+
+        .repo-private {
+            color: var(--warning);
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+            max-width: 350px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.success {
+            background: var(--success-bg);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .toast.error {
+            background: var(--error-bg);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        .toast.info {
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        .toast svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        /* GitHub user info */
+        .github-user-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: var(--bg-hover);
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .github-user-badge img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+
+        .github-user-badge span {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .github-user-badge .username {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Commit history */
+        .commit-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .commit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .commit-item:last-child {
+            border-bottom: none;
+        }
+
+        .commit-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .commit-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .commit-msg {
+            font-size: 13px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .commit-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .commit-sha {
+            font-family: 'SF Mono', Monaco, 'Consolas', monospace;
+            color: var(--accent);
+            cursor: pointer;
+        }
+
+        .commit-sha:hover {
+            text-decoration: underline;
+        }
+
+        /* Custom Repository Dropdown */
+        .custom-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .dropdown-selected {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .dropdown-selected:hover {
+            border-color: var(--accent);
+            background: var(--bg-hover);
+        }
+
+        .dropdown-selected.open {
+            border-color: var(--accent);
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .dropdown-selected-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .dropdown-selected-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .dropdown-selected-text {
+            font-size: 14px;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .dropdown-selected-text.placeholder {
+            color: var(--text-muted);
+        }
+
+        .dropdown-arrow {
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .dropdown-selected.open .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--accent);
+            border-top: none;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .dropdown-menu.open {
+            display: block;
+        }
+
+        .dropdown-search {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background: var(--bg-card);
+        }
+
+        .dropdown-search input {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .dropdown-search input:focus {
+            border-color: var(--accent);
+        }
+
+        .dropdown-search input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.1s ease;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: var(--bg-hover);
+        }
+
+        .dropdown-item.selected {
+            background: var(--accent-glow);
+        }
+
+        .dropdown-item-icon {
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .dropdown-item.selected .dropdown-item-icon {
+            color: var(--accent);
+        }
+
+        .dropdown-item-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .dropdown-item-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dropdown-item-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .repo-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .repo-badge.private {
+            background: rgba(255, 180, 50, 0.15);
+            color: #ffb432;
+        }
+
+        .repo-badge.public {
+            background: rgba(46, 204, 113, 0.15);
+            color: #2ecc71;
+        }
+
+        .repo-badge.local {
+            background: rgba(52, 152, 219, 0.15);
+            color: #3498db;
+        }
+
+        .dropdown-divider {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            gap: 10px;
+            margin: 4px 0;
+        }
+
+        .dropdown-divider-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .dropdown-divider-text {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .dropdown-section-header {
+            padding: 6px 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dropdown-empty {
+            padding: 24px 16px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* Sync Actions */
+        .sync-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .sync-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+
+        .sync-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+        }
+
+        .sync-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .sync-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .sync-btn.pull {
+            background: rgba(56, 139, 253, 0.15);
+            border-color: rgba(56, 139, 253, 0.4);
+            color: #58a6ff;
+        }
+
+        .sync-btn.pull:hover {
+            background: rgba(56, 139, 253, 0.25);
+            border-color: rgba(56, 139, 253, 0.6);
+        }
+
+        .sync-btn.push {
+            background: rgba(35, 134, 54, 0.15);
+            border-color: rgba(35, 134, 54, 0.4);
+            color: #3fb950;
+        }
+
+        .sync-btn.push:hover {
+            background: rgba(35, 134, 54, 0.25);
+            border-color: rgba(35, 134, 54, 0.6);
+        }
+
+        .sync-btn.loading {
+            pointer-events: none;
+        }
+
+        .sync-spinner {
+            width: 14px;
+            height: 14px;
+            display: none;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .sync-btn.loading .sync-spinner {
+            display: block;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .sync-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            background: #f85149;
+            border-radius: 9px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sync-btn.pull .sync-badge {
+            background: #58a6ff;
+        }
+
+        .sync-btn.push .sync-badge {
+            background: #3fb950;
+        }
+
+        .git-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        /* Changes Status */
+        .changes-status {
+            padding: 10px 12px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .changes-status.has-changes {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+
+        .changes-status.clean {
+            background: rgba(35, 134, 54, 0.1);
+            border: 1px solid rgba(35, 134, 54, 0.2);
+            color: #238636;
+        }
+
+        /* Changes List */
+        .changes-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .changes-list:empty {
+            display: none;
+        }
+
+        .change-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+        }
+
+        .change-item:last-child {
+            border-bottom: none;
+        }
+
+        .change-status {
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .change-status.modified {
+            background: rgba(227, 179, 65, 0.2);
+            color: #e3b341;
+        }
+
+        .change-status.added {
+            background: rgba(35, 134, 54, 0.2);
+            color: #238636;
+        }
+
+        .change-status.deleted {
+            background: rgba(218, 54, 51, 0.2);
+            color: #da3633;
+        }
+
+        .change-status.untracked {
+            background: rgba(139, 148, 158, 0.2);
+            color: #8b949e;
+        }
+
+        .change-status.renamed {
+            background: rgba(163, 113, 247, 0.2);
+            color: #a371f7;
+        }
+
+        .change-filename {
+            flex: 1;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .change-path {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Commit Box */
+        .commit-box {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .commit-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .commit-input {
+            flex: 1;
+            padding: 10px 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+        }
+
+        .commit-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .commit-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: #238636;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .commit-btn:hover:not(:disabled) {
+            background: #2ea043;
+        }
+
+        .commit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .commit-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .commit-options {
+            margin-top: 8px;
+        }
+
+        .commit-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .commit-option input {
+            accent-color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container">
+        <div class="content-header">
+            <h1>Source Control</h1>
+        </div>
+
+        <!-- GitHub Connection Required Banner (shown when not connected) -->
+        <div class="github-connect-banner" id="connect-banner" hidden>
+            <svg viewBox="0 0 24 24" fill="currentColor" width="48" height="48" style="margin-bottom: 12px; opacity: 0.8;">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            <h3>Connect Your GitHub Account</h3>
+            <p>Link your GitHub account to clone repositories, push commits, and manage branches.</p>
+            <button class="btn-github-connect" id="connect-github-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                Connect GitHub Account
+            </button>
+        </div>
+
+        <!-- Main Git UI (shown when connected) -->
+        <div id="git-ui" hidden>
+            <!-- GitHub User Badge -->
+            <div class="github-user-badge" id="github-user-badge">
+                <img id="gh-avatar" src="" alt="GitHub Avatar">
+                <span>Signed in as <span class="username" id="gh-username">-</span></span>
+            </div>
+
+            <div class="git-layout">
+                <!-- Repository Selector -->
+                <div class="git-section full-width">
+                    <div class="section-header">
+                        <h2>Repository</h2>
+                        <div class="section-actions">
+                            <button class="action-btn secondary" id="link-repo">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                                </svg>
+                                Link Repo
+                            </button>
+                            <button class="action-btn secondary" id="scan-repos">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                </svg>
+                                Scan Local
+                            </button>
+                            <button class="action-btn" id="clone-repo">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"/>
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                </svg>
+                                Clone
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Custom Dropdown -->
+                    <div class="custom-dropdown" id="repo-dropdown">
+                        <div class="dropdown-selected" id="dropdown-selected">
+                            <div class="dropdown-selected-content">
+                                <svg class="dropdown-selected-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                <span class="dropdown-selected-text placeholder" id="dropdown-text">Select a repository...</span>
+                            </div>
+                            <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6,9 12,15 18,9"/>
+                            </svg>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu">
+                            <div class="dropdown-search">
+                                <input type="text" id="repo-search-input" placeholder="Search repositories...">
+                            </div>
+                            <div class="dropdown-items" id="dropdown-items">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hidden select for compatibility -->
+                    <select class="repo-select" id="repo-select" style="display: none;">
+                        <option value="">Select a repository...</option>
+                    </select>
+                    <div class="loading-overlay" id="repo-loading" hidden>
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Branch Section -->
+                <div class="git-section" id="branch-section">
+                    <div class="section-header">
+                        <h2>Branches</h2>
+                        <button class="action-btn small" id="create-branch" title="Create new branch">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="branch-current" id="branch-current">
+                        <span class="branch-label">Current:</span>
+                        <span class="branch-name" id="current-branch-name">
+                            <svg class="branch-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="6" y1="3" x2="6" y2="15"/>
+                                <circle cx="18" cy="6" r="3"/>
+                                <circle cx="6" cy="18" r="3"/>
+                                <path d="M18 9a9 9 0 0 1-9 9"/>
+                            </svg>
+                            <span>-</span>
+                        </span>
+                    </div>
+                    <div class="branch-list" id="branch-list">
+                        <div class="empty-state">
+                            <p>Select a repository to view branches</p>
+                        </div>
+                    </div>
+                    <div class="loading-overlay" id="branch-loading" hidden>
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Changes & Sync Section -->
+                <div class="git-section" id="changes-section">
+                    <div class="section-header">
+                        <h2>Changes</h2>
+                        <div class="git-actions">
+                            <button class="action-btn small" id="git-refresh" title="Refresh">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M23 4v6h-6"/>
+                                    <path d="M1 20v-6h6"/>
+                                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="sync-actions" id="sync-actions">
+                        <button class="sync-btn" id="git-sync" title="Sync with remote">
+                            <svg class="sync-icon" id="sync-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 4v6h-6"/>
+                                <path d="M1 20v-6h6"/>
+                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                            </svg>
+                            <span class="sync-text">Fetch</span>
+                            <svg class="sync-spinner" id="sync-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <circle cx="12" cy="12" r="10" stroke-dasharray="32" stroke-dashoffset="12"/>
+                            </svg>
+                            <span class="sync-badge" id="sync-badge" hidden>0</span>
+                        </button>
+                    </div>
+                    <div class="changes-status" id="changes-status">
+                        <span class="status-text">Select a local repository to view changes</span>
+                    </div>
+                    <div class="changes-list" id="changes-list">
+                        <!-- Populated by JS -->
+                    </div>
+                    <div class="commit-box" id="commit-box" hidden>
+                        <div class="commit-input-group">
+                            <input type="text" class="commit-input" id="commit-message" placeholder="Commit message...">
+                            <button class="commit-btn" id="commit-btn" disabled>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20,6 9,17 4,12"/>
+                                </svg>
+                                Commit
+                            </button>
+                        </div>
+                        <div class="commit-options">
+                            <label class="commit-option">
+                                <input type="checkbox" id="commit-all" checked>
+                                <span>Stage all changes</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="loading-overlay" id="changes-loading" hidden>
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Recent Commits Section -->
+                <div class="git-section" id="commits-section">
+                    <div class="section-header">
+                        <h2>Recent Commits</h2>
+                    </div>
+                    <div class="commit-list" id="commit-list">
+                        <div class="empty-state">
+                            <p>Select a repository to view commits</p>
+                        </div>
+                    </div>
+                    <div class="loading-overlay" id="commits-loading" hidden>
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Repository Info Section -->
+                <div class="git-section full-width" id="repo-info-section" hidden>
+                    <div class="section-header">
+                        <h2>Repository Info</h2>
+                    </div>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="status-label">Stars</span>
+                            <span class="status-badge" id="repo-stars">-</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Forks</span>
+                            <span class="status-badge" id="repo-forks">-</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Open Issues</span>
+                            <span class="status-badge" id="repo-issues">-</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Visibility</span>
+                            <span class="status-badge" id="repo-visibility">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clone Repository Modal -->
+    <div class="modal-overlay" id="clone-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Clone Repository</h3>
+                <button class="modal-close" id="clone-modal-close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Search Repositories</label>
+                    <input type="text" class="form-input" id="repo-search" placeholder="Search your repositories...">
+                </div>
+                <div class="repo-list" id="clone-repo-list">
+                    <div class="empty-state">
+                        <div class="loading-spinner"></div>
+                        <p style="margin-top: 12px;">Loading repositories...</p>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 16px;">
+                    <label>Clone to Directory</label>
+                    <input type="text" class="form-input" id="clone-path" placeholder="C:\Repos\OlympusGames">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="clone-cancel">Cancel</button>
+                <button class="btn-primary" id="clone-confirm" disabled>Clone Repository</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Branch Modal -->
+    <div class="modal-overlay" id="branch-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Create New Branch</h3>
+                <button class="modal-close" id="branch-modal-close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Branch Name</label>
+                    <input type="text" class="form-input" id="new-branch-name" placeholder="feature/my-new-feature">
+                </div>
+                <div class="form-group">
+                    <label>Base Branch</label>
+                    <select class="form-input" id="base-branch-select">
+                        <option value="main">main</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="branch-cancel">Cancel</button>
+                <button class="btn-primary" id="branch-confirm">Create Branch</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link Repository Modal -->
+    <div class="modal-overlay" id="link-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Link Repository</h3>
+                <button class="modal-close" id="link-modal-close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Select Repository</label>
+                    <select class="form-input" id="link-repo-select">
+                        <option value="">Choose a repository...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Local Folder Path</label>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <input type="text" class="form-input" id="link-folder-path" placeholder="Browse for folder..." readonly>
+                        <button class="action-btn" id="link-browse-btn" style="flex-shrink: 0;">Browse</button>
+                    </div>
+                </div>
+                <div id="link-validation" style="font-size: 12px; margin-top: 8px;"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="link-cancel">Cancel</button>
+                <button class="btn-primary" id="link-confirm" disabled>Link Repository</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scan Local Repositories Modal -->
+    <div class="modal-overlay" id="scan-modal">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>Scan for Local Repositories</h3>
+                <button class="modal-close" id="scan-modal-close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="scan-progress" id="scan-progress" hidden>
+                    <div class="loading-spinner"></div>
+                    <span class="scan-progress-text">Scanning for organization repositories...</span>
+                </div>
+                <div class="scan-warning" id="scan-warning" hidden>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3.05h16.94a2 2 0 0 0 1.71-3.05L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    <div>
+                        <strong>This may take a while</strong>
+                        <p>The app might appear to be frozen while scanning. This is normal. Please wait...</p>
+                    </div>
+                </div>
+                <div class="scan-stats" id="scan-stats" hidden>
+                    Found <strong id="scan-matched">0</strong> of <strong id="scan-total">0</strong> organization repos on your computer
+                </div>
+                <div class="scan-results-list" id="scan-results-list">
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        </svg>
+                        <p>Click "Start Scan" to find Olympus organization repositories on your computer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="scan-cancel">Close</button>
+                <button class="btn-primary" id="scan-start">Start Scan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ==================== Configuration ====================
+        const GITHUB_API = 'https://api.github.com';
+        const API_BASE = 'https://atlas.olympusgames.dev';
+
+        // ==================== State ====================
+        let githubToken = null;
+        let githubUser = null;
+        let repositories = [];
+        let selectedRepo = null;
+        let selectedCloneRepo = null;
+        let localRepoPaths = {}; // Maps repo full_name to local path
+
+        // Get saved local repo paths from localStorage
+        function loadLocalRepoPaths() {
+            try {
+                const saved = localStorage.getItem('local_repo_paths');
+                if (saved) {
+                    localRepoPaths = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Failed to load local repo paths:', e);
+            }
+        }
+
+        // Save local repo paths to localStorage
+        function saveLocalRepoPaths() {
+            try {
+                localStorage.setItem('local_repo_paths', JSON.stringify(localRepoPaths));
+            } catch (e) {
+                console.error('Failed to save local repo paths:', e);
+            }
+        }
+
+        // Check if a repo exists locally
+        function isRepoLocal(repoFullName) {
+            const path = localRepoPaths[repoFullName];
+            if (!path) return false;
+            
+            // Use native function to check if path still exists
+            if (typeof nativePathExists === 'function') {
+                return nativePathExists(path);
+            }
+            return true; // Fallback: assume it exists if we have a saved path
+        }
+
+        // Mark a repo as cloned locally
+        function markRepoAsLocal(repoFullName, localPath) {
+            localRepoPaths[repoFullName] = localPath;
+            saveLocalRepoPaths();
+        }
+
+        loadLocalRepoPaths();
+
+        // ==================== DOM Elements ====================
+        const connectBanner = document.getElementById('connect-banner');
+        const gitUI = document.getElementById('git-ui');
+        const connectBtn = document.getElementById('connect-github-btn');
+        const ghAvatar = document.getElementById('gh-avatar');
+        const ghUsername = document.getElementById('gh-username');
+        const repoSelect = document.getElementById('repo-select');
+        const repoLoading = document.getElementById('repo-loading');
+        const branchList = document.getElementById('branch-list');
+        const branchLoading = document.getElementById('branch-loading');
+        const currentBranchName = document.getElementById('current-branch-name').querySelector('span');
+        const commitList = document.getElementById('commit-list');
+        const commitsLoading = document.getElementById('commits-loading');
+        const repoInfoSection = document.getElementById('repo-info-section');
+        const cloneModal = document.getElementById('clone-modal');
+        const branchModal = document.getElementById('branch-modal');
+        const linkModal = document.getElementById('link-modal');
+        const cloneRepoList = document.getElementById('clone-repo-list');
+        const repoSearchInput = document.getElementById('repo-search');
+        const clonePathInput = document.getElementById('clone-path');
+        const cloneConfirmBtn = document.getElementById('clone-confirm');
+        const toastContainer = document.getElementById('toast-container');
+        
+        // Custom dropdown elements
+        const dropdownSelected = document.getElementById('dropdown-selected');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        const dropdownText = document.getElementById('dropdown-text');
+        const dropdownItems = document.getElementById('dropdown-items');
+        const repoSearchDropdown = document.getElementById('repo-search-input');
+        
+        // Scan modal elements
+        const scanModal = document.getElementById('scan-modal');
+        const scanProgress = document.getElementById('scan-progress');
+        const scanWarning = document.getElementById('scan-warning');
+        const scanStats = document.getElementById('scan-stats');
+        const scanTotal = document.getElementById('scan-total');
+        const scanMatched = document.getElementById('scan-matched');
+        const scanResultsList = document.getElementById('scan-results-list');
+        const scanStartBtn = document.getElementById('scan-start');
+        const scanCancelBtn = document.getElementById('scan-cancel');
+        const scanReposBtn = document.getElementById('scan-repos');
+
+        // Link modal elements
+        const linkRepoBtn = document.getElementById('link-repo');
+        const linkRepoSelect = document.getElementById('link-repo-select');
+        const linkFolderPath = document.getElementById('link-folder-path');
+        const linkBrowseBtn = document.getElementById('link-browse-btn');
+        const linkValidation = document.getElementById('link-validation');
+        const linkConfirmBtn = document.getElementById('link-confirm');
+        const linkCancelBtn = document.getElementById('link-cancel');
+
+        // Changes/Git elements
+        const changesStatus = document.getElementById('changes-status');
+        const changesList = document.getElementById('changes-list');
+        const changesLoading = document.getElementById('changes-loading');
+        const commitBox = document.getElementById('commit-box');
+        const commitMessage = document.getElementById('commit-message');
+        const commitBtn = document.getElementById('commit-btn');
+        const commitAll = document.getElementById('commit-all');
+        const gitSyncBtn = document.getElementById('git-sync');
+        const syncIcon = document.getElementById('sync-icon');
+        const syncBadge = document.getElementById('sync-badge');
+        const gitRefreshBtn = document.getElementById('git-refresh');
+
+        // Sync state: 'fetch', 'pull', 'push'
+        let syncState = 'fetch';
+        let commitsAhead = 0;
+        let commitsBehind = 0;
+
+        // ==================== Custom Dropdown ====================
+        let dropdownOpen = false;
+        
+        function toggleDropdown() {
+            dropdownOpen = !dropdownOpen;
+            dropdownSelected.classList.toggle('open', dropdownOpen);
+            dropdownMenu.classList.toggle('open', dropdownOpen);
+            if (dropdownOpen) {
+                repoSearchDropdown.focus();
+            }
+        }
+        
+        function closeDropdown() {
+            dropdownOpen = false;
+            dropdownSelected.classList.remove('open');
+            dropdownMenu.classList.remove('open');
+        }
+        
+        function renderDropdownItems(repos, filter = '') {
+            const filtered = filter 
+                ? repos.filter(r => r.name.toLowerCase().includes(filter.toLowerCase()))
+                : repos;
+            
+            if (filtered.length === 0) {
+                dropdownItems.innerHTML = '<div class="dropdown-empty">No repositories found</div>';
+                return;
+            }
+
+            // Separate local and remote repos
+            const localRepos = filtered.filter(r => isRepoLocal(r.full_name));
+            const remoteRepos = filtered.filter(r => !isRepoLocal(r.full_name));
+
+            function renderRepoItem(repo) {
+                const isLocal = isRepoLocal(repo.full_name);
+                return `
+                    <div class="dropdown-item ${selectedRepo?.full_name === repo.full_name ? 'selected' : ''}" 
+                         data-repo="${repo.full_name}">
+                        <svg class="dropdown-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        <div class="dropdown-item-content">
+                            <div class="dropdown-item-name">
+                                ${repo.name}
+                                ${isLocal ? '<span class="repo-badge local">Local</span>' : ''}
+                                <span class="repo-badge ${repo.private ? 'private' : 'public'}">${repo.private ? 'Private' : 'Public'}</span>
+                            </div>
+                            <div class="dropdown-item-meta">
+                                ${repo.language || 'No language'} • Updated ${formatRelativeTime(repo.updated_at)}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            let html = '';
+
+            // Render local repos first
+            if (localRepos.length > 0) {
+                html += '<div class="dropdown-section-header">Local Repositories</div>';
+                html += localRepos.map(renderRepoItem).join('');
+                
+                // Add divider if there are also remote repos
+                if (remoteRepos.length > 0) {
+                    html += `<div class="dropdown-divider">
+                        <div class="dropdown-divider-line"></div>
+                        <span class="dropdown-divider-text">Remote</span>
+                        <div class="dropdown-divider-line"></div>
+                    </div>`;
+                }
+            }
+
+            // Render remote repos
+            if (remoteRepos.length > 0) {
+                if (localRepos.length === 0) {
+                    // No local repos, show header for remote
+                    html += '<div class="dropdown-section-header">Remote Repositories</div>';
+                }
+                html += remoteRepos.map(renderRepoItem).join('');
+            }
+
+            dropdownItems.innerHTML = html;
+            
+            // Add click handlers
+            dropdownItems.querySelectorAll('.dropdown-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const repoFullName = item.dataset.repo;
+                    selectRepository(repoFullName);
+                });
+            });
+        }
+        
+        function selectRepository(repoFullName) {
+            const repo = repositories.find(r => r.full_name === repoFullName);
+            if (!repo) return;
+            
+            selectedRepo = repo;
+            
+            // Update dropdown display
+            dropdownText.textContent = repo.name;
+            dropdownText.classList.remove('placeholder');
+            
+            // Update hidden select for compatibility
+            repoSelect.value = repoFullName;
+            
+            // Close dropdown
+            closeDropdown();
+            
+            // Re-render to show selected state
+            renderDropdownItems(repositories, repoSearchDropdown.value);
+            
+            // Load repo data
+            Promise.all([
+                loadBranches(repoFullName),
+                loadCommits(repoFullName),
+                loadRepoInfo(repoFullName)
+            ]);
+
+            // Load git changes if repo is linked locally
+            loadChanges();
+        }
+        
+        // Dropdown event listeners
+        dropdownSelected.addEventListener('click', toggleDropdown);
+        
+        repoSearchDropdown.addEventListener('input', (e) => {
+            renderDropdownItems(repositories, e.target.value);
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.custom-dropdown')) {
+                closeDropdown();
+            }
+        });
+
+        // ==================== Toast Notifications ====================
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            const icons = {
+                success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>',
+                error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+                info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+            };
+            
+            toast.innerHTML = `${icons[type] || icons.info}<span>${message}</span>`;
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // ==================== GitHub API ====================
+        async function githubRequest(endpoint, options = {}) {
+            if (!githubToken) {
+                throw new Error('Not authenticated with GitHub');
+            }
+
+            const url = endpoint.startsWith('http') ? endpoint : `${GITHUB_API}${endpoint}`;
+            
+            const response = await fetch(url, {
+                ...options,
+                headers: {
+                    'Authorization': `Bearer ${githubToken}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json',
+                    ...options.headers
+                }
+            });
+
+            if (!response.ok) {
+                const error = await response.json().catch(() => ({}));
+                throw new Error(error.message || `GitHub API error: ${response.status}`);
+            }
+
+            return response.json();
+        }
+
+        // ==================== Authentication ====================
+        async function checkGitHubConnection() {
+            console.log('Checking GitHub connection...');
+            
+            // Check localStorage for GitHub token
+            const storedToken = localStorage.getItem('github_access_token');
+            const storedUser = localStorage.getItem('github_user');
+
+            console.log('Stored token exists:', !!storedToken);
+            console.log('Stored user exists:', !!storedUser);
+
+            if (storedToken && storedUser) {
+                try {
+                    githubToken = storedToken;
+                    
+                    // Try to parse stored user
+                    try {
+                        githubUser = JSON.parse(storedUser);
+                    } catch (e) {
+                        // storedUser might be just a username string, not JSON
+                        githubUser = { login: storedUser };
+                    }
+                    
+                    // Verify token is still valid
+                    console.log('Verifying token...');
+                    const user = await githubRequest('/user');
+                    githubUser = user;
+                    localStorage.setItem('github_user', JSON.stringify(user));
+                    
+                    console.log('Token valid, showing connected UI');
+                    showConnectedUI();
+                    loadRepositories();
+                    return true;
+                } catch (error) {
+                    console.error('Token validation failed:', error);
+                    // Token invalid, clear storage
+                    localStorage.removeItem('github_access_token');
+                    localStorage.removeItem('github_user');
+                    localStorage.removeItem('github_connected');
+                    githubToken = null;
+                    githubUser = null;
+                }
+            }
+
+            // Check with backend API
+            try {
+                const token = localStorage.getItem('olympus_access_token');
+                if (token) {
+                    const response = await fetch(`${API_BASE}/api/v1/auth/github/status`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.connected && data.github_token) {
+                            githubToken = data.github_token;
+                            githubUser = data.github_user;
+                            
+                            localStorage.setItem('github_access_token', githubToken);
+                            localStorage.setItem('github_user', JSON.stringify(githubUser));
+                            
+                            showConnectedUI();
+                            loadRepositories();
+                            return true;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.log('Backend GitHub check failed:', error);
+            }
+
+            showDisconnectedUI();
+            return false;
+        }
+
+        function showConnectedUI() {
+            connectBanner.hidden = true;
+            gitUI.hidden = false;
+            
+            // Hide branch and commit loading states - they show when repo is selected
+            branchLoading.hidden = true;
+            commitsLoading.hidden = true;
+            // Repo loading will be shown by loadRepositories()
+            
+            if (githubUser) {
+                ghAvatar.src = githubUser.avatar_url || '';
+                ghUsername.textContent = githubUser.login || 'Unknown';
+            }
+        }
+
+        function showDisconnectedUI() {
+            connectBanner.hidden = false;
+            gitUI.hidden = true;
+            
+            // Make sure all loading states are hidden
+            repoLoading.hidden = true;
+            branchLoading.hidden = true;
+            commitsLoading.hidden = true;
+        }
+
+        // ==================== Repository Management ====================
+        const ORG_NAME = 'Olympus-Game-Studios'; // Only show repos from this organization
+        
+        async function loadRepositories() {
+            console.log('Loading repositories...');
+            repoLoading.hidden = false;
+            
+            // Hide branch and commit loaders - they shouldn't show until repo is selected
+            branchLoading.hidden = true;
+            commitsLoading.hidden = true;
+            
+            try {
+                let repos = [];
+                
+                // Method 1: Try user's repos filtered by org (works for private repos where user is member)
+                try {
+                    console.log('Fetching all user repos...');
+                    const allRepos = await githubRequest('/user/repos?sort=updated&per_page=100&type=all');
+                    console.log('Total user repos:', allRepos.length);
+                    
+                    repos = allRepos.filter(repo => {
+                        const owner = repo.owner?.login || repo.full_name.split('/')[0];
+                        return owner.toLowerCase() === ORG_NAME.toLowerCase();
+                    });
+                    console.log(`Filtered to ${ORG_NAME} repos:`, repos.length);
+                } catch (userError) {
+                    console.error('User repos fetch failed:', userError);
+                }
+                
+                // Method 2: If no repos found, try org endpoint directly
+                if (repos.length === 0) {
+                    try {
+                        console.log(`Trying org endpoint for ${ORG_NAME}...`);
+                        repos = await githubRequest(`/orgs/${ORG_NAME}/repos?sort=updated&per_page=100&type=all`);
+                        console.log('Got org repos:', repos.length);
+                    } catch (orgError) {
+                        console.error('Org fetch also failed:', orgError);
+                    }
+                }
+                
+                repositories = repos;
+                
+                // Populate custom dropdown
+                if (repos.length === 0) {
+                    dropdownText.textContent = 'No repositories found for ' + ORG_NAME;
+                    dropdownText.classList.add('placeholder');
+                    showToast(`No repos found for ${ORG_NAME}. Make sure you have access and the org name is correct.`, 'info');
+                } else {
+                    dropdownText.textContent = 'Select a repository...';
+                    dropdownText.classList.add('placeholder');
+                    renderDropdownItems(repos);
+                    showToast(`Loaded ${repos.length} repositories`, 'success');
+                }
+                
+                // Also populate hidden select for compatibility
+                repoSelect.innerHTML = '<option value="">Select a repository...</option>';
+                repos.forEach(repo => {
+                    const option = document.createElement('option');
+                    option.value = repo.full_name;
+                    option.textContent = `${repo.name}${repo.private ? ' 🔒' : ''}`;
+                    option.dataset.repo = JSON.stringify(repo);
+                    repoSelect.appendChild(option);
+                });
+
+                // Also store for clone modal
+                renderCloneRepoList(repos);
+                
+                console.log('Repositories loaded successfully');
+                
+            } catch (error) {
+                console.error('Failed to load repositories:', error);
+                showToast('Failed to load repositories: ' + error.message, 'error');
+            } finally {
+                repoLoading.hidden = true;
+                console.log('Repository loading complete, spinner hidden');
+            }
+        }
+
+        async function loadBranches(repoFullName) {
+            branchLoading.hidden = false;
+            branchList.innerHTML = '';
+            
+            try {
+                const branches = await githubRequest(`/repos/${repoFullName}/branches`);
+                const repo = await githubRequest(`/repos/${repoFullName}`);
+                const defaultBranch = repo.default_branch;
+                
+                currentBranchName.textContent = defaultBranch;
+                
+                branchList.innerHTML = branches.map(branch => `
+                    <div class="branch-item ${branch.name === defaultBranch ? 'active' : ''}" data-branch="${branch.name}">
+                        <svg class="branch-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="6" y1="3" x2="6" y2="15"/>
+                            <circle cx="18" cy="6" r="3"/>
+                            <circle cx="6" cy="18" r="3"/>
+                            <path d="M18 9a9 9 0 0 1-9 9"/>
+                        </svg>
+                        <span>${branch.name}</span>
+                        ${branch.name === defaultBranch ? '<span class="branch-badge">default</span>' : ''}
+                    </div>
+                `).join('');
+
+                // Update base branch select in modal
+                const baseBranchSelect = document.getElementById('base-branch-select');
+                baseBranchSelect.innerHTML = branches.map(b => 
+                    `<option value="${b.name}" ${b.name === defaultBranch ? 'selected' : ''}>${b.name}</option>`
+                ).join('');
+                
+            } catch (error) {
+                console.error('Failed to load branches:', error);
+                branchList.innerHTML = '<div class="empty-state"><p>Failed to load branches</p></div>';
+            } finally {
+                branchLoading.hidden = true;
+            }
+        }
+
+        async function loadCommits(repoFullName) {
+            commitsLoading.hidden = false;
+            commitList.innerHTML = '';
+            
+            try {
+                const commits = await githubRequest(`/repos/${repoFullName}/commits?per_page=10`);
+                
+                commitList.innerHTML = commits.map(commit => `
+                    <div class="commit-item">
+                        <img class="commit-avatar" src="${commit.author?.avatar_url || commit.committer?.avatar_url || ''}" alt="">
+                        <div class="commit-details">
+                            <div class="commit-msg">${escapeHtml(commit.commit.message.split('\n')[0])}</div>
+                            <div class="commit-meta">
+                                <span class="commit-sha" onclick="window.open('${commit.html_url}', '_blank')">${commit.sha.substring(0, 7)}</span>
+                                • ${commit.commit.author?.name || 'Unknown'} 
+                                • ${formatRelativeTime(commit.commit.author?.date)}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Failed to load commits:', error);
+                commitList.innerHTML = '<div class="empty-state"><p>Failed to load commits</p></div>';
+            } finally {
+                commitsLoading.hidden = true;
+            }
+        }
+
+        async function loadRepoInfo(repoFullName) {
+            try {
+                const repo = await githubRequest(`/repos/${repoFullName}`);
+                selectedRepo = repo;
+                
+                document.getElementById('repo-stars').textContent = formatNumber(repo.stargazers_count);
+                document.getElementById('repo-forks').textContent = formatNumber(repo.forks_count);
+                document.getElementById('repo-issues').textContent = formatNumber(repo.open_issues_count);
+                document.getElementById('repo-visibility').textContent = repo.private ? 'Private' : 'Public';
+                
+                repoInfoSection.hidden = false;
+            } catch (error) {
+                console.error('Failed to load repo info:', error);
+                repoInfoSection.hidden = true;
+            }
+        }
+
+        // ==================== Clone Modal ====================
+        function renderCloneRepoList(repos, filter = '') {
+            const filtered = filter 
+                ? repos.filter(r => r.full_name.toLowerCase().includes(filter.toLowerCase()))
+                : repos;
+
+            if (filtered.length === 0) {
+                cloneRepoList.innerHTML = '<div class="empty-state"><p>No repositories found</p></div>';
+                return;
+            }
+
+            cloneRepoList.innerHTML = filtered.map(repo => `
+                <div class="repo-list-item" data-repo="${escapeHtml(repo.full_name)}" data-clone-url="${escapeHtml(repo.clone_url)}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <div class="repo-info">
+                        <div class="repo-name">${escapeHtml(repo.full_name)}</div>
+                        <div class="repo-meta">
+                            ${repo.private ? '<span class="repo-private">Private</span>' : '<span>Public</span>'}
+                            <span>⭐ ${repo.stargazers_count}</span>
+                            ${repo.language ? `<span>${repo.language}</span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click handlers
+            cloneRepoList.querySelectorAll('.repo-list-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    cloneRepoList.querySelectorAll('.repo-list-item').forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
+                    selectedCloneRepo = {
+                        fullName: item.dataset.repo,
+                        cloneUrl: item.dataset.cloneUrl
+                    };
+                    cloneConfirmBtn.disabled = false;
+                });
+            });
+        }
+
+        function openCloneModal() {
+            cloneModal.classList.add('active');
+            selectedCloneRepo = null;
+            cloneConfirmBtn.disabled = true;
+            repoSearchInput.value = '';
+            renderCloneRepoList(repositories);
+            
+            // Set default clone path
+            clonePathInput.value = localStorage.getItem('default_clone_path') || 'C:\\Repos\\OlympusGames';
+        }
+
+        function closeCloneModal() {
+            cloneModal.classList.remove('active');
+        }
+
+        async function performClone() {
+            if (!selectedCloneRepo) return;
+
+            const clonePath = clonePathInput.value.trim();
+            if (!clonePath) {
+                showToast('Please enter a clone directory', 'error');
+                return;
+            }
+
+            closeCloneModal();
+            showToast(`Cloning ${selectedCloneRepo.fullName}...`, 'info');
+
+            // Build clone URL with token for private repos
+            const cloneUrl = selectedCloneRepo.cloneUrl.replace(
+                'https://',
+                `https://oauth2:${githubToken}@`
+            );
+
+            // Build full local path
+            const repoName = selectedCloneRepo.fullName.split('/')[1];
+            const fullLocalPath = `${clonePath}\\${repoName}`;
+
+            // Call native function to perform git clone
+            if (typeof nativeGitClone === 'function') {
+                try {
+                    const result = await new Promise((resolve, reject) => {
+                        nativeGitClone(cloneUrl, clonePath, selectedCloneRepo.fullName, (success, message) => {
+                            if (success) resolve(message);
+                            else reject(new Error(message));
+                        });
+                    });
+                    
+                    // Mark repo as local after successful clone
+                    markRepoAsLocal(selectedCloneRepo.fullName, fullLocalPath);
+                    renderDropdownItems(repositories, repoSearchDropdown.value);
+                    
+                    showToast(`Successfully cloned ${selectedCloneRepo.fullName}`, 'success');
+                } catch (error) {
+                    showToast(`Clone failed: ${error.message}`, 'error');
+                }
+            } else {
+                // Fallback - show command user can run
+                showToast(`Clone command: git clone ${selectedCloneRepo.cloneUrl} "${fullLocalPath}"`, 'info');
+                console.log('Clone URL (with token):', cloneUrl);
+                console.log('Clone path:', fullLocalPath);
+            }
+        }
+
+        // ==================== Create Branch ====================
+        function openBranchModal() {
+            if (!selectedRepo) {
+                showToast('Please select a repository first', 'error');
+                return;
+            }
+            branchModal.classList.add('active');
+            document.getElementById('new-branch-name').value = '';
+        }
+
+        function closeBranchModal() {
+            branchModal.classList.remove('active');
+        }
+
+        async function createBranch() {
+            const branchName = document.getElementById('new-branch-name').value.trim();
+            const baseBranch = document.getElementById('base-branch-select').value;
+
+            if (!branchName) {
+                showToast('Please enter a branch name', 'error');
+                return;
+            }
+
+            if (!selectedRepo) {
+                showToast('No repository selected', 'error');
+                return;
+            }
+
+            try {
+                // Get the SHA of the base branch
+                const baseRef = await githubRequest(`/repos/${selectedRepo.full_name}/git/refs/heads/${baseBranch}`);
+                const sha = baseRef.object.sha;
+
+                // Create new branch
+                await githubRequest(`/repos/${selectedRepo.full_name}/git/refs`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        ref: `refs/heads/${branchName}`,
+                        sha: sha
+                    })
+                });
+
+                showToast(`Branch '${branchName}' created successfully`, 'success');
+                closeBranchModal();
+                loadBranches(selectedRepo.full_name);
+                
+            } catch (error) {
+                console.error('Failed to create branch:', error);
+                showToast(`Failed to create branch: ${error.message}`, 'error');
+            }
+        }
+
+        // ==================== Utility Functions ====================
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toString();
+        }
+
+        function formatRelativeTime(dateString) {
+            if (!dateString) return 'Unknown';
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            if (diffDays < 7) return `${diffDays}d ago`;
+            return date.toLocaleDateString();
+        }
+
+        // ==================== Git Operations ====================
+        async function gitExec(command, repoPath) {
+            if (typeof nativeGitExec !== 'function') {
+                throw new Error('Git operations not available');
+            }
+            const result = nativeGitExec(command, repoPath);
+            return result;
+        }
+
+        async function loadChanges() {
+            if (!selectedRepo) return;
+            
+            const localPath = localRepoPaths[selectedRepo.full_name];
+            if (!localPath) {
+                changesStatus.className = 'changes-status';
+                changesStatus.innerHTML = '<span class="status-text">Repository not linked locally. Use "Link Repo" to connect.</span>';
+                changesList.innerHTML = '';
+                commitBox.hidden = true;
+                return;
+            }
+
+            changesLoading.hidden = false;
+
+            try {
+                // Get git status
+                const statusResult = await gitExec('status --porcelain', localPath);
+                
+                if (!statusResult.success && statusResult.output.includes('not a git repository')) {
+                    changesStatus.className = 'changes-status';
+                    changesStatus.innerHTML = '<span class="status-text">Not a valid git repository</span>';
+                    changesList.innerHTML = '';
+                    commitBox.hidden = true;
+                    return;
+                }
+
+                const lines = statusResult.output.trim().split('\n').filter(l => l.trim());
+                
+                if (lines.length === 0 || (lines.length === 1 && lines[0] === '')) {
+                    changesStatus.className = 'changes-status clean';
+                    changesStatus.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <polyline points="20,6 9,17 4,12"/>
+                        </svg>
+                        <span class="status-text">Working tree clean - no changes</span>
+                    `;
+                    changesList.innerHTML = '';
+                    commitBox.hidden = true;
+                } else {
+                    changesStatus.className = 'changes-status has-changes';
+                    changesStatus.innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <span class="status-text">${lines.length} file${lines.length > 1 ? 's' : ''} changed</span>
+                    `;
+
+                    // Parse changes
+                    const changes = lines.map(line => {
+                        const status = line.substring(0, 2).trim();
+                        const filename = line.substring(3);
+                        
+                        let statusClass, statusLetter;
+                        if (status === 'M' || status === 'MM') {
+                            statusClass = 'modified';
+                            statusLetter = 'M';
+                        } else if (status === 'A' || status === 'AM') {
+                            statusClass = 'added';
+                            statusLetter = 'A';
+                        } else if (status === 'D') {
+                            statusClass = 'deleted';
+                            statusLetter = 'D';
+                        } else if (status === '??' || status === '?') {
+                            statusClass = 'untracked';
+                            statusLetter = '?';
+                        } else if (status === 'R' || status.startsWith('R')) {
+                            statusClass = 'renamed';
+                            statusLetter = 'R';
+                        } else {
+                            statusClass = 'modified';
+                            statusLetter = status || 'M';
+                        }
+
+                        return { status: statusClass, letter: statusLetter, filename };
+                    });
+
+                    changesList.innerHTML = changes.map(change => `
+                        <div class="change-item">
+                            <span class="change-status ${change.status}">${change.letter}</span>
+                            <span class="change-filename" title="${change.filename}">${change.filename}</span>
+                        </div>
+                    `).join('');
+
+                    commitBox.hidden = false;
+                }
+
+                // Update sync button state
+                checkSyncStatus();
+
+            } catch (error) {
+                console.error('Failed to load changes:', error);
+                changesStatus.className = 'changes-status';
+                changesStatus.innerHTML = '<span class="status-text">Failed to load changes</span>';
+            } finally {
+                changesLoading.hidden = true;
+            }
+        }
+
+        const syncIcons = {
+            fetch: `<path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>`,
+            pull: `<line x1="12" y1="5" x2="12" y2="19"/><polyline points="19,12 12,19 5,12"/>`,
+            push: `<line x1="12" y1="19" x2="12" y2="5"/><polyline points="5,12 12,5 19,12"/>`
+        };
+
+        function updateSyncButton(state, count = 0) {
+            syncState = state;
+            const text = gitSyncBtn.querySelector('.sync-text');
+            
+            syncIcon.innerHTML = syncIcons[state];
+            
+            if (state === 'push') {
+                text.textContent = 'Push';
+                gitSyncBtn.title = `Push ${count} commit${count !== 1 ? 's' : ''} to remote`;
+                gitSyncBtn.className = 'sync-btn push';
+                syncBadge.textContent = count;
+                syncBadge.hidden = count === 0;
+            } else if (state === 'pull') {
+                text.textContent = 'Pull';
+                gitSyncBtn.title = `Pull ${count} commit${count !== 1 ? 's' : ''} from remote`;
+                gitSyncBtn.className = 'sync-btn pull';
+                syncBadge.textContent = count;
+                syncBadge.hidden = count === 0;
+            } else {
+                text.textContent = 'Fetch';
+                gitSyncBtn.title = 'Check for updates from remote';
+                gitSyncBtn.className = 'sync-btn';
+                syncBadge.hidden = true;
+            }
+        }
+
+        async function checkSyncStatus() {
+            if (!selectedRepo) return;
+            const localPath = localRepoPaths[selectedRepo.full_name];
+            if (!localPath) return;
+
+            try {
+                // Check commits ahead (to push)
+                const aheadResult = await gitExec('rev-list --count @{u}..HEAD', localPath);
+                commitsAhead = aheadResult.success ? parseInt(aheadResult.output.trim()) || 0 : 0;
+
+                // Check commits behind (to pull)
+                const behindResult = await gitExec('rev-list --count HEAD..@{u}', localPath);
+                commitsBehind = behindResult.success ? parseInt(behindResult.output.trim()) || 0 : 0;
+
+                // Determine button state: Push takes priority, then Pull, then Fetch
+                if (commitsAhead > 0) {
+                    updateSyncButton('push', commitsAhead);
+                } else if (commitsBehind > 0) {
+                    updateSyncButton('pull', commitsBehind);
+                } else {
+                    updateSyncButton('fetch');
+                }
+            } catch (e) {
+                // Upstream might not exist, default to fetch
+                updateSyncButton('fetch');
+            }
+        }
+
+        async function performSync() {
+            if (!selectedRepo) return;
+            const localPath = localRepoPaths[selectedRepo.full_name];
+            if (!localPath) {
+                showToast('Repository not linked locally', 'error');
+                return;
+            }
+
+            gitSyncBtn.disabled = true;
+            gitSyncBtn.classList.add('loading');
+            const originalText = gitSyncBtn.querySelector('.sync-text').textContent;
+            gitSyncBtn.querySelector('.sync-text').textContent = syncState === 'fetch' ? 'Fetching...' : syncState === 'pull' ? 'Pulling...' : 'Pushing...';
+
+            try {
+                if (syncState === 'push') {
+                    const result = await gitExec('push', localPath);
+                    if (result.success) {
+                        showToast('Push completed successfully', 'success');
+                    } else {
+                        showToast('Push failed: ' + result.output, 'error');
+                    }
+                } else if (syncState === 'pull') {
+                    const result = await gitExec('pull', localPath);
+                    if (result.success) {
+                        showToast('Pull completed successfully', 'success');
+                        loadCommits(selectedRepo.full_name);
+                    } else {
+                        showToast('Pull failed: ' + result.output, 'error');
+                    }
+                } else {
+                    const result = await gitExec('fetch --all', localPath);
+                    if (result.success) {
+                        showToast('Fetch completed', 'success');
+                    } else {
+                        showToast('Fetch failed: ' + result.output, 'error');
+                    }
+                }
+
+                // Refresh status after any sync operation
+                await checkSyncStatus();
+                loadChanges();
+            } catch (error) {
+                showToast('Sync failed: ' + error.message, 'error');
+            } finally {
+                gitSyncBtn.disabled = false;
+                gitSyncBtn.classList.remove('loading');
+            }
+        }
+
+        async function performCommit() {
+            if (!selectedRepo) return;
+            const localPath = localRepoPaths[selectedRepo.full_name];
+            if (!localPath) {
+                showToast('Repository not linked locally', 'error');
+                return;
+            }
+
+            const message = commitMessage.value.trim();
+            if (!message) {
+                showToast('Please enter a commit message', 'error');
+                return;
+            }
+
+            commitBtn.disabled = true;
+            showToast('Committing changes...', 'info');
+
+            try {
+                // Stage changes if checkbox is checked
+                if (commitAll.checked) {
+                    const addResult = await gitExec('add -A', localPath);
+                    if (!addResult.success) {
+                        showToast('Failed to stage changes: ' + addResult.output, 'error');
+                        return;
+                    }
+                }
+
+                // Escape quotes in commit message
+                const escapedMessage = message.replace(/"/g, '\\"');
+                const result = await gitExec(`commit -m "${escapedMessage}"`, localPath);
+                
+                if (result.success) {
+                    showToast('Commit successful', 'success');
+                    commitMessage.value = '';
+                    loadChanges();
+                    loadCommits(selectedRepo.full_name);
+                } else {
+                    if (result.output.includes('nothing to commit')) {
+                        showToast('Nothing to commit', 'info');
+                    } else {
+                        showToast('Commit failed: ' + result.output, 'error');
+                    }
+                }
+            } catch (error) {
+                showToast('Commit failed: ' + error.message, 'error');
+            } finally {
+                commitBtn.disabled = false;
+            }
+        }
+
+        // Enable/disable commit button based on message
+        commitMessage.addEventListener('input', () => {
+            commitBtn.disabled = !commitMessage.value.trim();
+        });
+
+        // Git button event listeners
+        gitSyncBtn.addEventListener('click', performSync);
+        commitBtn.addEventListener('click', performCommit);
+        gitRefreshBtn.addEventListener('click', () => {
+            loadChanges();
+            checkSyncStatus();
+        });
+
+        // ==================== Link Repository ====================
+        function openLinkModal() {
+            linkModal.classList.add('active');
+            linkRepoSelect.innerHTML = '<option value="">Choose a repository...</option>';
+            repositories.forEach(repo => {
+                const option = document.createElement('option');
+                option.value = repo.full_name;
+                option.textContent = repo.name;
+                linkRepoSelect.appendChild(option);
+            });
+            linkRepoSelect.value = '';
+            linkFolderPath.value = '';
+            linkValidation.innerHTML = '';
+            linkConfirmBtn.disabled = true;
+            linkConfirmBtn.textContent = 'Link Repository';
+        }
+
+        function closeLinkModal() {
+            linkModal.classList.remove('active');
+        }
+
+        async function browseForFolder() {
+            if (typeof nativeBrowseFolder !== 'function') {
+                showToast('Folder browser not available', 'error');
+                return;
+            }
+
+            try {
+                const path = nativeBrowseFolder();
+                if (path) {
+                    linkFolderPath.value = path;
+                    validateLinkSelection();
+                }
+            } catch (error) {
+                showToast('Failed to browse folders: ' + error.message, 'error');
+            }
+        }
+
+        function validateLinkSelection() {
+            const repo = linkRepoSelect.value;
+            const path = linkFolderPath.value;
+
+            linkValidation.innerHTML = '';
+            linkConfirmBtn.disabled = true;
+
+            if (!repo || !path) {
+                if (repo && path) {
+                    linkValidation.innerHTML = '<span style="color: #238636;">✓ Ready to link</span>';
+                    linkConfirmBtn.disabled = false;
+                }
+                return;
+            }
+
+            if (repo && path) {
+                linkValidation.innerHTML = '<span style="color: #238636;">✓ Ready to link</span>';
+                linkConfirmBtn.disabled = false;
+            }
+        }
+
+        async function performLink() {
+            const repoFullName = linkRepoSelect.value;
+            const path = linkFolderPath.value;
+
+            if (!repoFullName || !path) {
+                showToast('Please select a repository and folder', 'error');
+                return;
+            }
+
+            // Mark repo as local
+            markRepoAsLocal(repoFullName, path);
+            
+            // Refresh dropdown
+            renderDropdownItems(repositories, repoSearchDropdown.value);
+            
+            showToast(`Linked ${repoFullName} to ${path}`, 'success');
+            closeLinkModal();
+        }
+
+        // ==================== Scan for Local Repositories ====================
+        
+        function openScanModal() {
+            scanModal.classList.add('active');
+            scanProgress.hidden = true;
+            scanStats.hidden = true;
+            scanStartBtn.disabled = false;
+            scanStartBtn.textContent = 'Start Scan';
+            // Keep previous results if any
+        }
+        
+        function closeScanModal() {
+            scanModal.classList.remove('active');
+        }
+        
+        async function performScan() {
+            scanStartBtn.disabled = true;
+            scanStartBtn.textContent = 'Scanning...';
+            scanProgress.hidden = false;
+            scanWarning.hidden = false;
+            scanStats.hidden = true;
+            scanResultsList.innerHTML = '';
+            
+            try {
+                // Call native function to scan
+                if (typeof nativeScanForRepos !== 'function') {
+                    throw new Error('Native scan function not available');
+                }
+                
+                // Get list of org repo names to search for
+                const repoNames = repositories.map(r => r.name).join(',');
+                console.log('Searching for repos:', repoNames);
+                
+                // Pass repo names to native scan - it will only return matches
+                const resultJson = nativeScanForRepos(repoNames, 5);
+                const foundRepos = JSON.parse(resultJson);
+                
+                console.log('Scan found repos:', foundRepos);
+                
+                // All found repos should match since we filtered by name
+                const matched = foundRepos.map(found => {
+                    const matchingGitHub = repositories.find(r => 
+                        r.name.toLowerCase() === found.name.toLowerCase()
+                    );
+                    return {
+                        ...found,
+                        github: matchingGitHub
+                    };
+                }).filter(r => r.github);
+                
+                // Update stats
+                scanTotal.textContent = repositories.length;
+                scanMatched.textContent = matched.length;
+                scanStats.hidden = false;
+                
+                // Render results
+                let html = '';
+                
+                if (matched.length > 0) {
+                    matched.forEach(repo => {
+                        html += `
+                            <div class="scan-result-item matched" data-fullname="${repo.github.full_name}" data-path="${repo.path}">
+                                <svg class="scan-result-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+                                </svg>
+                                <div class="scan-result-content">
+                                    <div class="scan-result-name">
+                                        ${repo.name}
+                                        <span class="scan-match-badge">Found</span>
+                                    </div>
+                                    <div class="scan-result-path">${repo.path}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+                
+                if (matched.length === 0) {
+                    html = '<div class="empty-state"><p>No organization repositories found on your computer</p></div>';
+                }
+                
+                scanResultsList.innerHTML = html;
+                
+                // Add click handlers for matched repos
+                scanResultsList.querySelectorAll('.scan-result-item.matched').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const fullName = item.dataset.fullname;
+                        const path = item.dataset.path;
+                        
+                        // Mark as local
+                        markRepoAsLocal(fullName, path);
+                        
+                        // Update UI
+                        item.innerHTML += '<span style="margin-left: auto; color: #238636; font-size: 12px;">✓ Linked</span>';
+                        item.style.pointerEvents = 'none';
+                        
+                        showToast(`Linked ${fullName} to local folder`, 'success');
+                        
+                        // Refresh dropdown
+                        renderDropdownItems(repositories, repoSearchDropdown.value);
+                    });
+                });
+                
+                showToast(`Found ${foundRepos.length} repositories, ${matched.length} match your organization`, 'success');
+                
+            } catch (error) {
+                console.error('Scan failed:', error);
+                scanResultsList.innerHTML = `<div class="empty-state"><p>Scan failed: ${error.message}</p></div>`;
+                showToast('Failed to scan for repositories: ' + error.message, 'error');
+            } finally {
+                scanProgress.hidden = true;
+                scanStartBtn.disabled = false;
+                scanStartBtn.textContent = 'Scan Again';
+            }
+        }
+
+        // ==================== Event Listeners ====================
+        connectBtn.addEventListener('click', () => {
+            // Navigate to settings page to connect GitHub
+            if (typeof nativeNavigate === 'function') {
+                nativeNavigate('file:///assets/settings.html');
+            } else {
+                window.location.href = 'settings.html';
+            }
+        });
+
+        repoSelect.addEventListener('change', async (e) => {
+            const repoFullName = e.target.value;
+            if (!repoFullName) {
+                repoInfoSection.hidden = true;
+                branchList.innerHTML = '<div class="empty-state"><p>Select a repository to view branches</p></div>';
+                commitList.innerHTML = '<div class="empty-state"><p>Select a repository to view commits</p></div>';
+                return;
+            }
+
+            // Load all repo data in parallel
+            await Promise.all([
+                loadBranches(repoFullName),
+                loadCommits(repoFullName),
+                loadRepoInfo(repoFullName)
+            ]);
+        });
+
+        // Clone modal
+        document.getElementById('clone-repo').addEventListener('click', openCloneModal);
+        document.getElementById('clone-modal-close').addEventListener('click', closeCloneModal);
+        document.getElementById('clone-cancel').addEventListener('click', closeCloneModal);
+        document.getElementById('clone-confirm').addEventListener('click', performClone);
+        
+        repoSearchInput.addEventListener('input', (e) => {
+            renderCloneRepoList(repositories, e.target.value);
+        });
+
+        // Link modal
+        linkRepoBtn.addEventListener('click', openLinkModal);
+        document.getElementById('link-modal-close').addEventListener('click', closeLinkModal);
+        linkRepoSelect.addEventListener('change', validateLinkSelection);
+        linkBrowseBtn.addEventListener('click', browseForFolder);
+        linkCancelBtn.addEventListener('click', closeLinkModal);
+        linkConfirmBtn.addEventListener('click', performLink);
+        linkModal.addEventListener('click', (e) => {
+            if (e.target === linkModal) closeLinkModal();
+        });
+
+        // Scan modal
+        scanReposBtn.addEventListener('click', openScanModal);
+        document.getElementById('scan-modal-close').addEventListener('click', closeScanModal);
+        scanCancelBtn.addEventListener('click', closeScanModal);
+        scanStartBtn.addEventListener('click', performScan);
+        scanModal.addEventListener('click', (e) => {
+            if (e.target === scanModal) closeScanModal();
+        });
+
+        // Branch modal
+        document.getElementById('create-branch').addEventListener('click', openBranchModal);
+        document.getElementById('branch-modal-close').addEventListener('click', closeBranchModal);
+        document.getElementById('branch-cancel').addEventListener('click', closeBranchModal);
+        document.getElementById('branch-confirm').addEventListener('click', createBranch);
+
+        // Close modals on overlay click
+        cloneModal.addEventListener('click', (e) => {
+            if (e.target === cloneModal) closeCloneModal();
+        });
+        branchModal.addEventListener('click', (e) => {
+            if (e.target === branchModal) closeBranchModal();
+        });
+
+        // ==================== Initialize ====================
+        checkGitHubConnection();
+    })();
+    </script>
+</body>
+</html>
