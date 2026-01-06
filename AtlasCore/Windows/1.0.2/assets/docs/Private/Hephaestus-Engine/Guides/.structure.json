@@ -1,0 +1,30 @@
+[
+  {
+    "name": "CUSTOM_COMPONENTS_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "ECS_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "EDITOR_SCRIPT_ATTACHMENT.md",
+    "type": "file"
+  },
+  {
+    "name": "GUIDES_README.md",
+    "type": "file"
+  },
+  {
+    "name": "LIGHTING_AND_MATERIALS_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_README.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPT_DEVELOPMENT_GUIDE.md",
+    "type": "file"
+  }
+]
