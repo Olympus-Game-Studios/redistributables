@@ -1,0 +1,8 @@
+{
+  "name": "HephaestusEngine",
+  "version": "1.0.3",
+  "platform": "windows-x64",
+  "entry": "AtlasCore.exe",
+  "build_date": "2026-15-01T08:00:00Z",
+  "tags": ["app","release","Windows"]
+}

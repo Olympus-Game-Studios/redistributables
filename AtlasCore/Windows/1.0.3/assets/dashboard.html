@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Atlas Core</title>
+    <link rel="stylesheet" href="content.css">
+</head>
+<body>
+    <div class="content-container">
+        <div class="content-header">
+            <h1>Welcome to Atlas Core</h1>
+        </div>
+
+        <div class="home-grid">
+            <!-- Quick Actions -->
+            <div class="home-section">
+                <h2>Quick Actions</h2>
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="navigateTo('https://atlas.olympusgames.dev/embedded')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                        <span>Open Atlas</span>
+                    </button>
+
+                     </button>
+                    <button class="quick-action-btn" onclick="navigateTo('file:///assets/docs.html')">
+                        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                           <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                        <span>Documentation</span>
+                    </button>
+
+                    
+                    <button class="quick-action-btn" onclick="navigateTo('file:///assets/downloads.html')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7,10 12,15 17,10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        <span>Downloads</span>
+                   
+                    <button class="quick-action-btn" onclick="navigateTo('file:///assets/git.html')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="18" cy="18" r="3"/>
+                            <circle cx="6" cy="6" r="3"/>
+                            <path d="M13 6h3a2 2 0 0 1 2 2v7"/>
+                            <line x1="6" y1="9" x2="6" y2="21"/>
+                        </svg>
+                        <span>Source Control</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="home-section">
+                <h2>Recent Activity</h2>
+                <div class="activity-list">
+                    <!-- Populated dynamically by JavaScript -->
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="home-section">
+                <h2>System Status</h2>
+                <div class="status-grid">
+                    <!-- Populated dynamically by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Installed Apps -->
+            <div class="home-section">
+                <h2>Installed Apps</h2>
+                <div class="status-grid apps-status-grid">
+                    <!-- Populated dynamically by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="home.js"></script>
+</body>
+</html>

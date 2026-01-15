@@ -1,0 +1,32 @@
+[
+  {
+    "name": "APPLY-INTEGRATION.md",
+    "type": "file"
+  },
+  {
+    "name": "APPLY-README.md",
+    "type": "file"
+  },
+  {
+    "name": "DEVLOG-README.md",
+    "type": "file"
+  },
+  {
+    "name": "Devlogs",
+    "type": "dir",
+    "children": [
+      {
+        "name": "Hephaestus Engine — Devlog v0.0.5.md",
+        "type": "file"
+      }
+    ]
+  },
+  {
+    "name": "newsletter-setup.md",
+    "type": "file"
+  },
+  {
+    "name": "POSITIONS-README.md",
+    "type": "file"
+  }
+]

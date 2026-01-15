@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Atlas Core</title>
+    <link rel="stylesheet" href="content.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="content-container">
+        <div class="content-header">
+            <h1>Profile</h1>
+        </div>
+
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="avatar-section">
+                <div class="avatar-container">
+                    <div class="avatar" id="profile-avatar">
+                        <span id="avatar-initials">U</span>
+                        <img id="avatar-image" src="" alt="Avatar" style="display: none;">
+                    </div>
+                    <button class="avatar-edit-btn" id="change-avatar-btn" title="Change avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="avatar-info">
+                    <h2 id="profile-display-name">Loading...</h2>
+                    <p id="profile-username">@username</p>
+                    <p class="profile-role" id="profile-role">Developer</p>
+                </div>
+            </div>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-projects">-</span>
+                    <span class="stat-label">Projects</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-contributions">-</span>
+                    <span class="stat-label">Contributions</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="stat-joined">-</span>
+                    <span class="stat-label">Member Since</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Form -->
+        <div class="settings-section">
+            <h2>Edit Profile</h2>
+            <form id="profile-form">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="display-name">Display Name</label>
+                        <p>Your public display name visible to others</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="text" id="display-name" class="setting-input" placeholder="Enter display name">
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="email">Email</label>
+                        <p>Your email address for notifications</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="email" id="email" class="setting-input" placeholder="Enter email">
+                    </div>
+                </div>
+                <div class="setting-item bio-item">
+                    <div class="setting-info">
+                        <label for="bio">Bio</label>
+                        <p>A short description about yourself</p>
+                    </div>
+                    <div class="setting-control full-width">
+                        <textarea id="bio" class="setting-textarea" placeholder="Tell us about yourself..." rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="avatar-url">Avatar URL</label>
+                        <p>Direct URL to your avatar image</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="url" id="avatar-url" class="setting-input" placeholder="https://example.com/avatar.png">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="reset-btn">Reset Changes</button>
+                    <button type="submit" class="btn-primary" id="save-btn">
+                        <span class="btn-text">Save Changes</span>
+                        <span class="btn-loading" hidden>
+                            <svg class="spinner" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="form-message" id="profile-message" hidden></div>
+            </form>
+        </div>
+
+        <!-- Change Password Section -->
+        <div class="settings-section">
+            <h2>Change Password</h2>
+            <form id="password-form">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="current-password">Current Password</label>
+                        <p>Enter your current password</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="password" id="current-password" class="setting-input" placeholder="Current password">
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="new-password">New Password</label>
+                        <p>At least 8 characters recommended</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="password" id="new-password" class="setting-input" placeholder="New password">
+                    </div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label for="confirm-password">Confirm Password</label>
+                        <p>Re-enter your new password</p>
+                    </div>
+                    <div class="setting-control">
+                        <input type="password" id="confirm-password" class="setting-input" placeholder="Confirm new password">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary" id="change-password-btn">
+                        <span class="btn-text">Change Password</span>
+                        <span class="btn-loading" hidden>
+                            <svg class="spinner" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="form-message" id="password-message" hidden></div>
+            </form>
+        </div>
+
+        <!-- Account Info Section -->
+        <div class="settings-section">
+            <h2>Account Information</h2>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <label>Username</label>
+                    <p>Your unique account identifier (cannot be changed)</p>
+                </div>
+                <div class="setting-control">
+                    <span class="account-value" id="account-username">-</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <label>Account ID</label>
+                    <p>Your unique user ID</p>
+                </div>
+                <div class="setting-control">
+                    <span class="account-value monospace" id="account-id">-</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <label>Account Type</label>
+                    <p>Your account permissions level</p>
+                </div>
+                <div class="setting-control">
+                    <span class="account-badge" id="account-type">User</span>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <label>Last Login</label>
+                    <p>Your most recent sign-in</p>
+                </div>
+                <div class="setting-control">
+                    <span class="account-value" id="account-last-login">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html>

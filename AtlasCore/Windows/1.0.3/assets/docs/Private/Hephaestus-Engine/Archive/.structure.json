@@ -1,0 +1,148 @@
+[
+  {
+    "name": "C++_scripting_legacy",
+    "type": "dir",
+    "children": [
+      {
+        "name": "ASSET_BROWSER_CREATE_SCRIPT.md",
+        "type": "file"
+      },
+      {
+        "name": "ASSET_BROWSER_CREATE_SCRIPT_README.md",
+        "type": "file"
+      },
+      {
+        "name": "ASSET_BROWSER_CREATE_SCRIPT_SUMMARY.md",
+        "type": "file"
+      },
+      {
+        "name": "ASSET_BROWSER_CREATE_SCRIPT_VISUAL.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPTING_API_REFERENCE.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPTING_COMPLETE_IMPLEMENTATION.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPTING_IMPLEMENTATION_SUMMARY.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPTING_INTEGRATION_GUIDE.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPTING_LAYER_GUIDE.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPTING_LAYER_README.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPTING_MASTER_INDEX.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPTING_QUICK_START.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPTING_VISUAL_GUIDE.md",
+        "type": "file"
+      },
+      {
+        "name": "SCRIPT_DEVELOPMENT_GUIDE.md",
+        "type": "file"
+      },
+      {
+        "name": "SESSION_SUMMARY_SCRIPTING.md",
+        "type": "file"
+      }
+    ]
+  },
+  {
+    "name": "CUSTOM_COMPONENTS_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "documentation_root_backup_2025-11-09.zip",
+    "type": "file"
+  },
+  {
+    "name": "ECS_ARCHITECTURE_DIAGRAM.md",
+    "type": "file"
+  },
+  {
+    "name": "ECS_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "ECS_IMPLEMENTATION_SUMMARY.md",
+    "type": "file"
+  },
+  {
+    "name": "ECS_SUCCESS.md",
+    "type": "file"
+  },
+  {
+    "name": "ICON_INTEGRATION.md",
+    "type": "file"
+  },
+  {
+    "name": "IMGUIZMO_INTEGRATION.md",
+    "type": "file"
+  },
+  {
+    "name": "LIGHTING_ADVANCED_EXAMPLES.md",
+    "type": "file"
+  },
+  {
+    "name": "LIGHTING_AND_MATERIALS_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "LIGHTING_VISUAL_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_COMPARISON.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_INTEGRATION.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_QUICKSTART.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_README.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_SUMMARY.md",
+    "type": "file"
+  },
+  {
+    "name": "RAY_PICKING.md",
+    "type": "file"
+  },
+  {
+    "name": "RAY_PICKING_REFERENCE.md",
+    "type": "file"
+  },
+  {
+    "name": "TEXTURE_DROPDOWN_FEATURE.md",
+    "type": "file"
+  },
+  {
+    "name": "TEXTURE_RENDERING_GUIDE.md",
+    "type": "file"
+  }
+]
