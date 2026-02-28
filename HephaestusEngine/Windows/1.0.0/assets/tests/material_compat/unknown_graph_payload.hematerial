@@ -1,0 +1,70 @@
+{
+  "name": "UnknownGraphPayload",
+  "albedo": [1.0, 1.0, 1.0],
+  "metallic": 0.0,
+  "roughness": 0.5,
+  "ao": 1.0,
+  "emissive": [0.0, 0.0, 0.0],
+  "emissiveStrength": 0.0,
+  "useAlbedoTexture": false,
+  "albedoTexturePath": "",
+  "useNormalTexture": false,
+  "normalTexturePath": "",
+  "useRoughnessTexture": false,
+  "roughnessTexturePath": "",
+  "useAoTexture": false,
+  "aoTexturePath": "",
+  "useWorldAlignedTexture": false,
+  "worldTextureScale": 1.0,
+  "customTop": {
+    "keep": true,
+    "value": 42
+  },
+  "graph": {
+    "customGraph": "keep-me",
+    "nodes": [
+      {
+        "id": 1,
+        "type": "MaterialOutput",
+        "displayName": "Output",
+        "scalar": 0.0,
+        "color": [1.0, 1.0, 1.0],
+        "resourcePath": "",
+        "worldAlignedScale": 1.0,
+        "posX": 300,
+        "posY": 100,
+        "inputPins": [10, 11, 12, 13, 14, 15, 16],
+        "outputPins": [],
+        "nodeExtra": {"a": 1}
+      },
+      {
+        "id": 7,
+        "type": "LegacyCustomNode",
+        "displayName": "Legacy Custom",
+        "scalar": 0.0,
+        "color": [0.0, 1.0, 0.0],
+        "resourcePath": "legacy/path",
+        "worldAlignedScale": 2.0,
+        "posX": 30,
+        "posY": 40,
+        "inputPins": [200],
+        "outputPins": [201],
+        "unknownNodePayload": [1, 2, 3]
+      }
+    ],
+    "links": [
+      {
+        "id": 9,
+        "startPin": 201,
+        "endPin": 10,
+        "customLink": "keep"
+      },
+      {
+        "id": 10,
+        "startPin": 9999,
+        "endPin": 11,
+        "customLink": "orphan"
+      }
+    ]
+  }
+}

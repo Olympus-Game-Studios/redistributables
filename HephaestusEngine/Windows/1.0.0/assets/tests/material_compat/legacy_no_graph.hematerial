@@ -1,0 +1,7 @@
+{
+  "name": "LegacyNoGraph",
+  "metallic": 0.2,
+  "legacyCustom": {
+    "author": "legacy-tool"
+  }
+}

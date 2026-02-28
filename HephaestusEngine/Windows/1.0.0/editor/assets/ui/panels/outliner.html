@@ -1,0 +1,620 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>World Outliner</title>
+  <link rel="stylesheet" href="../ui_theme.css" />
+  <style>
+    .outliner-panel .ui-body {
+      background: #1a1f28;
+    }
+    .outliner-panel .ui-list {
+      padding: calc(6px * var(--uiScale)) 0;
+    }
+    .outliner-panel .ui-row.outliner-row {
+      padding: calc(6px * var(--uiScale)) calc(8px * var(--uiScale));
+      min-height: calc(28px * var(--uiScale));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      background: #1e2530;
+      transition: background 120ms ease, outline 120ms ease;
+    }
+    .outliner-panel .ui-row.outliner-row:hover {
+      background: #252d3a;
+    }
+    .outliner-panel .ui-row.outliner-row.is-selected {
+      background: #2e3947;
+      outline: 1px solid rgba(120, 170, 255, 0.6);
+      box-shadow: inset 0 0 0 1px rgba(120, 170, 255, 0.22);
+    }
+    .outliner-panel .ui-row.outliner-row.is-env {
+      background: #212b38;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: calc(13px * var(--uiScale));
+    }
+    .outliner-panel .ui-row.outliner-row.is-env .ui-row-name {
+      font-weight: 600;
+      color: #e8efff;
+      font-size: calc(13px * var(--uiScale));
+    }
+    .outliner-indent {
+      display: inline-block;
+      height: 1px;
+      flex: 0 0 auto;
+    }
+    .outliner-toggle {
+      width: calc(20px * var(--uiScale));
+      height: calc(20px * var(--uiScale));
+      border: 1px solid transparent;
+      background: transparent;
+      color: #b8c5d4;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(12px * var(--uiScale));
+      cursor: pointer;
+      padding: 0;
+      border-radius: 3px;
+    }
+    .outliner-toggle:hover {
+      color: #f0f4f8;
+      border-color: rgba(255, 255, 255, 0.12);
+      background: #2d3644;
+    }
+    .outliner-toggle.is-hidden {
+      visibility: hidden;
+    }
+    .outliner-icon {
+      width: calc(24px * var(--uiScale));
+      text-align: center;
+      color: #c8d2e0;
+      font-size: calc(15px * var(--uiScale));
+      flex: 0 0 auto;
+      opacity: 1;
+    }
+    .outliner-icon.is-env {
+      color: #a5c7ff;
+      filter: brightness(1.1);
+    }
+    .outliner-icon.is-folder {
+      color: #e5b97a;
+      filter: brightness(1.1);
+    }
+    .outliner-type {
+      margin-left: auto;
+      font-size: calc(10px * var(--uiScale));
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      border-color: rgba(255, 255, 255, 0.12);
+      background: rgba(43, 52, 66, 0.95);
+      padding: calc(3px * var(--uiScale)) calc(6px * var(--uiScale));
+    }
+    .ui-row-name {
+      font-size: calc(12.5px * var(--uiScale));
+    }
+    .ui-row.is-drag-over {
+      background: var(--rowSel) !important;
+      outline: 2px solid var(--accent) !important;
+      outline-offset: -1px;
+    }
+    .ui-row.is-dragging {
+      opacity: 0.5;
+      background: var(--accent) !important;
+    }
+    .ui-list.is-drag-over {
+      background: rgba(var(--accent-rgb, 66, 133, 244), 0.1);
+      outline: 2px dashed var(--accent, #4285f4);
+      outline-offset: -2px;
+    }
+    .outliner-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 100;
+    }
+    .outliner-modal.is-open {
+      display: flex;
+    }
+    .outliner-modal-card {
+      min-width: calc(260px * var(--uiScale));
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: var(--space-5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .outliner-modal-title {
+      font-size: var(--fontSizeSmall);
+      font-weight: 600;
+    }
+    .outliner-modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-2);
+    }
+  </style>
+</head>
+<body>
+  <div class="ui-panel outliner-panel">
+    <div class="ui-header">
+      <div class="ui-title">World Outliner</div>
+      <div class="ui-toolbar">
+        <button class="ui-btn ui-icon-btn" id="newFolderBtn" title="New Folder">F</button>
+        <button class="ui-btn ui-icon-btn" id="refreshBtn" title="Refresh">R</button>
+      </div>
+    </div>
+    <div class="ui-pathbar">
+      <input class="ui-input" id="filter" placeholder="Search" />
+      <span style="flex:1"></span>
+      <span class="ui-path" id="sceneName"></span>
+    </div>
+    <div class="ui-body">
+      <div class="ui-list" id="list"></div>
+    </div>
+    <div class="ui-status" id="status">Loading…</div>
+  </div>
+
+  <div class="outliner-modal" id="folderModal">
+    <div class="outliner-modal-card">
+      <div class="outliner-modal-title">Create Folder</div>
+      <input class="ui-input" id="folderName" placeholder="Folder name" />
+      <div class="outliner-modal-actions">
+        <button class="ui-btn" id="folderCancel">Cancel</button>
+        <button class="ui-btn" id="folderCreate">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../ui_common.js"></script>
+
+  <script>
+    let lastData = null;
+    let lastEnvRootId = 0;
+    const expandedState = {};
+    
+    // Track last clicked entity ID for Shift+Click range selection
+    let lastClickedId = null;
+    // Track the flat list of visible entity IDs in render order
+    let visibleEntityOrder = [];
+
+    function isExpanded(id) {
+      if (expandedState[id] === undefined) {
+        expandedState[id] = true;
+      }
+      return expandedState[id];
+    }
+
+    function renderList(data) {
+      lastData = data;
+      const list = document.getElementById('list');
+      list.innerHTML = '';
+      
+      // Reset visible entity order for range selection
+      visibleEntityOrder = [];
+
+      if (!data || !data.ok) {
+        document.getElementById('status').textContent = 'Outliner: ' + (data ? (data.error || 'error') : 'no data');
+        return;
+      }
+
+      const selectedId = data.selectedId || 0;
+      const filter = (document.getElementById('filter').value || '').toLowerCase();
+      const rawEnts = (data.entities || []).map((ent, index) => {
+        const name = ent.name || '(unnamed)';
+        const type = ent.type || 'ENTITY';
+        const isEnvironment = type === 'ENV' || type === 'ENVIRONMENT';
+        return {
+          id: ent.id,
+          name,
+          type,
+          parent: ent.parent || 0,
+          isFolder: !!ent.isFolder || type === 'FOLDER' || isEnvironment,
+          isEnvironment,
+          selected: ent.selected || (ent.id === selectedId),
+          order: index,
+          nameLower: name.toLowerCase(),
+          typeLower: type.toLowerCase()
+        };
+      });
+
+      const byId = new Map();
+      rawEnts.forEach(ent => byId.set(ent.id, ent));
+
+      const childrenById = new Map();
+      rawEnts.forEach(ent => {
+        if (ent.parent && byId.has(ent.parent)) {
+          if (!childrenById.has(ent.parent)) {
+            childrenById.set(ent.parent, []);
+          }
+          childrenById.get(ent.parent).push(ent);
+        }
+      });
+
+      const displayChildrenById = new Map();
+      for (const [parentId, children] of childrenById.entries()) {
+        displayChildrenById.set(parentId, children.slice());
+      }
+
+      const envRoot = rawEnts.find(ent => ent.isEnvironment) || null;
+      lastEnvRootId = envRoot ? envRoot.id : 0;
+      if (envRoot) {
+        if (!displayChildrenById.has(envRoot.id)) {
+          displayChildrenById.set(envRoot.id, []);
+        }
+        const rootsToAttach = rawEnts.filter(ent => ent.id !== envRoot.id && (!ent.parent || !byId.has(ent.parent)));
+        rootsToAttach.forEach(ent => {
+          if (ent.parent !== envRoot.id) {
+            displayChildrenById.get(envRoot.id).push(ent);
+          }
+        });
+      }
+
+      for (const [parentId, children] of displayChildrenById.entries()) {
+        children.sort((a, b) => a.order - b.order);
+      }
+
+      const roots = envRoot ? [envRoot] : rawEnts.filter(ent => !ent.parent || !byId.has(ent.parent));
+      roots.sort((a, b) => a.order - b.order);
+
+      function matches(ent) {
+        return !filter || ent.nameLower.includes(filter) || ent.typeLower.includes(filter);
+      }
+
+      function shouldShow(ent) {
+        if (!filter) return true;
+        if (matches(ent)) return true;
+        const children = displayChildrenById.get(ent.id) || [];
+        return children.some(child => shouldShow(child));
+      }
+
+      function renderEntity(ent, depth) {
+        if (!shouldShow(ent)) {
+          return 0;
+        }
+        
+        // Track this entity in the visible order for range selection
+        visibleEntityOrder.push(ent.id);
+
+        const children = displayChildrenById.get(ent.id) || [];
+        const hasChildren = children.length > 0;
+        const expanded = isExpanded(ent.id);
+
+        const row = document.createElement('div');
+        row.className = 'ui-row outliner-row' + (ent.selected ? ' is-selected' : '') + (ent.isEnvironment ? ' is-env' : '');
+        row.dataset.entityId = String(ent.id || 0);
+        row.dataset.isFolder = ent.isFolder ? '1' : '0';
+        row.dataset.isEnvironment = ent.isEnvironment ? '1' : '0';
+
+        const left = document.createElement('div');
+        left.className = 'ui-row-left';
+
+        const indent = document.createElement('span');
+        indent.className = 'outliner-indent';
+        indent.style.width = `${depth * 18}px`;
+
+        const toggle = document.createElement('button');
+        toggle.className = 'outliner-toggle' + (hasChildren ? '' : ' is-hidden');
+        toggle.textContent = expanded ? '▾' : '▸';
+        toggle.onclick = (ev) => {
+          ev.stopPropagation();
+          expandedState[ent.id] = !expanded;
+          renderList(lastData);
+        };
+
+        const icon = document.createElement('div');
+        icon.className = 'outliner-icon';
+        if (ent.isEnvironment) {
+          icon.classList.add('is-env');
+          icon.textContent = '🌎';
+        } else if (ent.isFolder) {
+          icon.classList.add('is-folder');
+          icon.textContent = hasChildren && expanded ? '📂' : '📁';
+        } else {
+          icon.textContent = '•';
+        }
+
+        const name = document.createElement('div');
+        name.className = 'ui-row-name';
+        name.textContent = ent.name || '(unnamed)';
+
+        const badge = document.createElement('div');
+        badge.className = 'ui-badge outliner-type';
+        badge.textContent = ent.type || 'ENTITY';
+
+        left.appendChild(indent);
+        left.appendChild(toggle);
+        left.appendChild(icon);
+        left.appendChild(name);
+        left.appendChild(badge);
+        row.appendChild(left);
+
+        // Track pointer state for drag detection
+        let pointerDownTime = 0;
+        let pointerDownPos = { x: 0, y: 0 };
+        let isDragging = false;
+
+        row.addEventListener('pointerdown', (ev) => {
+          if (ev.button !== 0) return;
+          // Don't start drag from toggle button
+          if (ev.target.classList.contains('outliner-toggle')) return;
+          
+          pointerDownTime = Date.now();
+          pointerDownPos = { x: ev.clientX, y: ev.clientY };
+          isDragging = false;
+          
+          try { row.setPointerCapture(ev.pointerId); } catch (_) {}
+        });
+
+        row.addEventListener('pointermove', (ev) => {
+          if (pointerDownTime === 0) return;
+          
+          const posDiff = Math.abs(ev.clientX - pointerDownPos.x) + Math.abs(ev.clientY - pointerDownPos.y);
+          
+          // Start drag if moved more than 5 pixels
+          if (!isDragging && posDiff > 5) {
+            isDragging = true;
+            row.classList.add('is-dragging');
+            window.hep.callCpp('outliner.drag_begin', { entityId: ent.id });
+            document.getElementById('status').textContent = 'Dragging: ' + ent.name;
+          }
+          
+          if (isDragging) {
+            // Find what we're hovering over
+            const elemBelow = document.elementFromPoint(ev.clientX, ev.clientY);
+            // Clear previous highlights
+            document.querySelectorAll('.is-drag-over').forEach(el => el.classList.remove('is-drag-over'));
+            
+            if (elemBelow) {
+              const targetRow = elemBelow.closest('.ui-row');
+              if (targetRow && targetRow !== row) {
+                const targetIsFolder = targetRow.dataset.isFolder === '1';
+                if (targetIsFolder) {
+                  targetRow.classList.add('is-drag-over');
+                }
+              }
+            }
+          }
+        });
+
+        row.addEventListener('pointerup', (ev) => {
+          if (isDragging) {
+            row.classList.remove('is-dragging');
+            document.querySelectorAll('.is-drag-over').forEach(el => el.classList.remove('is-drag-over'));
+            
+            // Find drop target
+            const elemBelow = document.elementFromPoint(ev.clientX, ev.clientY);
+            let targetFolderId = 0;
+            
+            if (elemBelow) {
+              const targetRow = elemBelow.closest('.ui-row');
+              if (targetRow && targetRow !== row && targetRow.dataset.isFolder === '1') {
+                targetFolderId = Number(targetRow.dataset.entityId || 0);
+              }
+            }
+            
+            // Perform reparent
+            const statusEl = document.getElementById('status');
+            if (targetFolderId > 0 || elemBelow === document.getElementById('list')) {
+              if (targetFolderId === 0 && lastEnvRootId) {
+                targetFolderId = lastEnvRootId;
+              }
+              const r = window.hep.callCpp('scene.reparent', { 
+                entityId: ent.id, 
+                newParentId: targetFolderId 
+              });
+              if (!r || !r.ok) {
+                statusEl.textContent = 'Reparent failed: ' + (r && r.error ? r.error : 'error');
+              } else {
+                statusEl.textContent = targetFolderId ? 'Moved to folder.' : 'Moved to root.';
+                refresh();
+              }
+            } else {
+              statusEl.textContent = 'Drop cancelled.';
+            }
+            
+            window.hep.callCpp('outliner.drag_end', {});
+            isDragging = false;
+          } else {
+            // This was a click, not a drag
+            const timeDiff = Date.now() - pointerDownTime;
+            if (timeDiff < 300) {
+              const ctrlPressed = (ev && ev.ctrlKey) || (ev && ev.metaKey);
+              const shiftPressed = ev && ev.shiftKey;
+              const statusEl = document.getElementById('status');
+              
+              if (shiftPressed && lastClickedId !== null) {
+                // Shift+Click: Range selection
+                const startIdx = visibleEntityOrder.indexOf(lastClickedId);
+                const endIdx = visibleEntityOrder.indexOf(ent.id);
+                
+                if (startIdx !== -1 && endIdx !== -1) {
+                  const minIdx = Math.min(startIdx, endIdx);
+                  const maxIdx = Math.max(startIdx, endIdx);
+                  const rangeIds = visibleEntityOrder.slice(minIdx, maxIdx + 1);
+                  
+                  const r = window.hep.callCpp('scene.range_select', {
+                    ids: rangeIds.join(',')
+                  });
+                  
+                  if (!r.ok) {
+                    statusEl.textContent = 'Range select failed: ' + (r.error || 'error');
+                  } else {
+                    statusEl.textContent = 'Range selected ' + rangeIds.length + ' items';
+                    refresh();
+                  }
+                } else {
+                  // Fallback to normal selection if indices not found
+                  const r = window.hep.callCpp('scene.select', { id: ent.id, toggle: 0, add: 0 });
+                  if (!r.ok) {
+                    statusEl.textContent = 'Select failed: ' + (r.error || 'error');
+                  } else {
+                    lastClickedId = ent.id;
+                    refresh();
+                  }
+                }
+              } else if (ctrlPressed) {
+                // Ctrl+Click: Toggle selection
+                const payload = {
+                  id: ent.id,
+                  toggle: 1,
+                  add: 0
+                };
+                statusEl.textContent = 'Multi-select: Ctrl+Click on #' + ent.id;
+                const r = window.hep.callCpp('scene.select', payload);
+                if (!r.ok) {
+                  statusEl.textContent = 'Select failed: ' + (r.error || 'error');
+                } else {
+                  lastClickedId = ent.id;
+                  refresh();
+                }
+              } else {
+                // Normal click: Single selection
+                const r = window.hep.callCpp('scene.select', { id: ent.id, toggle: 0, add: 0 });
+                if (!r.ok) {
+                  statusEl.textContent = 'Select failed: ' + (r.error || 'error');
+                } else {
+                  lastClickedId = ent.id;
+                  refresh();
+                }
+              }
+            }
+          }
+          
+          pointerDownTime = 0;
+          try { row.releasePointerCapture(ev.pointerId); } catch (_) {}
+        });
+
+        row.addEventListener('pointercancel', (ev) => {
+          if (isDragging) {
+            row.classList.remove('is-dragging');
+            document.querySelectorAll('.is-drag-over').forEach(el => el.classList.remove('is-drag-over'));
+            window.hep.callCpp('outliner.drag_end', {});
+          }
+          isDragging = false;
+          pointerDownTime = 0;
+        });
+
+        row.addEventListener('lostpointercapture', (ev) => {
+          if (isDragging) {
+            row.classList.remove('is-dragging');
+            document.querySelectorAll('.is-drag-over').forEach(el => el.classList.remove('is-drag-over'));
+            window.hep.callCpp('outliner.drag_end', {});
+          }
+          isDragging = false;
+          pointerDownTime = 0;
+        });
+
+        list.appendChild(row);
+
+        let renderedCount = 1;
+        const renderChildren = hasChildren && (filter || expanded);
+        if (renderChildren) {
+          children.forEach(child => {
+            renderedCount += renderEntity(child, depth + 1);
+          });
+        }
+
+        return renderedCount;
+      }
+
+      let totalVisible = 0;
+      roots.forEach(root => {
+        totalVisible += renderEntity(root, 0);
+      });
+
+      document.getElementById('status').textContent = 'Entities: ' + totalVisible;
+    }
+
+    function refresh() {
+      const data = window.hep.callCpp('scene.list', {});
+      renderList(data);
+    }
+
+    function createFolderWithName(name) {
+      const finalName = (name || '').trim() || 'Folder';
+      let parentId = lastEnvRootId || 0;
+      if (lastData && lastData.entities && lastData.selectedId) {
+        const selected = lastData.entities.find(ent => ent.id === lastData.selectedId);
+        if (selected && (selected.isFolder || selected.type === 'FOLDER' || selected.type === 'ENV')) {
+          parentId = selected.id;
+        }
+      }
+
+      const r = window.hep.callCpp('scene.create_folder', { name: finalName, parent: parentId });
+      const statusEl = document.getElementById('status');
+      if (!r || !r.ok) {
+        statusEl.textContent = 'Create folder failed: ' + (r && r.error ? r.error : 'error');
+        return;
+      }
+      statusEl.textContent = 'Created folder: ' + finalName;
+      refresh();
+    }
+
+    function openFolderDialog() {
+      const modal = document.getElementById('folderModal');
+      const input = document.getElementById('folderName');
+      if (!modal || !input) return;
+      input.value = 'New Folder';
+      modal.classList.add('is-open');
+      setTimeout(() => input.focus(), 0);
+    }
+
+    function closeFolderDialog() {
+      const modal = document.getElementById('folderModal');
+      if (modal) modal.classList.remove('is-open');
+    }
+
+    function submitFolderDialog() {
+      const input = document.getElementById('folderName');
+      const name = input ? input.value : '';
+      closeFolderDialog();
+      createFolderWithName(name);
+    }
+
+    // Receive events from C++
+    window.hepReceive = function(msg) {
+      if (!msg || msg.v !== 1) return;
+      if (msg.name === 'selection.changed') {
+        refresh();
+      }
+    };
+
+    // Initial refresh + periodic fallback (in case events are missed)
+    window.hep.onReady(() => {
+      const newFolderBtn = document.getElementById('newFolderBtn');
+      const folderModal = document.getElementById('folderModal');
+      const folderName = document.getElementById('folderName');
+      const folderCreate = document.getElementById('folderCreate');
+      const folderCancel = document.getElementById('folderCancel');
+
+      if (newFolderBtn) newFolderBtn.onclick = openFolderDialog;
+      if (folderCreate) folderCreate.onclick = submitFolderDialog;
+      if (folderCancel) folderCancel.onclick = closeFolderDialog;
+      if (folderModal) {
+        folderModal.addEventListener('click', (ev) => {
+          if (ev.target === folderModal) closeFolderDialog();
+        });
+      }
+      if (folderName) {
+        folderName.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter') {
+            submitFolderDialog();
+          } else if (ev.key === 'Escape') {
+            closeFolderDialog();
+          }
+        });
+      }
+      document.getElementById('refreshBtn').onclick = refresh;
+      document.getElementById('filter').addEventListener('input', refresh);
+      refresh();
+      setInterval(refresh, 1200);
+    });
+  </script>
+</body>
+</html>

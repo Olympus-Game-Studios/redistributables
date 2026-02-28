@@ -1,0 +1,481 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Add Actors</title>
+  <link rel="stylesheet" href="../ui_theme.css" />
+  <style>
+    .aa-wrap {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      height: 100%;
+      width: 100%;
+      min-height: 0;
+      gap: 0;
+      flex: 1;
+    }
+
+    .aa-sidebar {
+      background: var(--panel2);
+      border-right: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .aa-search {
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .aa-search input {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      padding-left: 38px;
+      background-image: none;
+    }
+
+    .aa-search .aa-mag {
+      position: absolute;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted2);
+      font-family: var(--mono);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .aa-catlist {
+      padding: 10px 6px;
+      overflow: auto;
+      flex: 1;
+    }
+
+    .aa-cat {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--text);
+      user-select: none;
+    }
+
+    .aa-cat:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    .aa-cat.is-active {
+      background: rgba(59,130,246,0.25);
+      outline: 1px solid rgba(59,130,246,0.35);
+    }
+
+    .aa-cat-icon {
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    .aa-main {
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      background: var(--panel);
+      width: 100%;
+      height: 100%;
+    }
+
+    .aa-main-header {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--header);
+    }
+
+    .aa-main-title {
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .aa-grid {
+      padding: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 12px;
+      overflow: auto;
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+    }
+
+    .aa-card {
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: var(--panel2);
+      box-shadow: none;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .aa-card:hover {
+      border-color: rgba(255,255,255,0.18);
+      transform: translateY(-1px);
+    }
+
+    .aa-thumb {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--panel);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-family: var(--mono);
+      color: rgba(255,255,255,0.55);
+      font-size: 24px;
+    }
+
+    .aa-label {
+      padding: 8px 10px;
+      font-size: var(--fontSizeSmall);
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .aa-hint {
+      padding: 10px 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: var(--panel2);
+      color: var(--muted);
+      font-size: var(--fontSizeSmall);
+    }
+
+    .aa-rel {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <div class="ui-panel">
+    <div class="ui-header">
+      <div class="ui-title">Add Actor</div>
+      <div class="ui-toolbar">
+        <button class="ui-btn" id="filtersBtn" title="Filters (coming soon)" disabled>Filters</button>
+        <button class="ui-btn" id="recentBtn" title="Recent (coming soon)" disabled>Recent</button>
+      </div>
+    </div>
+
+    <div class="aa-wrap">
+      <div class="aa-sidebar">
+        <div class="aa-search aa-rel">
+          <div class="aa-mag">⌕</div>
+          <input class="ui-input" id="search" placeholder="Search Actor Classes" />
+        </div>
+        <div class="aa-catlist" id="cats"></div>
+      </div>
+
+      <div class="aa-main">
+        <div class="aa-main-header">
+          <div class="aa-main-title" id="mainTitle">Basics</div>
+          <div class="ui-toolbar">
+            <span class="ui-badge" id="countBadge">0</span>
+          </div>
+        </div>
+        <div class="aa-grid" id="grid"></div>
+        <div class="aa-hint" id="hint">Double-click to spawn. Drag into viewport to place.</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../ui_common.js"></script>
+  <script>
+    // Must match EditorSpawnPreset (engine/UI/EditorSpawnPreset.h)
+    const Preset = {
+      DefaultCube: 0,
+      DefaultSphere: 1,
+      DirectionalLight: 2,
+      PointLight: 3,
+      SpotLight: 4,
+      EmptyEntity: 5,
+      Camera: 6,
+    };
+
+    const categories = [
+      { id: 'basics', name: 'Basics', icon: '+' },
+      { id: 'lights', name: 'Lights', icon: '|||' },
+      { id: 'shapes', name: 'Shapes', icon: '◯' },
+      { id: 'meshes', name: 'Geometry', icon: '⬚' },
+      { id: 'all', name: 'All Classes', icon: '⌕' },
+    ];
+
+    const items = [
+      { cat: 'basics', label: 'Empty Actor', preset: Preset.EmptyEntity, thumb: '✚' },
+      { cat: 'basics', label: 'Camera', preset: Preset.Camera, thumb: '📷' },
+      { cat: 'lights', label: 'Directional Light', preset: Preset.DirectionalLight, thumb: '☀' },
+      { cat: 'lights', label: 'Point Light', preset: Preset.PointLight, thumb: '●' },
+      { cat: 'lights', label: 'Spotlight', preset: Preset.SpotLight, thumb: '◐' },
+      { cat: 'shapes', label: 'Cube', preset: Preset.DefaultCube, thumb: '▦' },
+      { cat: 'shapes', label: 'Sphere', preset: Preset.DefaultSphere, thumb: '●' },
+    ];
+
+    // Dynamic mesh entries from assets (filled on ready).
+    let meshItems = [];
+
+    let activeCat = 'basics';
+    let dragPreset = null;
+
+    function setHint(text) {
+      const el = document.getElementById('hint');
+      if (el) el.textContent = text;
+    }
+
+    function spawn(preset) {
+      const r = window.hep.callCpp('actor.spawn_preset', { preset: preset });
+      if (!r || !r.ok) {
+        setHint('Spawn failed: ' + (r && r.error ? r.error : 'error'));
+      } else {
+        setHint('Spawned actor.');
+      }
+    }
+
+    function spawnMesh(rel) {
+      const r = window.hep.callCpp('actor.spawn_mesh', { rel: rel });
+      if (!r || !r.ok) {
+        setHint('Spawn mesh failed: ' + (r && r.error ? r.error : 'error'));
+      } else {
+        setHint('Spawned mesh actor.');
+      }
+    }
+
+    function beginDrag(preset) {
+      dragPreset = preset;
+      window.hep.callCpp('actor.drag_begin', { preset: preset });
+    }
+
+    function beginMeshDrag(rel) {
+      window.hep.callCpp('assets.drag_begin', { path: rel });
+    }
+
+    function endDrag() {
+      dragPreset = null;
+      window.hep.callCpp('actor.drag_end', {});
+    }
+
+    function endMeshDrag() {
+      window.hep.callCpp('assets.drag_end', {});
+    }
+
+    function renderCats() {
+      const root = document.getElementById('cats');
+      root.innerHTML = '';
+      categories.forEach(c => {
+        const row = document.createElement('div');
+        row.className = 'aa-cat' + (c.id === activeCat ? ' is-active' : '');
+
+        const ic = document.createElement('div');
+        ic.className = 'aa-cat-icon';
+        ic.textContent = c.icon;
+
+        const name = document.createElement('div');
+        name.textContent = c.name;
+
+        row.appendChild(ic);
+        row.appendChild(name);
+
+        row.onclick = () => {
+          activeCat = c.id;
+          render();
+        };
+        root.appendChild(row);
+      });
+    }
+
+    function filterItems() {
+      const q = (document.getElementById('search').value || '').toLowerCase().trim();
+      const all = items.concat(meshItems);
+      return all.filter(it => {
+        const catOk = (activeCat === 'all') || (it.cat === activeCat);
+        const qOk = !q || (it.label || '').toLowerCase().includes(q);
+        return catOk && qOk;
+      });
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('grid');
+      if (!grid) {
+        setHint('Error: grid element not found');
+        return;
+      }
+      grid.innerHTML = '';
+
+      const filtered = filterItems();
+      document.getElementById('countBadge').textContent = String(filtered.length);
+      const active = categories.find(c => c.id === activeCat);
+      document.getElementById('mainTitle').textContent = active ? active.name : 'Add Actors';
+
+      if (filtered.length === 0) {
+        const empty = document.createElement('div');
+        empty.style.gridColumn = '1/-1';
+        empty.style.padding = '20px';
+        empty.style.color = 'var(--muted)';
+        empty.style.textAlign = 'center';
+        empty.textContent = 'No actors in category.';
+        grid.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(it => {
+        const card = document.createElement('div');
+        card.className = 'aa-card';
+        card.dataset.preset = String(it.preset || -1);
+
+        const thumb = document.createElement('div');
+        thumb.className = 'aa-thumb';
+        thumb.textContent = it.thumb || ' '; 
+
+        const label = document.createElement('div');
+        label.className = 'aa-label';
+        label.textContent = it.label;
+
+        card.appendChild(thumb);
+        card.appendChild(label);
+
+        // Spawn on double-click
+        card.ondblclick = (ev) => {
+          ev.preventDefault();
+          if (typeof it.meshRel === 'string') {
+            spawnMesh(it.meshRel);
+          } else {
+            spawn(it.preset);
+          }
+        };
+
+        // Drag support: JS tells C++ which preset is being dragged.
+        card.onpointerdown = (ev) => {
+          if (ev.button !== 0) return;
+          if (typeof it.meshRel === 'string') {
+            beginMeshDrag(it.meshRel);
+          } else {
+            beginDrag(it.preset);
+          }
+          try { card.setPointerCapture(ev.pointerId); } catch (_) {}
+        };
+        card.onpointerup = () => {
+          if (typeof it.meshRel === 'string') {
+            endMeshDrag();
+          } else {
+            endDrag();
+          }
+        };
+        card.onpointercancel = () => {
+          if (typeof it.meshRel === 'string') {
+            endMeshDrag();
+          } else {
+            endDrag();
+          }
+        };
+        card.onlostpointercapture = () => {
+          if (typeof it.meshRel === 'string') {
+            endMeshDrag();
+          } else {
+            endDrag();
+          }
+        };
+
+        grid.appendChild(card);
+      });
+    }
+
+    function render() {
+      try {
+        renderCats();
+        renderGrid();
+      } catch (e) {
+        setHint('Render error: ' + String(e));
+        console.error('Render error:', e);
+      }
+    }
+
+    window.hepReceive = function(msg) {
+      // Currently unused.
+      void msg;
+    };
+
+    let didInit = false;
+    function boot() {
+      if (didInit) return;
+      didInit = true;
+
+      // Prove JS is running even if the C++ bridge isn't ready.
+      setHint('Loading actors…');
+
+      try {
+        const searchEl = document.getElementById('search');
+        if (searchEl) searchEl.addEventListener('input', render);
+
+        // Clear drag state if mouse is released outside cards
+        window.addEventListener('pointerup', () => endDrag());
+        window.addEventListener('blur', () => endDrag());
+      } catch (e) {
+        console.error('Event wiring failed:', e);
+      }
+
+      // Render built-in items immediately.
+      try {
+        render();
+      } catch (e) {
+        setHint('Render failed: ' + String(e));
+        console.error(e);
+      }
+
+      // If/when bridge becomes available, load meshes.
+      if (window.hep && window.hep.callCpp) {
+        try {
+          const meshResp = window.hep.callCpp('assets.list_meshes', {});
+          if (meshResp && meshResp.ok && Array.isArray(meshResp.meshes)) {
+            meshItems = meshResp.meshes.map(m => {
+              const name = (m && m.name) ? String(m.name) : 'Mesh';
+              const rel = (m && m.rel) ? String(m.rel) : '';
+              const ext = (rel.split('.').pop() || '').toLowerCase();
+              const thumb = (ext === 'fbx') ? 'F' : (ext === 'obj') ? 'O' : (ext === 'gltf' || ext === 'glb') ? 'G' : 'M';
+              return { cat: 'meshes', label: name, meshRel: rel, thumb: thumb };
+            }).filter(it => it.meshRel);
+            render();
+          }
+        } catch (e) {
+          console.error('Failed to load meshes:', e);
+        }
+      }
+    }
+
+    // Try to render as soon as DOM exists.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
+
+    // Also retry when the bridge is ready.
+    if (window.hep && window.hep.onReady) {
+      window.hep.onReady(() => {
+        // Allow boot to run if DOMContentLoaded fired before hep was available.
+        didInit = false;
+        boot();
+      });
+    }
+  </script>
+</body>
+</html>

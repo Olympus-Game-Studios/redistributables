@@ -1,0 +1,1142 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Asset Browser</title>
+  <link rel="stylesheet" href="../ui_theme.css" />
+  <style>
+    .asset-browser {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .asset-browser-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: var(--header);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .asset-browser-title {
+      font-weight: 600;
+      font-size: var(--fontSize);
+    }
+
+    .asset-browser-toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .asset-browser-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      background: var(--panel2);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid var(--border2);
+      border-radius: calc(var(--radius) - 2px);
+      background: #242b37;
+      color: var(--text);
+      font-size: var(--fontSizeSmall);
+    }
+
+    .search-box input::placeholder {
+      color: var(--muted2);
+    }
+
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(26, 163, 255, 0.35);
+    }
+
+    .sort-dropdown {
+      padding: 8px 10px;
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      background: #242b37;
+      color: var(--text);
+      font-size: var(--fontSizeSmall);
+      cursor: pointer;
+    }
+
+    .sort-dropdown:hover {
+      border-color: var(--border);
+    }
+
+    .asset-browser-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .asset-sidebar {
+      width: 240px;
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex-shrink: 0;
+    }
+
+    .asset-tree-item {
+      padding: 8px 12px;
+      cursor: pointer;
+      user-select: none;
+      font-size: var(--fontSizeSmall);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .asset-tree-item:hover {
+      background: var(--rowHover);
+    }
+
+    .asset-tree-item.is-selected {
+      background: var(--rowSel);
+      color: var(--accent);
+    }
+
+    .asset-tree-toggle {
+      width: calc(16px * var(--uiScale));
+      height: calc(16px * var(--uiScale));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: calc(10px * var(--uiScale));
+      flex-shrink: 0;
+    }
+
+    .asset-tree-toggle.no-children {
+      visibility: hidden;
+    }
+
+    .asset-tree-icon {
+      width: calc(16px * var(--uiScale));
+      height: calc(16px * var(--uiScale));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(12px * var(--uiScale));
+      flex-shrink: 0;
+      color: var(--muted);
+    }
+
+    .asset-tree-name {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .asset-tree-children {
+      display: none;
+    }
+
+    .asset-tree-children.is-open {
+      display: block;
+    }
+
+    .asset-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .asset-filter-bar {
+      display: flex;
+      gap: 6px;
+      padding: 10px 14px;
+      background: var(--panel2);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      flex-wrap: wrap;
+    }
+
+    .asset-filter-btn {
+      padding: 6px 14px;
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--text);
+      font-size: var(--fontSizeSmall);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .asset-filter-btn:hover {
+      border-color: var(--border);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .asset-filter-btn.is-active {
+      border-color: var(--accent);
+      background: rgba(26, 163, 255, 0.15);
+      color: var(--accent);
+    }
+
+    .asset-grid {
+      flex: 1;
+      overflow: auto;
+      padding: calc(14px * var(--uiScale));
+      background: var(--panel);
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(calc(140px * var(--uiScale)), 1fr));
+      gap: calc(12px * var(--uiScale));
+      align-content: start;
+    }
+
+    .asset-tile {
+      display: flex;
+      flex-direction: column;
+      gap: calc(6px * var(--uiScale));
+      padding: 0;
+      cursor: pointer;
+      user-select: none;
+      border-radius: var(--radius);
+      transition: background 0.1s;
+    }
+
+    .asset-tile:hover {
+      background: var(--rowHover);
+    }
+
+    .asset-tile.is-selected {
+      background: var(--rowSel);
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    .asset-tile-thumbnail {
+      width: 100%;
+      aspect-ratio: 1;
+      background: #1a1e27;
+      border: 1px solid var(--border2);
+      border-radius: calc(var(--radius) - 2px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(32px * var(--uiScale));
+      color: var(--muted2);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .asset-tile-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .asset-tile-info {
+      padding: 0 calc(6px * var(--uiScale)) calc(6px * var(--uiScale)) calc(6px * var(--uiScale));
+      min-width: 0;
+    }
+
+    .asset-tile-name {
+      font-size: var(--fontSizeTiny);
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .asset-tile-type {
+      font-size: calc(11px * var(--uiScale));
+      color: var(--muted2);
+    }
+
+    .asset-empty {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: var(--muted);
+      font-size: var(--fontSizeSmall);
+    }
+
+    .breadcrumb-bar {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      background: #262c37;
+      color: var(--muted);
+      font-size: var(--fontSizeSmall);
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-part {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .breadcrumb-btn {
+      padding: 4px 8px;
+      border: none;
+      border-radius: calc(var(--radius) - 3px);
+      background: transparent;
+      color: var(--accent);
+      font-size: var(--fontSizeSmall);
+      font-family: var(--mono);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .breadcrumb-btn:hover {
+      background: rgba(26, 163, 255, 0.15);
+      border: none;
+    }
+
+    .breadcrumb-separator {
+      color: var(--muted2);
+      user-select: none;
+    }
+
+    .breadcrumb-path {
+      font-family: var(--mono);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .status-bar {
+      padding: 10px 14px;
+      border-top: 1px solid var(--border);
+      background: var(--panel2);
+      color: var(--muted);
+      font-size: var(--fontSizeSmall);
+    }
+
+    .context-menu {
+      position: fixed;
+      z-index: 1000;
+      min-width: 180px;
+      padding: 6px;
+      background: #1e2430;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .context-menu.is-open {
+      display: flex;
+    }
+
+    .context-menu button {
+      width: 100%;
+      text-align: left;
+      padding: 8px 10px;
+      border: none;
+      border-radius: calc(var(--radius) - 3px);
+      background: transparent;
+      color: var(--text);
+      font-size: var(--fontSizeSmall);
+      cursor: pointer;
+    }
+
+    .context-menu button:hover {
+      background: var(--rowHover);
+    }
+
+    .context-menu .separator {
+      height: 1px;
+      background: var(--border);
+      margin: 2px 0;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1100;
+    }
+
+    .modal-backdrop.is-open {
+      display: flex;
+    }
+
+    .modal-card {
+      min-width: 320px;
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .modal-title {
+      font-weight: 600;
+      font-size: var(--fontSize);
+    }
+
+    .modal-input {
+      padding: 8px 10px;
+      border: 1px solid var(--border2);
+      border-radius: calc(var(--radius) - 2px);
+      background: #242b37;
+      color: var(--text);
+      font-size: var(--fontSizeSmall);
+    }
+
+    .modal-error {
+      color: #ee6b5c;
+      font-size: var(--fontSizeSmall);
+      min-height: 18px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .modal-actions button {
+      padding: 8px 14px;
+      border: 1px solid var(--border2);
+      border-radius: calc(var(--radius) - 2px);
+      background: #2b3342;
+      color: var(--text);
+      font-size: var(--fontSizeSmall);
+      cursor: pointer;
+    }
+
+    .modal-actions button:hover {
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body data-ui-scale-fixed="1.35">
+  <div class="asset-browser">
+    <div class="asset-browser-header">
+      <div class="asset-browser-title">Content Browser</div>
+      <div class="asset-browser-toolbar">
+        <button class="ui-btn ui-icon-btn" id="refreshBtn" title="Refresh">🔄</button>
+      </div>
+    </div>
+
+    <div class="asset-browser-controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search Assets" />
+      </div>
+      <select class="sort-dropdown" id="sortDropdown">
+        <option value="name">Sort by: Name</option>
+        <option value="type">Sort by: Type</option>
+        <option value="date">Sort by: Date</option>
+      </select>
+    </div>
+
+    <div class="asset-browser-content">
+      <div class="asset-sidebar" id="sidebar"></div>
+      
+      <div class="asset-main">
+        <div class="breadcrumb-bar" id="breadcrumbBar">
+          <!-- Dynamically generated breadcrumb buttons -->
+        </div>
+
+        <div class="asset-filter-bar" id="filterBar"></div>
+
+        <div class="asset-grid" id="grid"></div>
+
+        <div class="status-bar" id="status">Loading…</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="contextMenu" class="context-menu">
+    <button data-action="new-folder">New Folder...</button>
+    <button data-action="new-material">New Material...</button>
+    <div class="separator"></div>
+    
+    <button data-action="new-lua-script">New Lua Script...</button>
+    <div class="separator"></div>
+    <button data-action="new-blueprint">New Blueprint...</button>
+    <button data-action="new-scene">New Scene...</button>
+  </div>
+
+  <div id="createModal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-title" id="createModalTitle">Create Asset</div>
+      <div class="modal-location" id="createModalLocation"></div>
+      <input class="modal-input" id="createNameInput" type="text" placeholder="Name" />
+      <div class="modal-error" id="createModalError"></div>
+      <div class="modal-actions">
+        <button id="createCancelBtn">Cancel</button>
+        <button id="createConfirmBtn">Create</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../ui_common.js"></script>
+  <script>
+    let currentPath = '.';
+    let selectedRel = '';
+    let allEntries = [];
+    const folderNodes = {}; // path -> node
+    const rootNodePath = '.';
+    let pendingCreateKind = null;
+    let lastClickTime = 0;
+    let lastClickRel = '';
+
+    const contextMenuEl = document.getElementById('contextMenu');
+    const createModalEl = document.getElementById('createModal');
+    const createModalTitleEl = document.getElementById('createModalTitle');
+    const createModalLocationEl = document.getElementById('createModalLocation');
+    const createNameInputEl = document.getElementById('createNameInput');
+    const createModalErrorEl = document.getElementById('createModalError');
+    const createCancelBtn = document.getElementById('createCancelBtn');
+    const createConfirmBtn = document.getElementById('createConfirmBtn');
+
+    function showContextMenu(x, y) {
+      if (!contextMenuEl) return;
+      contextMenuEl.style.left = x + 'px';
+      contextMenuEl.style.top = y + 'px';
+      contextMenuEl.classList.add('is-open');
+    }
+
+    function hideContextMenu() {
+      if (!contextMenuEl) return;
+      contextMenuEl.classList.remove('is-open');
+    }
+
+    function defaultNameForKind(kind) {
+      switch (kind) {
+        case 'folder': return 'NewFolder';
+        case 'material': return 'NewMaterial';
+        case 'cpp_script': return 'NewScript';
+        case 'lua_script': return 'NewScript';
+        case 'blueprint': return 'NewBlueprint';
+        case 'scene': return 'NewScene';
+        default: return 'NewAsset';
+      }
+    }
+
+    function titleForKind(kind) {
+      switch (kind) {
+        case 'folder': return 'Create Folder';
+        case 'material': return 'Create Material';
+        case 'cpp_script': return 'Create C++ Script';
+        case 'lua_script': return 'Create Lua Script';
+        case 'blueprint': return 'Create Blueprint';
+        case 'scene': return 'Create Scene';
+        default: return 'Create Asset';
+      }
+    }
+
+    function openCreateModal(kind) {
+      pendingCreateKind = kind;
+      createModalTitleEl.textContent = titleForKind(kind);
+      createModalLocationEl.textContent = 'Location: ' + (currentPath || '.');
+      createNameInputEl.value = defaultNameForKind(kind);
+      createModalErrorEl.textContent = '';
+      createModalEl.classList.add('is-open');
+      setTimeout(() => createNameInputEl.focus(), 0);
+    }
+
+    function closeCreateModal() {
+      createModalEl.classList.remove('is-open');
+      createModalErrorEl.textContent = '';
+      pendingCreateKind = null;
+    }
+
+    function createAssetFromModal() {
+      if (!pendingCreateKind) return;
+      const name = (createNameInputEl.value || '').trim();
+      if (!name) {
+        createModalErrorEl.textContent = 'Please enter a name.';
+        return;
+      }
+
+      const res = window.hep.callCpp('assets.create', {
+        kind: pendingCreateKind,
+        dir: currentPath || '.',
+        name: name,
+      });
+
+      if (!res || !res.ok) {
+        createModalErrorEl.textContent = 'Create failed: ' + (res && res.error ? res.error : 'error');
+        return;
+      }
+
+      if (res.path) {
+        selectedRel = normPath(res.path);
+        window.hep.callCpp('assets.select', { path: selectedRel });
+      }
+
+      closeCreateModal();
+      refresh(currentPath || '.');
+    }
+
+    function normPath(p) {
+      if (!p || p === '/' || p === '') return '.';
+      if (p === '.') return '.';
+      if (p.startsWith('./')) p = p.slice(2);
+      while (p.endsWith('/')) p = p.slice(0, -1);
+      return p || '.';
+    }
+
+    function splitPath(p) {
+      p = normPath(p);
+      if (p === '.') return [];
+      return p.split('/').filter(Boolean);
+    }
+
+    function baseName(p) {
+      const parts = splitPath(p);
+      return parts.length ? parts[parts.length - 1] : 'Root';
+    }
+
+    function ensureFolderNode(path, name) {
+      path = normPath(path);
+      if (folderNodes[path]) {
+        if (name && !folderNodes[path].name) folderNodes[path].name = name;
+        return folderNodes[path];
+      }
+      folderNodes[path] = {
+        path,
+        name: name || baseName(path),
+        isDir: true,
+        expanded: false,
+        childrenLoaded: false,
+        children: [],
+        hasChildren: true,
+      };
+      return folderNodes[path];
+    }
+
+    function loadFolderChildren(node) {
+      if (!node || node.childrenLoaded) return;
+      const res = window.hep.callCpp('assets.list', { path: node.path });
+      if (!res || !res.ok) {
+        node.childrenLoaded = true;
+        node.children = [];
+        node.hasChildren = false;
+        return;
+      }
+
+      const entries = (res.entries || []).filter(e => e && e.rel);
+
+      const dirs = entries
+        .filter(e => e.dir)
+        .map(e => ({ name: e.name || '(unnamed)', path: normPath(e.rel || '.') }))
+        .filter(d => d.path !== '.')
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map(d => ensureFolderNode(d.path, d.name));
+
+      const files = entries
+        .filter(e => !e.dir)
+        .map(e => ({
+          name: e.name || '(unnamed)',
+          path: normPath(e.rel || '.'),
+          isDir: false,
+          expanded: false,
+          childrenLoaded: true,
+          children: [],
+          hasChildren: false,
+        }))
+        .filter(f => f.path !== '.')
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      node.children = [...dirs, ...files];
+      node.childrenLoaded = true;
+      node.hasChildren = node.children.length > 0;
+    }
+
+    function setExpanded(path, expanded) {
+      const node = ensureFolderNode(path);
+      node.expanded = !!expanded;
+      if (node.expanded) {
+        loadFolderChildren(node);
+      }
+    }
+
+    function expandToPath(path) {
+      path = normPath(path);
+      setExpanded(rootNodePath, true);
+
+      let built = '.';
+      const parts = splitPath(path);
+      for (const part of parts) {
+        built = (built === '.') ? part : (built + '/' + part);
+        ensureFolderNode(built, part);
+        setExpanded(built, true);
+      }
+    }
+
+    function extType(name) {
+      const n = (name || '').toLowerCase();
+      const i = n.lastIndexOf('.');
+      const ext = i >= 0 ? n.slice(i + 1) : '';
+      if (!ext) return 'FILE';
+      if (ext === 'png' || ext === 'jpg' || ext === 'jpeg' || ext === 'tga' || ext === 'hdr' || ext === 'exr') return 'TEXTURE';
+      if (ext === 'glb' || ext === 'gltf' || ext === 'fbx' || ext === 'obj') return 'MESH';
+      if (ext === 'hpblueprint') return 'BLUEPRINT';
+      if (ext === 'hpscene') return 'SCENE';
+      if (ext === 'lua') return 'LUA';
+      if (ext === 'cpp' || ext === 'h' || ext === 'hpp') return 'CODE';
+      if (ext === 'spv') return 'SHADER';
+      return ext.toUpperCase();
+    }
+
+    function getAssetIcon(name, isDir) {
+      if (isDir) return '📁';
+      const type = extType(name);
+      if (type === 'TEXTURE') return '🖼';
+      if (type === 'MESH') return '🔺';
+      if (type === 'BLUEPRINT') return '📋';
+      if (type === 'SCENE') return '🎬';
+      if (type === 'SHADER') return '⚡';
+      if (type === 'LUA') return '📜';
+      if (type === 'CODE') return '💻';
+      return '📄';
+    }
+
+    function setStatus(s) { document.getElementById('status').textContent = s; }
+
+    function spawnMeshFromAsset(rel, name) {
+      if (!rel) return false;
+      const r = window.hep.callCpp('assets.spawn_mesh', { rel: rel });
+      if (!r || !r.ok) {
+        setStatus('Spawn mesh failed: ' + (r && r.error ? r.error : 'error'));
+        return false;
+      }
+      setStatus('Spawned mesh: ' + (name || rel));
+      return true;
+    }
+
+    function handleAssetOpen(rel, name) {
+      if (!rel) return;
+      if (extType(name) === 'MESH') {
+        spawnMeshFromAsset(rel, name);
+      } else {
+        window.hep.callCpp('assets.open', { path: rel });
+      }
+    }
+
+    function renderSidebar(autoExpand = false) {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.innerHTML = '';
+
+      const root = ensureFolderNode(rootNodePath, 'Root');
+      // Ensure the currently viewed path is expanded/visible (only on full refreshes).
+      if (autoExpand) {
+        expandToPath(currentPath);
+      }
+
+      function renderNode(node, depth) {
+        const itemEl = document.createElement('div');
+        const isDir = !!node.isDir;
+        const isSelected = isDir
+          ? (normPath(node.path) === normPath(currentPath))
+          : (normPath(node.path) === normPath(selectedRel));
+        itemEl.className = 'asset-tree-item' + (isSelected ? ' is-selected' : '');
+        itemEl.setAttribute('data-path', node.path);
+        itemEl.style.paddingLeft = (10 + depth * 14) + 'px';
+
+        const toggle = document.createElement('div');
+        toggle.className = 'asset-tree-toggle';
+        // If we've loaded and there are no children, hide the toggle.
+        const canHaveChildren = isDir && (node.hasChildren || !node.childrenLoaded);
+        if (!canHaveChildren) {
+          toggle.classList.add('no-children');
+          toggle.textContent = '';
+        } else {
+          toggle.textContent = node.expanded ? '▼' : '▶';
+        }
+
+        const icon = document.createElement('div');
+        icon.className = 'asset-tree-icon';
+        icon.textContent = getAssetIcon(node.name, isDir);
+
+        const name = document.createElement('div');
+        name.className = 'asset-tree-name';
+        name.textContent = node.name || baseName(node.path);
+
+        itemEl.appendChild(toggle);
+        itemEl.appendChild(icon);
+        itemEl.appendChild(name);
+
+        toggle.onclick = (e) => {
+          e.stopPropagation();
+          if (!canHaveChildren) return;
+          node.expanded = !node.expanded;
+          if (node.expanded) loadFolderChildren(node);
+          renderSidebar(false);
+        };
+
+        itemEl.onclick = () => {
+          const now = Date.now();
+          const rel = normPath(node.path);
+          const isDouble = (rel === lastClickRel && (now - lastClickTime) < 350);
+          lastClickRel = rel;
+          lastClickTime = now;
+
+          if (isDouble) {
+            if (isDir) {
+              refresh(node.path);
+            } else {
+              handleAssetOpen(node.path, node.name);
+            }
+            return;
+          }
+
+          if (isDir) {
+            refresh(node.path);
+          } else {
+            selectedRel = rel;
+            window.hep.callCpp('assets.select', { path: selectedRel });
+            document.querySelectorAll('.asset-tile').forEach(t => t.classList.remove('is-selected'));
+            const tile = document.querySelector('.asset-tile[data-rel="' + selectedRel.replace(/"/g, '') + '"]');
+            if (tile) tile.classList.add('is-selected');
+            renderSidebar(false);
+          }
+        };
+
+        sidebar.appendChild(itemEl);
+
+        if (isDir && node.expanded) {
+          loadFolderChildren(node);
+          for (const child of (node.children || [])) {
+            renderNode(child, depth + 1);
+          }
+        }
+      }
+
+      renderNode(root, 0);
+
+      // Try to keep the current selection visible.
+      requestAnimationFrame(() => {
+        const sel = sidebar.querySelector('.asset-tree-item.is-selected');
+        if (sel && sel.scrollIntoView) sel.scrollIntoView({ block: 'nearest' });
+      });
+    }
+
+    function renderBreadcrumb() {
+      const breadcrumbBar = document.getElementById('breadcrumbBar');
+      breadcrumbBar.innerHTML = '';
+
+      // Root button
+      const rootBtn = document.createElement('button');
+      rootBtn.className = 'breadcrumb-btn';
+      rootBtn.textContent = 'Root';
+      rootBtn.onclick = () => refresh('.');
+      breadcrumbBar.appendChild(rootBtn);
+
+      // Build path parts
+      if (currentPath !== '.' && currentPath !== '') {
+        const parts = splitPath(currentPath);
+        const builtPaths = [];
+        let builtPath = '';
+
+        // First pass: build all paths
+        parts.forEach((part) => {
+          builtPath = builtPath ? (builtPath + '/' + part) : part;
+          builtPaths.push(builtPath);
+        });
+
+        // Second pass: render buttons with captured paths
+        parts.forEach((part, idx) => {
+          const separator = document.createElement('span');
+          separator.className = 'breadcrumb-separator';
+          separator.textContent = '/';
+          breadcrumbBar.appendChild(separator);
+
+          const btn = document.createElement('button');
+          btn.className = 'breadcrumb-btn';
+          btn.textContent = part;
+          const pathForButton = builtPaths[idx]; // Capture in a new variable
+          btn.onclick = () => refresh(pathForButton);
+          breadcrumbBar.appendChild(btn);
+        });
+      }
+    }
+    function renderGrid(entries) {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+
+      if (!entries || entries.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'asset-empty';
+        empty.textContent = 'No assets found';
+        grid.appendChild(empty);
+        return;
+      }
+
+      entries.forEach(e => {
+        const tile = document.createElement('div');
+        tile.className = 'asset-tile' + (e.rel === selectedRel ? ' is-selected' : '');
+        tile.setAttribute('data-rel', e.rel || '');
+
+        const thumbnail = document.createElement('div');
+        thumbnail.className = 'asset-tile-thumbnail';
+        thumbnail.textContent = getAssetIcon(e.name, e.dir);
+
+        const info = document.createElement('div');
+        info.className = 'asset-tile-info';
+
+        const tileName = document.createElement('div');
+        tileName.className = 'asset-tile-name';
+        tileName.textContent = e.name;
+
+        const type = document.createElement('div');
+        type.className = 'asset-tile-type';
+        type.textContent = e.dir ? 'Folder' : extType(e.name);
+
+        info.appendChild(tileName);
+        info.appendChild(type);
+
+        tile.appendChild(thumbnail);
+        tile.appendChild(info);
+
+        // Drag support for non-folder assets
+        // Note: drag_end is delayed to give ImGui time to process the drop in the next frame
+        tile.draggable = !e.dir;
+        tile.onpointerdown = (evt) => {
+          if (evt.button !== 0) return;
+          if (e.dir) return; // Don't drag folders
+          window.hep.callCpp('assets.drag_begin', { path: e.rel });
+          try { tile.setPointerCapture(evt.pointerId); } catch (_) {}
+        };
+        tile.ondragstart = (evt) => {
+          if (e.dir) return false;
+          evt.dataTransfer.effectAllowed = 'copy';
+          evt.dataTransfer.setData('text/plain', e.rel);
+          return true;
+        };
+        tile.ondragend = () => {
+          // Delay drag_end to allow ImGui to process the drop
+          if (!e.dir) setTimeout(() => window.hep.callCpp('assets.drag_end', {}), 50);
+        };
+        tile.onpointerup = () => {
+          // Delay drag_end to allow ImGui to process the drop in the next frame
+          if (!e.dir) setTimeout(() => window.hep.callCpp('assets.drag_end', {}), 50);
+        };
+        tile.onpointercancel = () => {
+          if (!e.dir) setTimeout(() => window.hep.callCpp('assets.drag_end', {}), 50);
+        };
+        tile.onlostpointercapture = () => {
+          if (!e.dir) setTimeout(() => window.hep.callCpp('assets.drag_end', {}), 50);
+        };
+
+        tile.onclick = () => {
+          const now = Date.now();
+          const rel = e.rel;
+          const isDouble = (rel === lastClickRel && (now - lastClickTime) < 350);
+          lastClickRel = rel;
+          lastClickTime = now;
+
+          if (isDouble) {
+            if (e.dir) {
+              refresh(e.rel);
+            } else {
+              handleAssetOpen(e.rel, e.name);
+            }
+            return;
+          }
+
+          selectedRel = e.rel;
+          window.hep.callCpp('assets.select', { path: selectedRel });
+          document.querySelectorAll('.asset-tile').forEach(t => t.classList.remove('is-selected'));
+          tile.classList.add('is-selected');
+        };
+
+        grid.appendChild(tile);
+      });
+    }
+
+    function render(res) {
+      if (!res || !res.ok) {
+        setStatus('Error');
+        const grid = document.getElementById('grid');
+        grid.innerHTML = '<div class="asset-empty">' + ((res && (res.error || res.raw)) ? (res.error || res.raw) : 'assets.list failed') + '</div>';
+        return;
+      }
+
+      currentPath = normPath(res.path || '.');
+      allEntries = res.entries || [];
+
+      // Keep the tree in sync as the user navigates via grid/double-click.
+      ensureFolderNode(currentPath, baseName(currentPath));
+      expandToPath(currentPath);
+
+      renderBreadcrumb();
+      renderSidebar(true);
+      renderGrid(allEntries);
+
+      setStatus((allEntries.length) + ' items');
+    }
+
+    function refresh(path) {
+      const res = window.hep.callCpp('assets.list', { path: path || '.' });
+      render(res);
+    }
+
+    window.hepReceive = function(msg) {
+      // No events yet.
+    };
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const filtered = allEntries.filter(entry => 
+        entry.name.toLowerCase().includes(query)
+      );
+      renderGrid(filtered);
+      setStatus(filtered.length + ' items');
+    });
+
+    document.getElementById('sortDropdown').addEventListener('change', (e) => {
+      const sortType = e.target.value;
+      let sorted = [...allEntries];
+      
+      if (sortType === 'name') {
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+      } else if (sortType === 'type') {
+        sorted.sort((a, b) => extType(a.name).localeCompare(extType(b.name)));
+      } else if (sortType === 'date') {
+        // Would need date metadata from backend
+      }
+      
+      renderGrid(sorted);
+    });
+
+    const gridEl = document.getElementById('grid');
+    const sidebarEl = document.getElementById('sidebar');
+    const breadcrumbEl = document.getElementById('breadcrumbBar');
+    const filterBarEl = document.getElementById('filterBar');
+
+    function handleContextMenu(e) {
+      console.log('Context menu event fired at', e.clientX, e.clientY);
+      if (e.target && (e.target.closest('input') || e.target.closest('select') || e.target.closest('textarea'))) {
+        return;
+      }
+      e.preventDefault();
+      hideContextMenu();
+      showContextMenu(e.clientX, e.clientY);
+    }
+
+    function handleMouseDown(e) {
+      if (e.button === 2) { // Right mouse button
+        console.log('Right mouse button down at', e.clientX, e.clientY);
+      }
+    }
+
+    function handleMouseUp(e) {
+      if (e.button === 2) { // Right mouse button
+        console.log('Right mouse button up at', e.clientX, e.clientY);
+        handleContextMenu(e);
+      }
+    }
+
+    [gridEl, sidebarEl, breadcrumbEl, filterBarEl].forEach(el => {
+      if (!el) return;
+      el.addEventListener('contextmenu', handleContextMenu);
+    });
+
+    // Also listen on the document itself for context menu events
+    document.addEventListener('contextmenu', handleContextMenu);
+
+    // Also detect right-click via mousedown/mouseup as fallback
+    document.addEventListener('mousedown', handleMouseDown);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    document.addEventListener('click', (e) => {
+      if (contextMenuEl && !contextMenuEl.contains(e.target)) {
+        hideContextMenu();
+      }
+    });
+
+    document.addEventListener('scroll', () => hideContextMenu(), true);
+
+    if (contextMenuEl) {
+      contextMenuEl.addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const action = btn.getAttribute('data-action');
+        hideContextMenu();
+        switch (action) {
+          case 'new-folder':
+            openCreateModal('folder');
+            break;
+          case 'new-material':
+            openCreateModal('material');
+            break;
+          case 'new-cpp-script':
+            openCreateModal('cpp_script');
+            break;
+          case 'new-lua-script':
+            openCreateModal('lua_script');
+            break;
+          case 'new-blueprint':
+            openCreateModal('blueprint');
+            break;
+          case 'new-scene':
+            openCreateModal('scene');
+            break;
+        }
+      });
+    }
+
+    createCancelBtn.addEventListener('click', () => closeCreateModal());
+    createConfirmBtn.addEventListener('click', () => createAssetFromModal());
+    createModalEl.addEventListener('click', (e) => {
+      if (e.target === createModalEl) {
+        closeCreateModal();
+      }
+    });
+    createNameInputEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        createAssetFromModal();
+      }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeCreateModal();
+      }
+    });
+
+    window.hep.onReady(() => {
+      document.getElementById('refreshBtn').onclick = () => refresh(currentPath);
+      // Seed the tree with root children so the sidebar isn't empty.
+      const root = ensureFolderNode(rootNodePath, 'Root');
+      root.expanded = true;
+      loadFolderChildren(root);
+      refresh('.');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1781 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Details</title>
+  <link rel="stylesheet" href="../ui_theme.css" />
+</head>
+<body>
+  <div class="ui-panel">
+    <div class="ui-header">
+      <div class="ui-title">Details</div>
+      <div class="ui-toolbar">
+        <button class="ui-btn ui-icon-btn" id="refreshBtn" title="Refresh">R</button>
+        <span id="dynamicToolbar" style="display:flex; gap:6px;"></span>
+      </div>
+    </div>
+
+    <div class="ui-body">
+      <div class="ui-section">
+        <div class="ui-props">
+          <div class="ui-prop">
+            <div class="ui-prop-label">Name</div>
+            <div class="ui-prop-control">
+              <input class="ui-input" style="width:100%" id="name" value="" placeholder="(none)" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRANSFORM SECTION -->
+      <div class="ui-section">
+        <div class="ui-section-hdr" id="transformHdr">
+          <div class="ui-section-title">Transform</div>
+          <div style="color:var(--muted); font-size:12px;" id="entityId">—</div>
+        </div>
+        <div class="ui-props" id="transformBody">
+          <div class="ui-prop">
+            <div class="ui-prop-label">Location</div>
+            <div class="ui-prop-control ui-inline">
+              <span class="axis x">X</span><input class="ui-input ui-num" id="px" />
+              <span class="axis y">Y</span><input class="ui-input ui-num" id="py" />
+              <span class="axis z">Z</span><input class="ui-input ui-num" id="pz" />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Rotation</div>
+            <div class="ui-prop-control ui-inline">
+              <span class="axis x">X</span><input class="ui-input ui-num" id="rx" />
+              <span class="axis y">Y</span><input class="ui-input ui-num" id="ry" />
+              <span class="axis z">Z</span><input class="ui-input ui-num" id="rz" />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Scale</div>
+            <div class="ui-prop-control ui-inline">
+              <span class="axis x">X</span><input class="ui-input ui-num" id="sx" />
+              <span class="axis y">Y</span><input class="ui-input ui-num" id="sy" />
+              <span class="axis z">Z</span><input class="ui-input ui-num" id="sz" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIGHT SECTION -->
+      <div class="ui-section" id="lightSection" style="display:none;">
+        <div class="ui-section-hdr" id="lightHdr">
+          <div class="ui-section-title">Light</div>
+        </div>
+        <div class="ui-props" id="lightBody">
+          <div class="ui-prop">
+            <div class="ui-prop-label">Type</div>
+            <div class="ui-prop-control">
+              <select class="ui-input" id="lightType">
+                <option value="0">Directional</option>
+                <option value="1">Point</option>
+                <option value="2">Spot</option>
+              </select>
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Color</div>
+            <div class="ui-prop-control ui-inline">
+              <span class="axis x">R</span><input class="ui-input ui-num" id="lightR" min="0" max="1" step="0.1" />
+              <span class="axis y">G</span><input class="ui-input ui-num" id="lightG" min="0" max="1" step="0.1" />
+              <span class="axis z">B</span><input class="ui-input ui-num" id="lightB" min="0" max="1" step="0.1" />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Intensity</div>
+            <div class="ui-prop-control">
+              <input class="ui-input ui-num" id="lightIntensity" />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Range</div>
+            <div class="ui-prop-control">
+              <input class="ui-input ui-num" id="lightRange" />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Direction</div>
+            <div class="ui-prop-control ui-inline">
+              <span class="axis x">X</span><input class="ui-input ui-num" id="lightDirX" step="0.1" />
+              <span class="axis y">Y</span><input class="ui-input ui-num" id="lightDirY" step="0.1" />
+              <span class="axis z">Z</span><input class="ui-input ui-num" id="lightDirZ" step="0.1" />
+            </div>
+          </div>
+
+          <!-- Shadow Section -->
+          <div style="border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px;">
+            <div class="ui-prop">
+              <div class="ui-prop-label">Cast Shadows</div>
+              <div class="ui-prop-control">
+                <input type="checkbox" id="lightCastShadows" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Shadow Bias</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="lightShadowBias" step="0.0001" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Shadow Strength</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="lightShadowStrength" min="0" max="1" step="0.1" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Shadow Distance</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="lightShadowDistance" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Shadow Extent</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="lightShadowExtent" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENVIRONMENT SECTION -->
+      <div class="ui-section" id="envSection" style="display:none;">
+        <div class="ui-section-hdr" id="envHdr">
+          <div class="ui-section-title">Environment</div>
+        </div>
+        <div class="ui-props" id="envBody">
+          <div class="ui-prop">
+            <div class="ui-prop-label">Background Type</div>
+            <div class="ui-prop-control">
+              <select class="ui-input" id="envType">
+                <option value="0">Solid Color</option>
+                <option value="1">HDRI</option>
+              </select>
+            </div>
+          </div>
+          <div class="ui-prop" id="envColorProp">
+            <div class="ui-prop-label">Color</div>
+            <div class="ui-prop-control ui-inline">
+              <span class="axis x">R</span><input class="ui-input ui-num" id="envR" min="0" max="1" step="0.1" />
+              <span class="axis y">G</span><input class="ui-input ui-num" id="envG" min="0" max="1" step="0.1" />
+              <span class="axis z">B</span><input class="ui-input ui-num" id="envB" min="0" max="1" step="0.1" />
+            </div>
+          </div>
+          <div class="ui-prop" id="envHdriProp" style="display:none;">
+            <div class="ui-prop-label">HDRI Path</div>
+            <div class="ui-prop-control">
+              <select class="ui-input" style="width:100%" id="envHdriPath"></select>
+            </div>
+          </div>
+          <div class="ui-prop" id="envHdriIntensityProp" style="display:none;">
+            <div class="ui-prop-label">HDRI Intensity</div>
+            <div class="ui-prop-control">
+              <input class="ui-input ui-num" id="envHdriIntensity" />
+            </div>
+          </div>
+          <div style="border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px;">
+            <div class="ui-prop">
+              <div class="ui-prop-label">Enable Render Distance</div>
+              <div class="ui-prop-control">
+                <input type="checkbox" id="envEnableRenderDist" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Render Distance</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="envRenderDist" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Infinite Distance</div>
+              <div class="ui-prop-control">
+                <input type="checkbox" id="envInfiniteRenderDist" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MESH SECTION -->
+      <div class="ui-section" id="meshSection" style="display:none;">
+        <div class="ui-section-hdr" id="meshHdr">
+          <div class="ui-section-title">Mesh</div>
+        </div>
+        <div class="ui-props" id="meshBody">
+          <div class="ui-prop">
+            <div class="ui-prop-label">Visible</div>
+            <div class="ui-prop-control">
+              <input type="checkbox" id="meshVisible" checked />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Hide In Game</div>
+            <div class="ui-prop-control">
+              <input type="checkbox" id="meshHideInGame" />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Backface Culling</div>
+            <div class="ui-prop-control">
+              <input type="checkbox" id="meshBackfaceCulling" />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Asset Path</div>
+            <div class="ui-prop-control">
+              <input class="ui-input" style="width:100%" id="meshAssetPath" disabled placeholder="(no mesh)" />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Materials</div>
+            <div class="ui-prop-control">
+              <div id="meshMaterialSlots" style="display:flex; flex-direction:column; gap:6px;"></div>
+            </div>
+          </div>
+          <div style="border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px;">
+            <div class="ui-prop">
+              <div class="ui-prop-label">Lua Script</div>
+              <div class="ui-prop-control">
+                <div id="meshScriptAssigned" style="margin-bottom:6px; font-size:12px; color: var(--muted2);">
+                  Not assigned
+                </div>
+                <div style="display:flex; gap:5px;">
+                  <input class="ui-input" style="flex:1;" id="meshScriptPath" placeholder="Select a .lua in Asset Browser, or type scripts/MyScript.lua" />
+                  <button class="ui-btn" id="meshAssignScriptBtn" style="width:auto; padding: 0 10px;">Assign</button>
+                  <button class="ui-btn" id="meshRemoveScriptBtn" style="width:auto; padding: 0 10px; display:none;">Remove</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px;">
+            <div class="ui-prop">
+              <div class="ui-prop-label">Mesh Collider</div>
+              <div class="ui-prop-control" style="display:flex; gap:6px; align-items:center;">
+                <button class="ui-btn" id="meshColliderAddBtn" style="width:auto; padding: 0 10px;">Add Mesh Collider</button>
+                <button class="ui-btn" id="meshColliderRemoveBtn" style="width:auto; padding: 0 10px; display:none;">Remove Mesh Collider</button>
+              </div>
+            </div>
+            <div id="meshColliderProps" style="display:none;">
+              <div class="ui-prop">
+                <div class="ui-prop-label">Collision Enabled</div>
+                <div class="ui-prop-control">
+                  <input type="checkbox" id="meshColliderEnabled" />
+                </div>
+              </div>
+              <div class="ui-prop">
+                <div class="ui-prop-label">Static Collider</div>
+                <div class="ui-prop-control">
+                  <input type="checkbox" id="meshColliderStatic" />
+                </div>
+              </div>
+              <div class="ui-prop">
+                <div class="ui-prop-label">Trigger</div>
+                <div class="ui-prop-control">
+                  <input type="checkbox" id="meshColliderTrigger" />
+                </div>
+              </div>
+              <div class="ui-prop">
+                <div class="ui-prop-label">Complex Collision</div>
+                <div class="ui-prop-control">
+                  <input type="checkbox" id="meshColliderUseComplex" />
+                </div>
+              </div>
+              <div class="ui-prop">
+                <div class="ui-prop-label">Debug Draw Bounds</div>
+                <div class="ui-prop-control">
+                  <input type="checkbox" id="meshColliderDebug" />
+                </div>
+              </div>
+              <div class="ui-prop">
+                <div class="ui-prop-label">Contacts</div>
+                <div class="ui-prop-control">
+                  <div id="meshColliderContacts" style="font-size:12px; color:var(--muted2);">none this frame.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGID BODY SECTION -->
+      <div class="ui-section" id="rigidBodySection" style="display:none;">
+        <div class="ui-section-hdr" id="rigidBodyHdr">
+          <div class="ui-section-title">Rigid Body</div>
+        </div>
+        <div class="ui-props" id="rigidBodyBody">
+          <div id="rigidBodyEmpty" style="display:none;">
+            <div class="ui-prop">
+              <div class="ui-prop-label">Component</div>
+              <div class="ui-prop-control" style="display:flex; gap:6px; align-items:center;">
+                <div style="color:var(--muted2); font-size:12px;">Not present</div>
+                <button class="ui-btn" id="rbAddBtn" style="width:auto; padding:0 10px;">Add Rigid Body</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="rigidBodyProps" style="display:none;">
+            <div class="ui-prop">
+              <div class="ui-prop-label">Presets</div>
+              <div class="ui-prop-control" style="display:flex; gap:6px;">
+                <button class="ui-btn" id="rbPresetPlayerBtn" style="width:auto; padding:0 10px;">Player</button>
+                <button class="ui-btn" id="rbPresetGroundBtn" style="width:auto; padding:0 10px;">Ground/Env</button>
+                <button class="ui-btn" id="rbRemoveBtn" style="width:auto; padding:0 10px; margin-left:auto;">Remove</button>
+              </div>
+            </div>
+
+            <div class="ui-prop">
+              <div class="ui-prop-label">Static Body</div>
+              <div class="ui-prop-control">
+                <input type="checkbox" id="rbIsStatic" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Trigger Volume</div>
+              <div class="ui-prop-control">
+                <input type="checkbox" id="rbIsTrigger" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Use Gravity</div>
+              <div class="ui-prop-control">
+                <input type="checkbox" id="rbUseGravity" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Freeze Rotation</div>
+              <div class="ui-prop-control">
+                <input type="checkbox" id="rbFreezeRotation" />
+              </div>
+            </div>
+
+            <div class="ui-prop">
+              <div class="ui-prop-label">Mass</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="rbMass" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Friction</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="rbFriction" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Restitution</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="rbRestitution" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Linear Damping</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="rbLinearDamping" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Angular Damping</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="rbAngularDamping" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Linear Velocity</div>
+              <div class="ui-prop-control ui-inline">
+                <span class="axis x">X</span><input class="ui-input ui-num" id="rbLinVelX" />
+                <span class="axis y">Y</span><input class="ui-input ui-num" id="rbLinVelY" />
+                <span class="axis z">Z</span><input class="ui-input ui-num" id="rbLinVelZ" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Angular Velocity</div>
+              <div class="ui-prop-control ui-inline">
+                <span class="axis x">X</span><input class="ui-input ui-num" id="rbAngVelX" />
+                <span class="axis y">Y</span><input class="ui-input ui-num" id="rbAngVelY" />
+                <span class="axis z">Z</span><input class="ui-input ui-num" id="rbAngVelZ" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Debug Draw Collider</div>
+              <div class="ui-prop-control">
+                <input type="checkbox" id="rbDebugDraw" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHYSICS SHAPE SECTION -->
+      <div class="ui-section" id="physicsShapeSection" style="display:none;">
+        <div class="ui-section-hdr" id="physicsShapeHdr">
+          <div class="ui-section-title">Physics Shape</div>
+        </div>
+        <div class="ui-props" id="physicsShapeBody">
+          <div id="physicsShapeEmpty" style="display:none;">
+            <div class="ui-prop">
+              <div class="ui-prop-label">Component</div>
+              <div class="ui-prop-control" style="display:flex; gap:6px; align-items:center;">
+                <div style="color:var(--muted2); font-size:12px;">Not present</div>
+                <button class="ui-btn" id="physicsShapeAddBtn" style="width:auto; padding:0 10px;">Add Physics Shape</button>
+              </div>
+            </div>
+          </div>
+          <div id="physicsShapeProps" style="display:none;">
+            <div class="ui-prop">
+              <div class="ui-prop-label">Shape Type</div>
+              <div class="ui-prop-control">
+                <select class="ui-input" id="physicsShapeType">
+                  <option value="0">Box</option>
+                  <option value="1">Sphere</option>
+                  <option value="2">Capsule</option>
+                </select>
+              </div>
+            </div>
+            <div class="ui-prop" id="physicsShapeExtents">
+              <div class="ui-prop-label">Half Extents</div>
+              <div class="ui-prop-control ui-inline">
+                <span class="axis x">X</span><input class="ui-input ui-num" id="physicsExtX" />
+                <span class="axis y">Y</span><input class="ui-input ui-num" id="physicsExtY" />
+                <span class="axis z">Z</span><input class="ui-input ui-num" id="physicsExtZ" />
+              </div>
+            </div>
+            <div class="ui-prop" id="physicsShapeRadius" style="display:none;">
+              <div class="ui-prop-label">Radius</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="physicsRadius" />
+              </div>
+            </div>
+            <div class="ui-prop" id="physicsShapeHeight" style="display:none;">
+              <div class="ui-prop-label">Height</div>
+              <div class="ui-prop-control">
+                <input class="ui-input ui-num" id="physicsHeight" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Offset</div>
+              <div class="ui-prop-control ui-inline">
+                <span class="axis x">X</span><input class="ui-input ui-num" id="physicsOffX" />
+                <span class="axis y">Y</span><input class="ui-input ui-num" id="physicsOffY" />
+                <span class="axis z">Z</span><input class="ui-input ui-num" id="physicsOffZ" />
+              </div>
+            </div>
+            <div class="ui-prop">
+              <div class="ui-prop-label">Remove</div>
+              <div class="ui-prop-control">
+                <button class="ui-btn" id="physicsShapeRemoveBtn" style="width:auto; padding:0 10px;">Remove Physics Shape</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCRIPTS SECTION -->
+      <div class="ui-section" id="scriptsSection">
+        <div class="ui-section-hdr" id="scriptsHdr">
+          <div class="ui-section-title">Scripts</div>
+        </div>
+        <div class="ui-props" id="scriptsBody">
+          <div class="ui-prop">
+            <div class="ui-prop-label">Attached</div>
+            <div class="ui-prop-control">
+              <div id="scriptsAttached" style="font-size:12px; color:var(--muted2);">No scripts attached to this entity.</div>
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Add Script</div>
+            <div class="ui-prop-control" style="display:flex; gap:6px;">
+              <input class="ui-input" id="scriptNameInput" placeholder="Script name" />
+              <button class="ui-btn" id="scriptAttachBtn" style="width:auto; padding:0 10px;">Attach</button>
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Registered Scripts</div>
+            <div class="ui-prop-control">
+              <div id="scriptsRegistered" style="font-size:12px; color:var(--muted2);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LUA SCRIPTS SECTION -->
+      <div class="ui-section" id="luaScriptsSection">
+        <div class="ui-section-hdr" id="luaScriptsHdr">
+          <div class="ui-section-title">Lua Scripts</div>
+        </div>
+        <div class="ui-props" id="luaScriptsBody">
+          <div class="ui-prop">
+            <div class="ui-prop-label">Attached Script</div>
+            <div class="ui-prop-control">
+              <div id="luaAttached" style="font-size:12px; color:var(--muted2);">No Lua scripts attached to this entity.</div>
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Lua Script Enabled</div>
+            <div class="ui-prop-control">
+              <input type="checkbox" id="luaEnabled" />
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Manage</div>
+            <div class="ui-prop-control" style="display:flex; gap:6px;">
+              <button class="ui-btn" id="luaRemoveBtn" style="width:auto; padding:0 10px;">Remove Lua Script</button>
+            </div>
+          </div>
+          <div class="ui-prop">
+            <div class="ui-prop-label">Add Lua Script</div>
+            <div class="ui-prop-control" style="display:flex; gap:6px;">
+              <input class="ui-input" id="luaPathInput" placeholder="Select a .lua in Asset Browser, or type path" />
+              <button class="ui-btn" id="luaAttachBtn" style="width:auto; padding:0 10px;">Attach</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-status" id="status">Loading…</div>
+  </div>
+
+  <script src="../ui_common.js"></script>
+  <script>
+    let currentId = 0;
+    let currentEntityType = null; // Will store 'LIGHT', 'ENV', 'MESH', or null
+    let selectedIds = [];
+    let selectionCount = 0;
+    let materialCatalog = [];
+    let hdriCatalog = [];
+    let currentMeshMaterialIndices = [];
+    let currentMeshAppliedMaterialPaths = [];
+    let currentSubmeshCount = 1; // Number of material slots from mesh submeshes
+
+    function setStatus(s) {
+      document.getElementById('status').textContent = s;
+    }
+
+    function setField(id, v) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const val = (v === null || v === undefined) ? '' : String(v);
+      if (el.type === 'checkbox') {
+        el.checked = v ? true : false;
+      } else {
+        el.value = val;
+      }
+    }
+
+    function getNumber(id) {
+      const el = document.getElementById(id);
+      if (!el) return 0;
+      const n = parseFloat(el.value);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function getCheckbox(id) {
+      const el = document.getElementById(id);
+      if (!el) return false;
+      return el.checked ? 1 : 0;
+    }
+
+    function loadMaterialCatalog() {
+      const res = window.hep.callCpp('assets.list_materials', {});
+      if (!res || !res.ok || !Array.isArray(res.materials)) {
+        materialCatalog = [];
+        return;
+      }
+      materialCatalog = res.materials
+        .map(e => ({
+          name: String(e.name || e.rel || ''),
+          rel: String(e.rel || e.name || '')
+        }))
+        .sort((a, b) => (a.name === b.name ? a.rel.localeCompare(b.rel) : a.name.localeCompare(b.name)));
+    }
+
+    function loadHdriCatalog() {
+      const res = window.hep.callCpp('assets.list_hdri', {});
+      if (!res || !res.ok || !Array.isArray(res.hdris)) {
+        hdriCatalog = [];
+        renderHdriOptions();
+        return;
+      }
+      hdriCatalog = res.hdris
+        .map(e => ({
+          name: String(e.name || e.rel || ''),
+          rel: String(e.rel || e.name || '')
+        }))
+        .sort((a, b) => (a.name === b.name ? a.rel.localeCompare(b.rel) : a.name.localeCompare(b.name)));
+      renderHdriOptions();
+    }
+
+    function renderHdriOptions(forceValue) {
+      const select = document.getElementById('envHdriPath');
+      if (!select) return;
+
+      const currentValue = (forceValue !== undefined) ? String(forceValue || '') : String(select.value || '');
+      select.innerHTML = '';
+
+      const noneOpt = document.createElement('option');
+      noneOpt.value = '';
+      noneOpt.textContent = '(None)';
+      select.appendChild(noneOpt);
+
+      hdriCatalog.forEach((h) => {
+        const opt = document.createElement('option');
+        opt.value = h.rel;
+        opt.textContent = h.name || h.rel;
+        opt.title = h.rel;
+        select.appendChild(opt);
+      });
+
+      if (currentValue && !hdriCatalog.some(h => h.rel === currentValue)) {
+        const opt = document.createElement('option');
+        opt.value = currentValue;
+        opt.textContent = 'Custom: ' + currentValue;
+        opt.title = currentValue;
+        select.appendChild(opt);
+      }
+
+      select.value = currentValue;
+    }
+
+    function renderMaterialSlots() {
+      const host = document.getElementById('meshMaterialSlots');
+      if (!host) return;
+      host.innerHTML = '';
+
+      const indices = Array.isArray(currentMeshMaterialIndices) ? currentMeshMaterialIndices : [];
+      const appliedPaths = Array.isArray(currentMeshAppliedMaterialPaths) ? currentMeshAppliedMaterialPaths : [];
+      // Use submeshCount to determine how many slots, falling back to indices length or 1
+      const slotCount = Math.max(1, currentSubmeshCount, indices.length, appliedPaths.length);
+
+      for (let slotIndex = 0; slotIndex < slotCount; slotIndex++) {
+        const value = indices[slotIndex] !== undefined ? indices[slotIndex] : -1;
+        const appliedPath = appliedPaths[slotIndex] || '';
+        const appliedName = appliedPath ? appliedPath.split('/').pop().replace(/\.[^.]*$/, '') : 'No Material';
+
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.flexDirection = 'column';
+        row.style.gap = '4px';
+
+        const label = document.createElement('div');
+        label.style.display = 'flex';
+        label.style.alignItems = 'center';
+        label.style.gap = '6px';
+        
+        const slotLabel = document.createElement('div');
+        slotLabel.style.minWidth = '64px';
+        slotLabel.style.color = 'var(--muted2)';
+        slotLabel.style.fontSize = '12px';
+        slotLabel.textContent = 'Slot ' + (slotIndex + 1);
+        
+        const appliedLabel = document.createElement('div');
+        appliedLabel.style.color = appliedPath ? 'var(--accent)' : 'var(--muted2)';
+        appliedLabel.style.fontSize = '11px';
+        appliedLabel.style.flex = '1';
+        appliedLabel.style.overflow = 'hidden';
+        appliedLabel.style.textOverflow = 'ellipsis';
+        appliedLabel.textContent = appliedName;
+        appliedLabel.title = appliedPath || 'No material applied';
+        
+        label.appendChild(slotLabel);
+        label.appendChild(appliedLabel);
+
+        const select = document.createElement('select');
+        select.className = 'ui-input';
+        select.style.minWidth = '0';
+        select.style.cursor = 'pointer';
+
+        const noneOpt = document.createElement('option');
+        noneOpt.value = '-1';
+        noneOpt.textContent = '(None)';
+        select.appendChild(noneOpt);
+
+        materialCatalog.forEach((mat, idx) => {
+          const opt = document.createElement('option');
+          opt.value = String(idx);
+          opt.textContent = mat.name || mat.rel || ('Material ' + idx);
+          if (mat.rel) opt.title = mat.rel;
+          select.appendChild(opt);
+        });
+
+        if (value >= 0 && value >= materialCatalog.length) {
+          const opt = document.createElement('option');
+          opt.value = String(value);
+          opt.textContent = 'Unknown (' + value + ')';
+          select.appendChild(opt);
+        }
+
+        // Only show a selected material if one is actually applied.
+        // This avoids defaulting to catalog index 0 when nothing has been applied yet.
+        let effectiveValue = -1;
+        if (appliedPath) {
+          const matchIndex = materialCatalog.findIndex(m => m && m.rel === appliedPath);
+          if (matchIndex >= 0) {
+            effectiveValue = matchIndex;
+          } else if (Number.isFinite(value)) {
+            effectiveValue = value;
+          }
+        }
+        select.value = String(Number.isFinite(effectiveValue) ? effectiveValue : -1);
+        select.addEventListener('change', () => {
+          const next = parseInt(select.value, 10);
+          if (!Array.isArray(currentMeshMaterialIndices)) currentMeshMaterialIndices = [];
+          while (currentMeshMaterialIndices.length <= slotIndex) {
+            currentMeshMaterialIndices.push(-1);
+          }
+          currentMeshMaterialIndices[slotIndex] = Number.isFinite(next) ? next : -1;
+          
+          // Apply the material to the mesh if a valid material is selected
+          if (next >= 0 && next < materialCatalog.length && materialCatalog[next]) {
+            const materialPath = materialCatalog[next].rel;
+            const applyRes = window.hep.callCpp('material.apply_to_mesh', {
+              id: currentId,
+              materialPath: materialPath,
+              slot: slotIndex
+            });
+            if (applyRes && applyRes.ok) {
+              // Update the applied path display
+              currentMeshAppliedMaterialPaths[slotIndex] = materialPath;
+              appliedLabel.textContent = materialCatalog[next].name || materialPath.split('/').pop();
+              appliedLabel.style.color = 'var(--accent)';
+            } else if (applyRes) {
+              console.warn('Failed to apply material:', applyRes.error || 'unknown error');
+            }
+          } else if (next === -1) {
+            // Clear the applied material (persist via backend)
+            const applyRes = window.hep.callCpp('material.apply_to_mesh', {
+              id: currentId,
+              materialPath: '',
+              slot: slotIndex
+            });
+            if (applyRes && applyRes.ok) {
+              currentMeshAppliedMaterialPaths[slotIndex] = '';
+              appliedLabel.textContent = 'No Material';
+              appliedLabel.style.color = 'var(--muted2)';
+            } else if (applyRes) {
+              console.warn('Failed to clear material:', applyRes.error || 'unknown error');
+            }
+          }
+          
+          pushMeshProperties();
+        });
+
+        row.appendChild(label);
+        row.appendChild(select);
+        host.appendChild(row);
+      }
+    }
+
+
+
+    function showSections(sections) {
+      ['lightSection', 'envSection', 'meshSection'].forEach(s => {
+        document.getElementById(s).style.display = sections.includes(s) ? 'block' : 'none';
+      });
+    }
+
+    function getSelectionState() {
+      const sel = window.hep.callCpp('scene.get_selection', {});
+      if (!sel || !sel.ok) {
+        return { ids: [], primaryId: 0 };
+      }
+      const ids = Array.isArray(sel.ids) ? sel.ids.map(v => Number(v)).filter(v => Number.isFinite(v) && v > 0) : [];
+      const primaryId = Number(sel.primaryId || 0) || 0;
+      return { ids, primaryId };
+    }
+
+    function loadSelected() {
+      const selState = getSelectionState();
+      selectedIds = selState.ids;
+      selectionCount = selectedIds.length;
+
+      const nameInput = document.getElementById('name');
+      if (nameInput) nameInput.disabled = selectionCount > 1;
+
+      if (selectionCount === 0) {
+        currentId = 0;
+        currentEntityType = null;
+        setField('name', '');
+        ['px','py','pz','rx','ry','rz','sx','sy','sz'].forEach(k => setField(k, ''));
+        document.getElementById('entityId').textContent = '—';
+        showSections([]);
+        document.getElementById('rigidBodySection').style.display = 'none';
+        document.getElementById('physicsShapeSection').style.display = 'none';
+        document.getElementById('scriptsSection').style.display = 'none';
+        document.getElementById('luaScriptsSection').style.display = 'none';
+        setStatus('No selection.');
+        return;
+      }
+
+      const res = window.hep.callCpp('entity.get', { id: selState.primaryId || 0 });
+      if (!res.ok) {
+        setStatus('Details: ' + (res.error || 'error'));
+        return;
+      }
+      if (!res.entity) {
+        currentId = 0;
+        currentEntityType = null;
+        setField('name', '');
+        ['px','py','pz','rx','ry','rz','sx','sy','sz'].forEach(k => setField(k, ''));
+        document.getElementById('entityId').textContent = '—';
+        showSections([]);
+        document.getElementById('rigidBodySection').style.display = 'none';
+        document.getElementById('physicsShapeSection').style.display = 'none';
+        document.getElementById('scriptsSection').style.display = 'none';
+        document.getElementById('luaScriptsSection').style.display = 'none';
+        setStatus('No selection.');
+        return;
+      }
+
+      currentId = res.entity.id || 0;
+      setField('name', selectionCount > 1 ? '' : (res.entity.name || ''));
+      setField('px', res.entity.px);
+      setField('py', res.entity.py);
+      setField('pz', res.entity.pz);
+      setField('rx', res.entity.rx);
+      setField('ry', res.entity.ry);
+      setField('rz', res.entity.rz);
+      setField('sx', res.entity.sx);
+      setField('sy', res.entity.sy);
+      setField('sz', res.entity.sz);
+      document.getElementById('entityId').textContent = selectionCount > 1 ? ('Multiple (' + selectionCount + ')') : ('#' + currentId);
+
+      if (selectionCount > 1) {
+        currentEntityType = null;
+        showSections([]);
+        document.getElementById('rigidBodySection').style.display = 'none';
+        document.getElementById('physicsShapeSection').style.display = 'none';
+        document.getElementById('scriptsSection').style.display = 'none';
+        document.getElementById('luaScriptsSection').style.display = 'none';
+        setStatus('Multiple selection (' + selectionCount + '). Transform edits apply to all.');
+        return;
+      }
+
+      currentEntityType = res.entity.type;
+      const sections = [];
+      if (currentEntityType === 'LIGHT') {
+        sections.push('lightSection');
+        loadLightProperties();
+      } else if (currentEntityType === 'ENV') {
+        sections.push('envSection');
+        loadHdriCatalog();
+        loadEnvironmentProperties();
+      } else if (currentEntityType === 'MESH') {
+        sections.push('meshSection');
+        loadMaterialCatalog();
+        loadMeshProperties();
+        loadMeshColliderProperties();
+      }
+      showSections(sections);
+
+      // Rigid Body section is independent of entity type.
+      loadRigidBodyProperties();
+      loadPhysicsShapeProperties();
+      loadScriptsSection();
+      loadLuaScriptsSection();
+      setStatus('Ready');
+    }
+
+    function loadRigidBodyProperties() {
+      const section = document.getElementById('rigidBodySection');
+      if (!section) return;
+      if (!currentId) {
+        section.style.display = 'none';
+        return;
+      }
+
+      const res = window.hep.callCpp('rigidbody.get', { id: currentId });
+      if (!res || !res.ok) {
+        // Backwards-compatible: older builds won't have these handlers.
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'block';
+      const empty = document.getElementById('rigidBodyEmpty');
+      const props = document.getElementById('rigidBodyProps');
+
+      if (!res.rigidbody) {
+        if (empty) empty.style.display = 'block';
+        if (props) props.style.display = 'none';
+        return;
+      }
+
+      if (empty) empty.style.display = 'none';
+      if (props) props.style.display = 'block';
+
+      const rb = res.rigidbody;
+      setField('rbIsStatic', rb.isStatic);
+      setField('rbIsTrigger', rb.isTrigger);
+      setField('rbUseGravity', rb.useGravity);
+      setField('rbFreezeRotation', rb.freezeRotation);
+      setField('rbMass', rb.mass);
+      setField('rbFriction', rb.friction);
+      setField('rbRestitution', rb.restitution);
+      setField('rbLinearDamping', rb.linearDamping);
+      setField('rbAngularDamping', rb.angularDamping);
+      setField('rbLinVelX', rb.linVelX);
+      setField('rbLinVelY', rb.linVelY);
+      setField('rbLinVelZ', rb.linVelZ);
+      setField('rbAngVelX', rb.angVelX);
+      setField('rbAngVelY', rb.angVelY);
+      setField('rbAngVelZ', rb.angVelZ);
+      setField('rbDebugDraw', rb.debugDraw);
+    }
+
+    function pushRigidBodyProperties() {
+      if (!currentId) return;
+      const payload = {
+        id: currentId,
+        isStatic: getCheckbox('rbIsStatic'),
+        isTrigger: getCheckbox('rbIsTrigger'),
+        useGravity: getCheckbox('rbUseGravity'),
+        freezeRotation: getCheckbox('rbFreezeRotation'),
+        mass: getNumber('rbMass'),
+        friction: getNumber('rbFriction'),
+        restitution: getNumber('rbRestitution'),
+        linearDamping: getNumber('rbLinearDamping'),
+        angularDamping: getNumber('rbAngularDamping'),
+        linVelX: getNumber('rbLinVelX'),
+        linVelY: getNumber('rbLinVelY'),
+        linVelZ: getNumber('rbLinVelZ'),
+        angVelX: getNumber('rbAngVelX'),
+        angVelY: getNumber('rbAngVelY'),
+        angVelZ: getNumber('rbAngVelZ'),
+        debugDraw: getCheckbox('rbDebugDraw')
+      };
+      const r = window.hep.callCpp('rigidbody.set', payload);
+      if (!r.ok) {
+        setStatus('RigidBody update failed: ' + (r.error || 'error'));
+      }
+      loadRigidBodyProperties();
+    }
+
+    function addRigidBody() {
+      if (!currentId) return;
+      const r = window.hep.callCpp('rigidbody.add', { id: currentId });
+      if (!r.ok) {
+        setStatus('Add RigidBody failed: ' + (r.error || 'error'));
+      }
+      loadRigidBodyProperties();
+    }
+
+    function removeRigidBody() {
+      if (!currentId) return;
+      const r = window.hep.callCpp('rigidbody.remove', { id: currentId });
+      if (!r.ok) {
+        setStatus('Remove RigidBody failed: ' + (r.error || 'error'));
+      }
+      loadRigidBodyProperties();
+    }
+
+    function applyRigidBodyPreset(preset) {
+      if (!currentId) return;
+      const r = window.hep.callCpp('rigidbody.preset', { id: currentId, preset: String(preset || '') });
+      if (!r.ok) {
+        setStatus('Preset failed: ' + (r.error || 'error'));
+      }
+      loadRigidBodyProperties();
+    }
+
+    function loadPhysicsShapeProperties() {
+      const section = document.getElementById('physicsShapeSection');
+      if (!section) return;
+      if (!currentId) {
+        section.style.display = 'none';
+        return;
+      }
+
+      const res = window.hep.callCpp('physics_shape.get', { id: currentId });
+      if (!res || !res.ok) {
+        section.style.display = 'none';
+        return;
+      }
+
+      section.style.display = 'block';
+      const empty = document.getElementById('physicsShapeEmpty');
+      const props = document.getElementById('physicsShapeProps');
+
+      if (!res.shape) {
+        if (empty) empty.style.display = 'block';
+        if (props) props.style.display = 'none';
+        return;
+      }
+
+      if (empty) empty.style.display = 'none';
+      if (props) props.style.display = 'block';
+
+      const s = res.shape;
+      setField('physicsShapeType', s.type);
+      setField('physicsExtX', s.extX);
+      setField('physicsExtY', s.extY);
+      setField('physicsExtZ', s.extZ);
+      setField('physicsRadius', s.radius);
+      setField('physicsHeight', s.height);
+      setField('physicsOffX', s.offX);
+      setField('physicsOffY', s.offY);
+      setField('physicsOffZ', s.offZ);
+      updatePhysicsShapeDisplay();
+    }
+
+    function updatePhysicsShapeDisplay() {
+      const type = parseInt(document.getElementById('physicsShapeType').value);
+      const ext = document.getElementById('physicsShapeExtents');
+      const rad = document.getElementById('physicsShapeRadius');
+      const hgt = document.getElementById('physicsShapeHeight');
+      if (type === 0) {
+        if (ext) ext.style.display = 'flex';
+        if (rad) rad.style.display = 'none';
+        if (hgt) hgt.style.display = 'none';
+      } else if (type === 1) {
+        if (ext) ext.style.display = 'none';
+        if (rad) rad.style.display = 'flex';
+        if (hgt) hgt.style.display = 'none';
+      } else {
+        if (ext) ext.style.display = 'none';
+        if (rad) rad.style.display = 'flex';
+        if (hgt) hgt.style.display = 'flex';
+      }
+    }
+
+    function pushPhysicsShapeProperties() {
+      if (!currentId) return;
+      const payload = {
+        id: currentId,
+        type: parseInt(document.getElementById('physicsShapeType').value),
+        extX: getNumber('physicsExtX'),
+        extY: getNumber('physicsExtY'),
+        extZ: getNumber('physicsExtZ'),
+        radius: getNumber('physicsRadius'),
+        height: getNumber('physicsHeight'),
+        offX: getNumber('physicsOffX'),
+        offY: getNumber('physicsOffY'),
+        offZ: getNumber('physicsOffZ')
+      };
+      const r = window.hep.callCpp('physics_shape.set', payload);
+      if (!r.ok) setStatus('Physics shape update failed: ' + (r.error || 'error'));
+      loadPhysicsShapeProperties();
+    }
+
+    function addPhysicsShape() {
+      if (!currentId) return;
+      const r = window.hep.callCpp('physics_shape.add', { id: currentId });
+      if (!r.ok) setStatus('Add physics shape failed: ' + (r.error || 'error'));
+      loadPhysicsShapeProperties();
+    }
+
+    function removePhysicsShape() {
+      if (!currentId) return;
+      const r = window.hep.callCpp('physics_shape.remove', { id: currentId });
+      if (!r.ok) setStatus('Remove physics shape failed: ' + (r.error || 'error'));
+      loadPhysicsShapeProperties();
+    }
+
+    function loadScriptsSection() {
+      if (!currentId) return;
+      const section = document.getElementById('scriptsSection');
+      if (section) section.style.display = 'block';
+      const attached = window.hep.callCpp('scripts.get', { id: currentId });
+      const reg = window.hep.callCpp('scripts.registered', {});
+
+      const attachedEl = document.getElementById('scriptsAttached');
+      if (attachedEl) {
+        attachedEl.innerHTML = '';
+        const list = attached && attached.ok && Array.isArray(attached.attached) ? attached.attached : [];
+        if (!list.length) {
+          attachedEl.textContent = 'No scripts attached to this entity.';
+        } else {
+          list.forEach(name => {
+            const row = document.createElement('div');
+            row.style.display = 'flex';
+            row.style.gap = '6px';
+            row.style.alignItems = 'center';
+
+            const label = document.createElement('div');
+            label.textContent = String(name);
+            const btn = document.createElement('button');
+            btn.className = 'ui-btn';
+            btn.textContent = 'Remove';
+            btn.style.width = 'auto';
+            btn.style.padding = '0 10px';
+            btn.onclick = () => {
+              const r = window.hep.callCpp('scripts.detach', { id: currentId, name: String(name) });
+              if (!r.ok) setStatus('Remove script failed: ' + (r.error || 'error'));
+              loadScriptsSection();
+            };
+
+            row.appendChild(label);
+            row.appendChild(btn);
+            attachedEl.appendChild(row);
+          });
+        }
+      }
+
+      const regEl = document.getElementById('scriptsRegistered');
+      if (regEl) {
+        const items = reg && reg.ok && Array.isArray(reg.items) ? reg.items : [];
+        if (!items.length) {
+          regEl.textContent = '';
+        } else {
+          regEl.innerHTML = '';
+          items.forEach(name => {
+            const row = document.createElement('div');
+            row.textContent = String(name);
+            regEl.appendChild(row);
+          });
+        }
+      }
+    }
+
+    function attachScript() {
+      if (!currentId) return;
+      const name = (document.getElementById('scriptNameInput').value || '').trim();
+      if (!name) {
+        setStatus('Enter a script name');
+        return;
+      }
+      const r = window.hep.callCpp('scripts.attach', { id: currentId, name: name });
+      if (!r.ok) {
+        setStatus('Attach script failed: ' + (r.error || 'error'));
+      } else {
+        document.getElementById('scriptNameInput').value = '';
+      }
+      loadScriptsSection();
+    }
+
+    function loadLuaScriptsSection() {
+      if (!currentId) return;
+      const section = document.getElementById('luaScriptsSection');
+      if (section) section.style.display = 'block';
+      const res = window.hep.callCpp('lua.get', { id: currentId });
+      const attachedEl = document.getElementById('luaAttached');
+      const enabledEl = document.getElementById('luaEnabled');
+      const removeBtn = document.getElementById('luaRemoveBtn');
+
+      if (!res || !res.ok) {
+        if (attachedEl) attachedEl.textContent = 'No Lua scripts attached to this entity.';
+        if (enabledEl) enabledEl.checked = false;
+        if (removeBtn) removeBtn.style.display = 'none';
+        return;
+      }
+
+      if (!res.lua) {
+        if (attachedEl) attachedEl.textContent = 'No Lua scripts attached to this entity.';
+        if (enabledEl) enabledEl.checked = false;
+        if (removeBtn) removeBtn.style.display = 'none';
+        return;
+      }
+
+      if (attachedEl) attachedEl.textContent = 'Attached Script: ' + String(res.lua.path || '');
+      if (enabledEl) enabledEl.checked = !!res.lua.enabled;
+      if (removeBtn) removeBtn.style.display = '';
+    }
+
+    function attachLuaScript() {
+      if (!currentId) return;
+      let path = (document.getElementById('luaPathInput').value || '').trim();
+      if (!path) {
+        const sel = window.hep.callCpp('assets.get_selected', {});
+        if (sel && sel.ok && sel.path) {
+          path = String(sel.path || '').trim();
+          if (path) document.getElementById('luaPathInput').value = path;
+        }
+      }
+      if (!path) {
+        setStatus('Select a .lua in Asset Browser, or type a path');
+        return;
+      }
+      if (!path.toLowerCase().endsWith('.lua')) {
+        setStatus('Selected asset is not a .lua script');
+        return;
+      }
+      const r = window.hep.callCpp('lua.attach', { id: currentId, path: path });
+      if (!r.ok) {
+        setStatus('Lua attach failed: ' + (r.error || 'error'));
+      }
+      loadLuaScriptsSection();
+    }
+
+    function removeLuaScript() {
+      if (!currentId) return;
+      const r = window.hep.callCpp('lua.remove', { id: currentId });
+      if (!r.ok) setStatus('Remove Lua script failed: ' + (r.error || 'error'));
+      loadLuaScriptsSection();
+    }
+
+    function setLuaEnabled() {
+      if (!currentId) return;
+      const r = window.hep.callCpp('lua.set_enabled', { id: currentId, enabled: getCheckbox('luaEnabled') });
+      if (!r.ok) setStatus('Lua enable failed: ' + (r.error || 'error'));
+    }
+
+    function loadLightProperties() {
+      if (!currentId) return;
+      const res = window.hep.callCpp('light.get', { id: currentId });
+      if (!res.ok || !res.light) {
+        setStatus('Failed to load light: ' + (res.error || 'error'));
+        return;
+      }
+      const light = res.light;
+      setField('lightType', light.type);
+      setField('lightR', light.r);
+      setField('lightG', light.g);
+      setField('lightB', light.b);
+      setField('lightIntensity', light.intensity);
+      setField('lightRange', light.range);
+      setField('lightDirX', light.dirX);
+      setField('lightDirY', light.dirY);
+      setField('lightDirZ', light.dirZ);
+      setField('lightCastShadows', light.castShadows);
+      setField('lightShadowBias', light.shadowBias);
+      setField('lightShadowStrength', light.shadowStrength);
+      setField('lightShadowDistance', light.shadowDistance);
+      setField('lightShadowExtent', light.shadowExtent);
+    }
+
+    function pushLightProperties() {
+      if (!currentId) return;
+      const payload = {
+        id: currentId,
+        type: parseInt(document.getElementById('lightType').value),
+        r: getNumber('lightR'),
+        g: getNumber('lightG'),
+        b: getNumber('lightB'),
+        intensity: getNumber('lightIntensity'),
+        range: getNumber('lightRange'),
+        dirX: getNumber('lightDirX'),
+        dirY: getNumber('lightDirY'),
+        dirZ: getNumber('lightDirZ'),
+        castShadows: getCheckbox('lightCastShadows'),
+        shadowBias: getNumber('lightShadowBias'),
+        shadowStrength: getNumber('lightShadowStrength'),
+        shadowDistance: getNumber('lightShadowDistance'),
+        shadowExtent: getNumber('lightShadowExtent')
+      };
+      const r = window.hep.callCpp('light.set', payload);
+      if (!r.ok) setStatus('Light update failed: ' + (r.error || 'error'));
+    }
+
+    function loadEnvironmentProperties() {
+      if (!currentId) return;
+      const res = window.hep.callCpp('environment.get', { id: currentId });
+      if (!res.ok || !res.environment) {
+        setStatus('Failed to load environment: ' + (res.error || 'error'));
+        return;
+      }
+      const env = res.environment;
+      setField('envType', env.type);
+      setField('envR', env.r);
+      setField('envG', env.g);
+      setField('envB', env.b);
+      setField('envHdriPath', env.hdriPath);
+      renderHdriOptions(env.hdriPath);
+      setField('envHdriIntensity', env.hdriIntensity);
+      setField('envEnableRenderDist', env.enableRenderDistance);
+      setField('envRenderDist', env.renderDistance);
+      setField('envInfiniteRenderDist', env.infiniteRenderDistance);
+      updateEnvDisplay();
+    }
+
+    function updateEnvDisplay() {
+      const type = parseInt(document.getElementById('envType').value);
+      const isSolid = type === 0;
+      document.getElementById('envColorProp').style.display = isSolid ? 'flex' : 'none';
+      document.getElementById('envHdriProp').style.display = isSolid ? 'none' : 'flex';
+      document.getElementById('envHdriIntensityProp').style.display = isSolid ? 'none' : 'flex';
+    }
+
+    function pushEnvironmentProperties() {
+      if (!currentId) return;
+      const payload = {
+        id: currentId,
+        type: parseInt(document.getElementById('envType').value),
+        r: getNumber('envR'),
+        g: getNumber('envG'),
+        b: getNumber('envB'),
+        hdriPath: document.getElementById('envHdriPath').value,
+        hdriIntensity: getNumber('envHdriIntensity'),
+        enableRenderDistance: getCheckbox('envEnableRenderDist'),
+        renderDistance: getNumber('envRenderDist'),
+        infiniteRenderDistance: getCheckbox('envInfiniteRenderDist')
+      };
+      const r = window.hep.callCpp('environment.set', payload);
+      if (!r.ok) setStatus('Environment update failed: ' + (r.error || 'error'));
+    }
+
+    function loadMeshProperties() {
+      if (!currentId) return;
+      const res = window.hep.callCpp('mesh.get', { id: currentId });
+      if (!res.ok || !res.mesh) {
+        setStatus('Failed to load mesh: ' + (res.error || 'error'));
+        return;
+      }
+      const mesh = res.mesh;
+      setField('meshVisible', mesh.visible);
+      setField('meshHideInGame', mesh.hideInGame);
+      setField('meshBackfaceCulling', mesh.backfaceCulling);
+      setField('meshAssetPath', mesh.meshAssetPath);
+      currentSubmeshCount = (typeof mesh.submeshCount === 'number' && mesh.submeshCount > 0) ? mesh.submeshCount : 1;
+      currentMeshMaterialIndices = Array.isArray(mesh.materialIndices) && mesh.materialIndices.length > 0 
+        ? mesh.materialIndices.slice() 
+        : [];
+      currentMeshAppliedMaterialPaths = Array.isArray(mesh.appliedMaterialPaths) ? mesh.appliedMaterialPaths.slice() : [];
+      renderMaterialSlots();
+
+      const assignedEl = document.getElementById('meshScriptAssigned');
+      const removeBtn = document.getElementById('meshRemoveScriptBtn');
+      const scriptPath = (mesh && mesh.scriptPath) ? String(mesh.scriptPath) : '';
+      const hasScript = !!(mesh && mesh.hasScript);
+
+      if (hasScript && scriptPath) {
+        assignedEl.textContent = 'Assigned: ' + scriptPath;
+        assignedEl.style.color = 'var(--accent)';
+        removeBtn.style.display = '';
+        // Keep the input in sync with what's actually assigned.
+        document.getElementById('meshScriptPath').value = scriptPath;
+      } else {
+        assignedEl.textContent = 'Not assigned';
+        assignedEl.style.color = 'var(--muted2)';
+        removeBtn.style.display = 'none';
+      }
+    }
+
+    function loadMeshColliderProperties() {
+      if (!currentId) return;
+      const res = window.hep.callCpp('mesh_collider.get', { id: currentId });
+      if (!res || !res.ok) return;
+
+      const addBtn = document.getElementById('meshColliderAddBtn');
+      const removeBtn = document.getElementById('meshColliderRemoveBtn');
+      const props = document.getElementById('meshColliderProps');
+      const contactsEl = document.getElementById('meshColliderContacts');
+
+      if (!res.collider) {
+        if (addBtn) addBtn.style.display = '';
+        if (removeBtn) removeBtn.style.display = 'none';
+        if (props) props.style.display = 'none';
+        if (contactsEl) contactsEl.textContent = 'none this frame.';
+        return;
+      }
+
+      if (addBtn) addBtn.style.display = 'none';
+      if (removeBtn) removeBtn.style.display = '';
+      if (props) props.style.display = 'block';
+
+      const c = res.collider;
+      setField('meshColliderEnabled', c.enabled);
+      setField('meshColliderStatic', c.isStatic);
+      setField('meshColliderTrigger', c.isTrigger);
+      setField('meshColliderDebug', c.debugDraw);
+      setField('meshColliderUseComplex', c.useComplexCollision);
+
+      if (contactsEl) {
+        const contacts = Array.isArray(c.contacts) ? c.contacts : [];
+        if (!contacts.length) {
+          contactsEl.textContent = 'none this frame.';
+        } else {
+          contactsEl.textContent = '';
+          contacts.forEach(entry => {
+            const line = document.createElement('div');
+            const name = entry.other || 'Entity';
+            const pen = (entry.pen !== undefined) ? Number(entry.pen).toFixed(3) : '0.000';
+            const nx = (entry.nx !== undefined) ? Number(entry.nx).toFixed(2) : '0.00';
+            const ny = (entry.ny !== undefined) ? Number(entry.ny).toFixed(2) : '0.00';
+            const nz = (entry.nz !== undefined) ? Number(entry.nz).toFixed(2) : '0.00';
+            const trig = entry.trigger ? ' [trigger]' : '';
+            line.textContent = name + ' | pen ' + pen + ' | n(' + nx + ', ' + ny + ', ' + nz + ')' + trig;
+            contactsEl.appendChild(line);
+          });
+        }
+      }
+    }
+
+    function pushMeshProperties() {
+      if (!currentId) return;
+      const payload = {
+        id: currentId,
+        visible: getCheckbox('meshVisible'),
+        hideInGame: getCheckbox('meshHideInGame'),
+        backfaceCulling: getCheckbox('meshBackfaceCulling'),
+        materialIndices: Array.isArray(currentMeshMaterialIndices) ? currentMeshMaterialIndices : []
+      };
+      const r = window.hep.callCpp('mesh.set', payload);
+      if (!r.ok) setStatus('Mesh update failed: ' + (r.error || 'error'));
+    }
+
+    function pushMeshColliderProperties() {
+      if (!currentId) return;
+      const payload = {
+        id: currentId,
+        enabled: getCheckbox('meshColliderEnabled'),
+        isStatic: getCheckbox('meshColliderStatic'),
+        isTrigger: getCheckbox('meshColliderTrigger'),
+        debugDraw: getCheckbox('meshColliderDebug'),
+        useComplexCollision: getCheckbox('meshColliderUseComplex')
+      };
+      const r = window.hep.callCpp('mesh_collider.set', payload);
+      if (!r.ok) setStatus('Mesh collider update failed: ' + (r.error || 'error'));
+    }
+
+    function addMeshCollider() {
+      if (!currentId) return;
+      const r = window.hep.callCpp('mesh_collider.add', { id: currentId });
+      if (!r.ok) setStatus('Add mesh collider failed: ' + (r.error || 'error'));
+      loadMeshColliderProperties();
+    }
+
+    function removeMeshCollider() {
+      if (!currentId) return;
+      const r = window.hep.callCpp('mesh_collider.remove', { id: currentId });
+      if (!r.ok) setStatus('Remove mesh collider failed: ' + (r.error || 'error'));
+      loadMeshColliderProperties();
+    }
+
+    function assignMeshScript() {
+      if (!currentId) return;
+      let scriptPath = (document.getElementById('meshScriptPath').value || '').trim();
+
+      // If the user hasn't typed anything, fall back to the asset browser selection.
+      if (!scriptPath) {
+        const sel = window.hep.callCpp('assets.get_selected', {});
+        if (sel && sel.ok && sel.path) {
+          scriptPath = String(sel.path || '').trim();
+          if (scriptPath) document.getElementById('meshScriptPath').value = scriptPath;
+        }
+      }
+
+      if (!scriptPath) {
+        setStatus('Select a .lua in Asset Browser, or type a path');
+        return;
+      }
+
+      if (!scriptPath.toLowerCase().endsWith('.lua')) {
+        setStatus('Selected asset is not a .lua script');
+        return;
+      }
+
+      const r = window.hep.callCpp('mesh.assign_script', { id: currentId, scriptPath: scriptPath });
+      if (!r.ok) {
+        setStatus('Script assignment failed: ' + (r.error || 'error'));
+      } else {
+        setStatus('Script assigned');
+        loadMeshProperties();
+      }
+    }
+
+    function removeMeshScript() {
+      if (!currentId) return;
+      const r = window.hep.callCpp('mesh.remove_script', { id: currentId });
+      if (!r.ok) {
+        setStatus('Remove script failed: ' + (r.error || 'error'));
+      } else {
+        setStatus('Script removed');
+        // Clear the input so Assign can re-use asset selection.
+        document.getElementById('meshScriptPath').value = '';
+        loadMeshProperties();
+      }
+    }
+
+    function pushRename() {
+      if (selectionCount > 1) {
+        setStatus('Multiple selection: renaming is disabled.');
+        return;
+      }
+      if (!currentId) return;
+      const name = document.getElementById('name').value || '';
+      const r = window.hep.callCpp('entity.rename', { id: currentId, name: name });
+      if (!r.ok) setStatus('Rename failed: ' + (r.error || 'error'));
+    }
+
+    function pushTransform() {
+      const payload = {
+        px: getNumber('px'), py: getNumber('py'), pz: getNumber('pz'),
+        rx: getNumber('rx'), ry: getNumber('ry'), rz: getNumber('rz'),
+        sx: getNumber('sx'), sy: getNumber('sy'), sz: getNumber('sz')
+      };
+
+      if (selectionCount > 1) {
+        const ids = selectedIds.filter(v => Number.isFinite(v) && v > 0).join(',');
+        if (!ids) return;
+        const r = window.hep.callCpp('entity.set_transform_multi', Object.assign({ ids: ids }, payload));
+        if (!r.ok) setStatus('Transform failed: ' + (r.error || 'error'));
+        return;
+      }
+
+      if (!currentId) return;
+      const r = window.hep.callCpp('entity.set_transform', Object.assign({ id: currentId }, payload));
+      if (!r.ok) setStatus('Transform failed: ' + (r.error || 'error'));
+    }
+
+    function wire() {
+      document.getElementById('name').addEventListener('change', () => { pushRename(); loadSelected(); });
+      
+      // Transform inputs
+      ['px','py','pz','rx','ry','rz','sx','sy','sz'].forEach(id => {
+        const el = document.getElementById(id);
+        el.addEventListener('change', () => { pushTransform(); loadSelected(); });
+        el.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            pushTransform();
+            loadSelected();
+          }
+        });
+      });
+
+      // Light inputs
+      ['lightType', 'lightR', 'lightG', 'lightB', 'lightIntensity', 'lightRange', 
+       'lightDirX', 'lightDirY', 'lightDirZ', 'lightCastShadows', 
+       'lightShadowBias', 'lightShadowStrength', 'lightShadowDistance', 'lightShadowExtent'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', pushLightProperties);
+      });
+
+      // Environment inputs
+      document.getElementById('envType').addEventListener('change', () => {
+        updateEnvDisplay();
+        pushEnvironmentProperties();
+      });
+      ['envR', 'envG', 'envB', 'envHdriIntensity', 
+       'envEnableRenderDist', 'envRenderDist', 'envInfiniteRenderDist'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', pushEnvironmentProperties);
+      });
+
+      const envHdriPathEl = document.getElementById('envHdriPath');
+      if (envHdriPathEl) {
+        envHdriPathEl.addEventListener('change', () => {
+          const val = String(envHdriPathEl.value || '');
+          if (val) {
+            const typeEl = document.getElementById('envType');
+            if (typeEl && String(typeEl.value) !== '1') {
+              typeEl.value = '1';
+              updateEnvDisplay();
+            }
+          }
+          pushEnvironmentProperties();
+        });
+      }
+
+      // Mesh inputs
+      ['meshVisible', 'meshHideInGame', 'meshBackfaceCulling'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', pushMeshProperties);
+      });
+      document.getElementById('meshAssignScriptBtn').addEventListener('click', assignMeshScript);
+      document.getElementById('meshRemoveScriptBtn').addEventListener('click', removeMeshScript);
+
+      // Mesh collider
+      const meshColliderAddBtn = document.getElementById('meshColliderAddBtn');
+      if (meshColliderAddBtn) meshColliderAddBtn.addEventListener('click', addMeshCollider);
+      const meshColliderRemoveBtn = document.getElementById('meshColliderRemoveBtn');
+      if (meshColliderRemoveBtn) meshColliderRemoveBtn.addEventListener('click', removeMeshCollider);
+      ['meshColliderEnabled','meshColliderStatic','meshColliderTrigger','meshColliderDebug','meshColliderUseComplex'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', pushMeshColliderProperties);
+      });
+
+      // Rigid body
+      const rbAddBtn = document.getElementById('rbAddBtn');
+      if (rbAddBtn) rbAddBtn.addEventListener('click', addRigidBody);
+      const rbRemoveBtn = document.getElementById('rbRemoveBtn');
+      if (rbRemoveBtn) rbRemoveBtn.addEventListener('click', removeRigidBody);
+      const rbPresetPlayerBtn = document.getElementById('rbPresetPlayerBtn');
+      if (rbPresetPlayerBtn) rbPresetPlayerBtn.addEventListener('click', () => applyRigidBodyPreset('player'));
+      const rbPresetGroundBtn = document.getElementById('rbPresetGroundBtn');
+      if (rbPresetGroundBtn) rbPresetGroundBtn.addEventListener('click', () => applyRigidBodyPreset('ground'));
+
+      ['rbIsStatic','rbIsTrigger','rbUseGravity','rbFreezeRotation','rbMass','rbFriction','rbRestitution','rbLinearDamping','rbAngularDamping','rbLinVelX','rbLinVelY','rbLinVelZ','rbAngVelX','rbAngVelY','rbAngVelZ','rbDebugDraw'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', pushRigidBodyProperties);
+      });
+
+      // Physics shape
+      const physicsShapeAddBtn = document.getElementById('physicsShapeAddBtn');
+      if (physicsShapeAddBtn) physicsShapeAddBtn.addEventListener('click', addPhysicsShape);
+      const physicsShapeRemoveBtn = document.getElementById('physicsShapeRemoveBtn');
+      if (physicsShapeRemoveBtn) physicsShapeRemoveBtn.addEventListener('click', removePhysicsShape);
+      const physicsShapeType = document.getElementById('physicsShapeType');
+      if (physicsShapeType) physicsShapeType.addEventListener('change', () => { updatePhysicsShapeDisplay(); pushPhysicsShapeProperties(); });
+      ['physicsExtX','physicsExtY','physicsExtZ','physicsRadius','physicsHeight','physicsOffX','physicsOffY','physicsOffZ'].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('change', pushPhysicsShapeProperties);
+      });
+
+      // Scripts
+      const scriptAttachBtn = document.getElementById('scriptAttachBtn');
+      if (scriptAttachBtn) scriptAttachBtn.addEventListener('click', attachScript);
+
+      // Lua scripts
+      const luaAttachBtn = document.getElementById('luaAttachBtn');
+      if (luaAttachBtn) luaAttachBtn.addEventListener('click', attachLuaScript);
+      const luaRemoveBtn = document.getElementById('luaRemoveBtn');
+      if (luaRemoveBtn) luaRemoveBtn.addEventListener('click', removeLuaScript);
+      const luaEnabled = document.getElementById('luaEnabled');
+      if (luaEnabled) luaEnabled.addEventListener('change', setLuaEnabled);
+
+      // Drag axis labels left/right to adjust values.
+      const axisSpans = document.querySelectorAll('.axis');
+      axisSpans.forEach(span => {
+        span.addEventListener('mousedown', (e) => {
+          if (!currentId) return;
+          e.preventDefault();
+
+          const prevCursor = document.body.style.cursor;
+          document.body.style.cursor = 'ew-resize';
+          const prevUserSelect = document.body.style.userSelect;
+          document.body.style.userSelect = 'none';
+
+          const input = span.nextElementSibling;
+          if (!input || input.tagName.toLowerCase() !== 'input') return;
+
+          const id = input.id || '';
+          let baseSpeed = 0.01;
+          if (id.startsWith('p')) baseSpeed = 0.02;
+          else if (id.startsWith('r')) baseSpeed = 0.2;
+          else if (id.startsWith('s')) baseSpeed = 0.01;
+
+          const startX = e.clientX;
+          const startVal = parseFloat(input.value);
+          const initial = isNaN(startVal) ? 0 : startVal;
+
+          let lastPush = 0;
+          function onMove(ev) {
+            const dx = ev.clientX - startX;
+            let mult = 1.0;
+            if (ev.shiftKey) mult = 0.1;
+            if (ev.ctrlKey) mult = 10.0;
+            const next = initial + (dx * baseSpeed * mult);
+            input.value = String(next);
+
+            const now = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+            if (now - lastPush > 33) {
+              lastPush = now;
+              if (id.startsWith('p') || id.startsWith('r') || id.startsWith('s')) {
+                pushTransform();
+              }
+            }
+          }
+
+          function onUp() {
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+            document.body.style.cursor = prevCursor;
+            document.body.style.userSelect = prevUserSelect;
+            if (id.startsWith('p') || id.startsWith('r') || id.startsWith('s')) {
+              pushTransform();
+            }
+          }
+
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        });
+      });
+    }
+
+    window.hepReceive = function(msg) {
+      if (!msg || msg.v !== 1) return;
+      if (msg.name === 'selection.changed') {
+        loadSelected();
+      }
+      if (msg.name === 'assets.selected') {
+        const p = msg.payload || {};
+        const path = (p && p.path) ? String(p.path) : '';
+        // Only auto-fill if it's a lua script, and only when the mesh section is visible.
+        if (path && path.toLowerCase().endsWith('.lua')) {
+          const meshSection = document.getElementById('meshSection');
+          if (meshSection && meshSection.style.display !== 'none') {
+            document.getElementById('meshScriptPath').value = path;
+          }
+          const luaSection = document.getElementById('luaScriptsSection');
+          if (luaSection && luaSection.style.display !== 'none') {
+            document.getElementById('luaPathInput').value = path;
+          }
+        }
+      }
+      if (msg.name === 'entity.transform') {
+        const p = msg.payload || {};
+        if (!p.id || p.id !== currentId) return;
+
+        const ae = document.activeElement;
+        const editing = ae && ae.tagName && ae.tagName.toLowerCase() === 'input' && (ae.id === 'name' || ['px','py','pz','rx','ry','rz','sx','sy','sz'].includes(ae.id));
+        if (editing) return;
+
+        setField('px', p.px);
+        setField('py', p.py);
+        setField('pz', p.pz);
+        setField('rx', p.rx);
+        setField('ry', p.ry);
+        setField('rz', p.rz);
+        setField('sx', p.sx);
+        setField('sy', p.sy);
+        setField('sz', p.sz);
+      }
+    };
+
+    window.hep.onReady(() => {
+      window.hep.wireCollapsible(document.getElementById('transformHdr'), document.getElementById('transformBody'), 'details.transform.open');
+      window.hep.wireCollapsible(document.getElementById('lightHdr'), document.getElementById('lightBody'), 'details.light.open');
+      window.hep.wireCollapsible(document.getElementById('envHdr'), document.getElementById('envBody'), 'details.env.open');
+      window.hep.wireCollapsible(document.getElementById('meshHdr'), document.getElementById('meshBody'), 'details.mesh.open');
+      window.hep.wireCollapsible(document.getElementById('rigidBodyHdr'), document.getElementById('rigidBodyBody'), 'details.rigidbody.open');
+      window.hep.wireCollapsible(document.getElementById('physicsShapeHdr'), document.getElementById('physicsShapeBody'), 'details.physics_shape.open');
+      window.hep.wireCollapsible(document.getElementById('scriptsHdr'), document.getElementById('scriptsBody'), 'details.scripts.open');
+      window.hep.wireCollapsible(document.getElementById('luaScriptsHdr'), document.getElementById('luaScriptsBody'), 'details.lua_scripts.open');
+      document.getElementById('refreshBtn').onclick = loadSelected;
+
+      function renderDynamicToolbar() {
+        const host = document.getElementById('dynamicToolbar');
+        if (!host) return;
+        host.innerHTML = '';
+
+        const res = window.hep.callCpp('details.toolbar', {});
+        if (!res || !res.ok || !Array.isArray(res.items)) {
+          // Backwards-compatible: older builds won't have the handler.
+          return;
+        }
+
+        res.items.forEach(item => {
+          if (!item || !item.id) return;
+          const btn = document.createElement('button');
+          btn.className = 'ui-btn ui-icon-btn';
+          btn.textContent = (item.label ? String(item.label) : String(item.id));
+          if (item.tooltip) btn.title = String(item.tooltip);
+
+          // Visual hint for toggles.
+          if (item.kind === 'toggle' && item.value) {
+            btn.style.background = 'var(--accent2)';
+            btn.style.borderColor = 'var(--accent2)';
+            btn.style.color = '#0b0f14';
+          }
+
+          btn.onclick = () => {
+            const payload = { id: String(item.id) };
+            if (item.kind === 'toggle') payload.value = item.value ? 0 : 1;
+            const r = window.hep.callCpp('details.action', payload);
+            if (!r || !r.ok) {
+              setStatus('Action failed: ' + ((r && r.error) ? r.error : 'error'));
+            }
+            renderDynamicToolbar();
+          };
+
+          host.appendChild(btn);
+        });
+      }
+
+      wire();
+      renderDynamicToolbar();
+      loadSelected();
+    });
+  </script>
+</body>
+</html>

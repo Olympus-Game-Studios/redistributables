@@ -1,0 +1,645 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blueprint Editor</title>
+  <link rel="stylesheet" href="../ui_theme.css" />
+  <style>
+    .bp-editor {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .bp-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: var(--header);
+      border-bottom: 1px solid var(--border);
+      gap: 8px;
+    }
+
+    .bp-title {
+      font-weight: 600;
+      font-size: var(--fontSize);
+    }
+
+    .bp-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 6px 10px;
+      background: var(--panel2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .bp-tab {
+      padding: 6px 12px;
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      background: transparent;
+      color: var(--text);
+      font-size: var(--fontSizeSmall);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .bp-tab.is-active {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(26, 163, 255, 0.15);
+    }
+
+    .bp-body {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      grid-template-rows: 1fr 220px;
+      gap: 8px;
+      padding: 8px;
+      flex: 1;
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    .bp-panel {
+      background: var(--panel2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .bp-panel-title {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      font-size: var(--fontSizeSmall);
+      background: #262c37;
+    }
+
+    .bp-panel-body {
+      padding: 8px 10px;
+      overflow: auto;
+      flex: 1;
+    }
+
+    .bp-tree-item {
+      padding: 6px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: var(--fontSizeSmall);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bp-tree-item:hover {
+      background: var(--rowHover);
+    }
+
+    .bp-tree-item.is-selected {
+      background: var(--rowSel);
+      color: var(--accent);
+    }
+
+    .bp-field-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .bp-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .bp-field label {
+      font-size: var(--fontSizeTiny);
+      color: var(--muted2);
+    }
+
+    .bp-field input {
+      padding: 6px 8px;
+      border: 1px solid var(--border2);
+      border-radius: calc(var(--radius) - 2px);
+      background: #242b37;
+      color: var(--text);
+      font-size: var(--fontSizeSmall);
+    }
+
+    .bp-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: var(--fontSizeSmall);
+    }
+
+    .bp-row input {
+      flex: 1;
+    }
+
+    .bp-btn {
+      padding: 6px 12px;
+      border: 1px solid var(--border2);
+      border-radius: var(--radius);
+      background: #2b3342;
+      color: var(--text);
+      cursor: pointer;
+      font-size: var(--fontSizeSmall);
+    }
+
+    .bp-btn:hover {
+      border-color: var(--accent);
+    }
+
+    .bp-status {
+      padding: 8px 12px;
+      border-top: 1px solid var(--border);
+      background: var(--panel2);
+      font-size: var(--fontSizeSmall);
+      color: var(--muted);
+    }
+
+    .bp-script {
+      width: 100%;
+      height: 100%;
+      resize: none;
+      background: #1e2430;
+      color: var(--text);
+      border: none;
+      padding: 10px;
+      font-family: var(--mono);
+      font-size: calc(11px * var(--uiScale));
+    }
+
+    .bp-script-toolbar {
+      display: flex;
+      gap: 8px;
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--border);
+      background: #262c37;
+      align-items: center;
+    }
+
+    .bp-components {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .bp-component-tag {
+      padding: 4px 8px;
+      border: 1px solid var(--border2);
+      border-radius: 999px;
+      font-size: var(--fontSizeTiny);
+      color: var(--muted2);
+      width: fit-content;
+    }
+
+    .bp-component-tag.is-unknown {
+      border-color: #b05c5c;
+      color: #e08e8e;
+    }
+
+    .bp-footer-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body data-ui-scale-fixed="1.2">
+  <div class="bp-editor">
+    <div class="bp-header">
+      <div class="bp-title">Blueprint Editor</div>
+      <div id="bpPath"></div>
+      <div class="bp-footer-actions">
+        <button class="bp-btn" id="saveBtn">Save</button>
+        <button class="bp-btn" id="addChildBtn">Add Child</button>
+        <button class="bp-btn" id="deleteNodeBtn">Delete Node</button>
+      </div>
+    </div>
+
+    <div class="bp-tabs" id="bpTabs"></div>
+
+    <div class="bp-body">
+      <div class="bp-panel">
+        <div class="bp-panel-title">Hierarchy</div>
+        <div class="bp-panel-body" id="bpTree"></div>
+      </div>
+
+      <div class="bp-panel">
+        <div class="bp-panel-title">Inspector</div>
+        <div class="bp-panel-body">
+          <div class="bp-row">
+            <label style="width: 70px;">Name</label>
+            <input id="nodeName" />
+          </div>
+          <div class="bp-row">
+            <label style="width: 70px;">Parent</label>
+            <input id="nodeParent" disabled />
+          </div>
+
+          <div class="bp-panel-title" style="margin: 10px -10px 8px -10px;">Transform</div>
+          <div class="bp-field-group">
+            <div class="bp-field"><label>Pos X</label><input id="posX" type="number" step="0.01" /></div>
+            <div class="bp-field"><label>Pos Y</label><input id="posY" type="number" step="0.01" /></div>
+            <div class="bp-field"><label>Pos Z</label><input id="posZ" type="number" step="0.01" /></div>
+          </div>
+          <div class="bp-field-group">
+            <div class="bp-field"><label>Rot X</label><input id="rotX" type="number" step="0.1" /></div>
+            <div class="bp-field"><label>Rot Y</label><input id="rotY" type="number" step="0.1" /></div>
+            <div class="bp-field"><label>Rot Z</label><input id="rotZ" type="number" step="0.1" /></div>
+          </div>
+          <div class="bp-field-group">
+            <div class="bp-field"><label>Scale X</label><input id="scaleX" type="number" step="0.01" /></div>
+            <div class="bp-field"><label>Scale Y</label><input id="scaleY" type="number" step="0.01" /></div>
+            <div class="bp-field"><label>Scale Z</label><input id="scaleZ" type="number" step="0.01" /></div>
+          </div>
+
+          <div class="bp-footer-actions">
+            <button class="bp-btn" id="applyTransformBtn">Apply Transform</button>
+          </div>
+
+          <div class="bp-panel-title" style="margin: 12px -10px 8px -10px;">Components</div>
+          <div class="bp-row">
+            <select id="componentType" class="sort-dropdown" style="flex: 1;">
+              <option value="MeshRenderer">Mesh Renderer</option>
+              <option value="Camera">Camera</option>
+              <option value="ScriptComponent">Script Component</option>
+            </select>
+            <button class="bp-btn" id="addComponentBtn">Add</button>
+          </div>
+          <div class="bp-components" id="componentList"></div>
+          <div class="bp-panel-title" style="margin: 12px -10px 8px -10px;">Component Data</div>
+          <textarea class="bp-script" id="componentData" style="height: 120px;"></textarea>
+          <div class="bp-footer-actions">
+            <button class="bp-btn" id="applyComponentBtn">Apply Component</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bp-panel" style="grid-column: 1 / -1;">
+        <div class="bp-panel-title">Script</div>
+        <div class="bp-script-toolbar">
+          <span id="scriptInfo">Root Script</span>
+          <span style="flex:1"></span>
+          <button class="bp-btn" id="applyScriptBtn">Apply Script</button>
+        </div>
+        <textarea class="bp-script" id="scriptEditor" spellcheck="false"></textarea>
+      </div>
+    </div>
+
+    <div class="bp-status" id="bpStatus">Open a .hpblueprint to begin.</div>
+  </div>
+
+  <script src="../ui_common.js"></script>
+  <script>
+    const state = {
+      docs: {},
+      activePath: null,
+    };
+
+    function setStatus(msg) {
+      document.getElementById('bpStatus').textContent = msg || '';
+    }
+
+    function getActiveDoc() {
+      return state.activePath ? state.docs[state.activePath] : null;
+    }
+
+    function applyDoc(doc) {
+      if (!doc || !doc.path) return;
+      const prev = state.docs[doc.path];
+      state.docs[doc.path] = doc;
+      if (prev) {
+        state.docs[doc.path].selectedNodeId = prev.selectedNodeId;
+        state.docs[doc.path].selectedComponentType = prev.selectedComponentType;
+      }
+      if (!state.activePath) state.activePath = doc.path;
+      if (!state.docs[doc.path].selectedNodeId) {
+        const nodes = (doc.data && doc.data.nodes) ? doc.data.nodes : [];
+        const root = nodes.find(n => !n.parentId);
+        state.docs[doc.path].selectedNodeId = root ? root.id : (nodes[0] ? nodes[0].id : null);
+      }
+      render();
+    }
+
+    function openBlueprint(path) {
+      const res = window.hep.callCpp('blueprint.load', { path });
+      if (!res || !res.ok) {
+        setStatus('Open failed: ' + (res && (res.error || res.detail) ? (res.error || res.detail) : 'error'));
+        return;
+      }
+      applyDoc(res.doc);
+    }
+
+    function renderTabs() {
+      const tabs = document.getElementById('bpTabs');
+      tabs.innerHTML = '';
+      const keys = Object.keys(state.docs);
+      if (keys.length === 0) return;
+      keys.forEach((key) => {
+        const doc = state.docs[key];
+        const btn = document.createElement('button');
+        const name = doc.data && doc.data.name ? doc.data.name : key.split('/').pop();
+        btn.textContent = name + (doc.dirty ? ' *' : '');
+        btn.className = 'bp-tab' + (key === state.activePath ? ' is-active' : '');
+        btn.onclick = () => { state.activePath = key; render(); };
+        tabs.appendChild(btn);
+      });
+    }
+
+    function buildTree(nodes) {
+      const byParent = {};
+      nodes.forEach(n => {
+        const parent = n.parentId || '';
+        byParent[parent] = byParent[parent] || [];
+        byParent[parent].push(n);
+      });
+      return byParent;
+    }
+
+    function renderTree() {
+      const tree = document.getElementById('bpTree');
+      tree.innerHTML = '';
+      const doc = getActiveDoc();
+      if (!doc || !doc.data) return;
+      const nodes = doc.data.nodes || [];
+      const byParent = buildTree(nodes);
+
+      function renderNodeList(parentId, depth) {
+        const list = byParent[parentId || ''] || [];
+        list.forEach(node => {
+          const item = document.createElement('div');
+          item.className = 'bp-tree-item' + (doc.selectedNodeId === node.id ? ' is-selected' : '');
+          item.style.paddingLeft = (8 + depth * 16) + 'px';
+          item.textContent = node.name || node.id;
+          item.onclick = () => { doc.selectedNodeId = node.id; renderInspector(); renderTree(); };
+          tree.appendChild(item);
+          renderNodeList(node.id, depth + 1);
+        });
+      }
+
+      renderNodeList('', 0);
+    }
+
+    function renderInspector() {
+      const doc = getActiveDoc();
+      if (!doc || !doc.data) return;
+      const nodes = doc.data.nodes || [];
+      const node = nodes.find(n => n.id === doc.selectedNodeId);
+      const nameInput = document.getElementById('nodeName');
+      const parentInput = document.getElementById('nodeParent');
+      if (!node) {
+        nameInput.value = '';
+        parentInput.value = '';
+        return;
+      }
+      nameInput.value = node.name || '';
+      parentInput.value = node.parentId || '(root)';
+
+      const t = node.transform || { position:[0,0,0], rotation:[0,0,0], scale:[1,1,1] };
+      document.getElementById('posX').value = t.position[0];
+      document.getElementById('posY').value = t.position[1];
+      document.getElementById('posZ').value = t.position[2];
+      document.getElementById('rotX').value = t.rotation[0];
+      document.getElementById('rotY').value = t.rotation[1];
+      document.getElementById('rotZ').value = t.rotation[2];
+      document.getElementById('scaleX').value = t.scale[0];
+      document.getElementById('scaleY').value = t.scale[1];
+      document.getElementById('scaleZ').value = t.scale[2];
+
+      const list = document.getElementById('componentList');
+      list.innerHTML = '';
+      (node.components || []).forEach(c => {
+        const tag = document.createElement('div');
+        tag.className = 'bp-component-tag' + (c.known ? '' : ' is-unknown');
+        tag.textContent = c.type + (c.known ? '' : ' (Unknown)');
+        tag.onclick = () => {
+          doc.selectedComponentType = c.type;
+          renderComponentData();
+        };
+        list.appendChild(tag);
+      });
+
+      renderScript();
+      renderComponentData();
+    }
+
+    function renderComponentData() {
+      const doc = getActiveDoc();
+      const editor = document.getElementById('componentData');
+      if (!doc || !doc.data) {
+        editor.value = '';
+        return;
+      }
+      const nodes = doc.data.nodes || [];
+      const node = nodes.find(n => n.id === doc.selectedNodeId);
+      if (!node) {
+        editor.value = '';
+        return;
+      }
+      const type = doc.selectedComponentType || (node.components && node.components[0] ? node.components[0].type : '');
+      doc.selectedComponentType = type || '';
+      if (!type) {
+        editor.value = '';
+        return;
+      }
+      const comp = (node.components || []).find(c => c.type === type);
+      editor.value = comp && comp.data ? comp.data : '{}';
+    }
+
+    function renderScript() {
+      const doc = getActiveDoc();
+      if (!doc || !doc.data) return;
+      document.getElementById('scriptEditor').value = doc.data.scriptSource || '';
+      const info = doc.data.scriptNodeId ? ('Script Node: ' + doc.data.scriptNodeId) : 'Root Script';
+      document.getElementById('scriptInfo').textContent = info;
+    }
+
+    function renderPath() {
+      const doc = getActiveDoc();
+      const el = document.getElementById('bpPath');
+      if (!doc) {
+        el.textContent = '';
+        return;
+      }
+      el.textContent = doc.path + (doc.dirty ? ' *' : '');
+    }
+
+    function render() {
+      renderTabs();
+      renderPath();
+      renderTree();
+      renderInspector();
+      if (!getActiveDoc()) {
+        setStatus('Open a .hpblueprint to begin.');
+      } else {
+        setStatus('');
+      }
+    }
+
+    function sendUpdateNode() {
+      const doc = getActiveDoc();
+      if (!doc) return;
+      const nodeId = doc.selectedNodeId;
+      if (!nodeId) return;
+
+      const patch = {
+        name: document.getElementById('nodeName').value || '',
+        transform: {
+          position: [
+            parseFloat(document.getElementById('posX').value || 0),
+            parseFloat(document.getElementById('posY').value || 0),
+            parseFloat(document.getElementById('posZ').value || 0)
+          ],
+          rotation: [
+            parseFloat(document.getElementById('rotX').value || 0),
+            parseFloat(document.getElementById('rotY').value || 0),
+            parseFloat(document.getElementById('rotZ').value || 0)
+          ],
+          scale: [
+            parseFloat(document.getElementById('scaleX').value || 1),
+            parseFloat(document.getElementById('scaleY').value || 1),
+            parseFloat(document.getElementById('scaleZ').value || 1)
+          ]
+        }
+      };
+
+      const res = window.hep.callCpp('blueprint.update_node', {
+        path: doc.path,
+        nodeId: nodeId,
+        patch: patch,
+      });
+      if (res && res.ok) {
+        applyDoc(res.doc);
+      } else {
+        setStatus('Update failed: ' + (res && res.error ? res.error : 'error'));
+      }
+    }
+
+    function sendUpdateScript() {
+      const doc = getActiveDoc();
+      if (!doc) return;
+      const res = window.hep.callCpp('blueprint.update_script', {
+        path: doc.path,
+        nodeId: doc.data.scriptNodeId || doc.selectedNodeId || '',
+        source: document.getElementById('scriptEditor').value || '',
+        language: doc.data.scriptLanguage || 'lua'
+      });
+      if (res && res.ok) {
+        applyDoc(res.doc);
+      } else {
+        setStatus('Script update failed: ' + (res && res.error ? res.error : 'error'));
+      }
+    }
+
+    function addChild() {
+      const doc = getActiveDoc();
+      if (!doc) return;
+      const res = window.hep.callCpp('blueprint.add_child', {
+        path: doc.path,
+        parentId: doc.selectedNodeId || ''
+      });
+      if (res && res.ok) {
+        applyDoc(res.doc);
+      } else {
+        setStatus('Add child failed: ' + (res && res.error ? res.error : 'error'));
+      }
+    }
+
+    function deleteNode() {
+      const doc = getActiveDoc();
+      if (!doc || !doc.selectedNodeId) return;
+      const res = window.hep.callCpp('blueprint.delete_node', {
+        path: doc.path,
+        nodeId: doc.selectedNodeId
+      });
+      if (res && res.ok) {
+        applyDoc(res.doc);
+      } else {
+        setStatus('Delete failed: ' + (res && res.error ? res.error : 'error'));
+      }
+    }
+
+    function addComponent() {
+      const doc = getActiveDoc();
+      if (!doc || !doc.selectedNodeId) return;
+      const type = document.getElementById('componentType').value;
+      const res = window.hep.callCpp('blueprint.add_component', {
+        path: doc.path,
+        nodeId: doc.selectedNodeId,
+        componentType: type
+      });
+      if (res && res.ok) {
+        applyDoc(res.doc);
+        doc.selectedComponentType = type;
+        renderComponentData();
+      } else {
+        setStatus('Add component failed: ' + (res && res.error ? res.error : 'error'));
+      }
+    }
+
+    function applyComponentData() {
+      const doc = getActiveDoc();
+      if (!doc || !doc.selectedNodeId || !doc.selectedComponentType) return;
+      const data = document.getElementById('componentData').value || '{}';
+      const res = window.hep.callCpp('blueprint.update_component', {
+        path: doc.path,
+        nodeId: doc.selectedNodeId,
+        componentType: doc.selectedComponentType,
+        data: data
+      });
+      if (res && res.ok) {
+        applyDoc(res.doc);
+      } else {
+        setStatus('Component update failed: ' + (res && res.error ? res.error : 'error'));
+      }
+    }
+
+    function saveBlueprint() {
+      const doc = getActiveDoc();
+      if (!doc) return;
+      const res = window.hep.callCpp('blueprint.save', { path: doc.path });
+      if (res && res.ok) {
+        applyDoc(res.doc);
+        setStatus('Saved.');
+      } else {
+        setStatus('Save failed: ' + (res && res.error ? res.error : 'error'));
+      }
+    }
+
+    window.hepReceive = function(msg) {
+      if (!msg || msg.v !== 1) return;
+      if (msg.name === 'blueprint.open') {
+        applyDoc(msg.payload);
+      }
+      if (msg.name === 'blueprint.open_failed') {
+        setStatus('Open failed: ' + (msg.payload && msg.payload.error ? msg.payload.error : 'error'));
+      }
+    };
+
+    window.hep.onReady(() => {
+      document.getElementById('applyTransformBtn').onclick = sendUpdateNode;
+      document.getElementById('applyScriptBtn').onclick = sendUpdateScript;
+      document.getElementById('addChildBtn').onclick = addChild;
+      document.getElementById('deleteNodeBtn').onclick = deleteNode;
+      document.getElementById('addComponentBtn').onclick = addComponent;
+      document.getElementById('applyComponentBtn').onclick = applyComponentData;
+      document.getElementById('saveBtn').onclick = saveBlueprint;
+      document.getElementById('nodeName').addEventListener('change', sendUpdateNode);
+      render();
+    });
+  </script>
+</body>
+</html>

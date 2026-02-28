@@ -1,0 +1,56 @@
+{
+  "name": "SwappedDirection",
+  "albedo": [1.0, 1.0, 1.0],
+  "metallic": 0.0,
+  "roughness": 0.5,
+  "ao": 1.0,
+  "emissive": [0.0, 0.0, 0.0],
+  "emissiveStrength": 0.0,
+  "useAlbedoTexture": false,
+  "albedoTexturePath": "",
+  "useNormalTexture": false,
+  "normalTexturePath": "",
+  "useRoughnessTexture": false,
+  "roughnessTexturePath": "",
+  "useAoTexture": false,
+  "aoTexturePath": "",
+  "useWorldAlignedTexture": false,
+  "worldTextureScale": 1.0,
+  "graph": {
+    "nodes": [
+      {
+        "id": 1,
+        "type": "MaterialOutput",
+        "displayName": "Material Output",
+        "scalar": 0.0,
+        "color": [1.0, 1.0, 1.0],
+        "resourcePath": "",
+        "worldAlignedScale": 1.0,
+        "posX": 250,
+        "posY": 100,
+        "inputPins": [1, 2, 3, 4, 5, 6, 7],
+        "outputPins": []
+      },
+      {
+        "id": 2,
+        "type": "ConstantVec3",
+        "displayName": "Color",
+        "scalar": 0.0,
+        "color": [0.2, 0.3, 0.4],
+        "resourcePath": "",
+        "worldAlignedScale": 1.0,
+        "posX": 20,
+        "posY": 20,
+        "inputPins": [],
+        "outputPins": [8]
+      }
+    ],
+    "links": [
+      {
+        "id": 1,
+        "startPin": 1,
+        "endPin": 8
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+QWidget {
+    background-color: #20242b;
+    color: #d8dee9;
+}
+QToolTip {
+    background-color: #11151b;
+    color: #d8dee9;
+    border: 1px solid #3b4252;
+}
+QMenuBar, QMenu, QStatusBar, QDockWidget, QToolBar {
+    background-color: #1b1f26;
+    color: #d8dee9;
+}
+QPushButton, QToolButton {
+    background-color: #2f3642;
+    border: 1px solid #4c566a;
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+QPushButton:hover, QToolButton:hover {
+    background-color: #3a4250;
+}
+QLineEdit, QTextEdit, QPlainTextEdit, QComboBox, QListView, QTreeView {
+    background-color: #151a21;
+    color: #d8dee9;
+    border: 1px solid #3b4252;
+}

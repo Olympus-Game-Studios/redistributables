@@ -1,0 +1,8 @@
+{
+  "name": "HephaestusEngine",
+  "version": "1.0.0",
+  "platform": "windows-x64",
+  "entry": "HephaestusEngine.exe",
+  "build_date": "2026-2-28T4:30:00Z",
+  "tags": ["engine","release","Patch","Windows"]
+}

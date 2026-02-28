@@ -1,0 +1,88 @@
+{
+  "schema": "HephaestusBlueprint",
+  "version": 1,
+  "assetId": "b1fce2b7-8ac1-4eb9-9fd9-3eeb9b6b3f01",
+  "name": "Player",
+  "nodes": [
+    {
+      "id": "node_root",
+      "name": "Player",
+      "parentId": null,
+      "transform": {
+        "position": [0.0, 0.0, 0.0],
+        "rotation": [0.0, 0.0, 0.0],
+        "scale": [1.0, 1.0, 1.0]
+      },
+      "components": {
+        "PhysicsShape": {
+          "type": "Capsule",
+          "radius": 0.4,
+          "height": 1.8,
+          "offset": [0.0, 0.9, 0.0]
+        },
+        "RigidBody": {
+          "mass": 1.0,
+          "isStatic": false,
+          "isTrigger": false,
+          "useGravity": true,
+          "freezeRotation": true,
+          "linearDamping": 0.1,
+          "angularDamping": 0.1,
+          "friction": 0.2,
+          "restitution": 0.0
+        }
+      },
+      "script": {
+        "language": "lua",
+        "source": "local yaw = 0\nlocal pitch = 0\nlocal lastMouseX = nil\nlocal lastMouseY = nil\n\nfunction onAwake()\n  yaw = 0\n  pitch = 0\n  lastMouseX = nil\n  lastMouseY = nil\nend\n\nfunction onUpdate(dt)\n  local speed = moveSpeed or 5.0\n  local sensitivity = lookSensitivity or 0.15\n\n  if Input.isMouseButtonPressed(\"RIGHT\") then\n    local mouse = Input.getMousePosition()\n    if mouse and lastMouseX then\n      local dx = mouse.x - lastMouseX\n      local dy = mouse.y - lastMouseY\n      yaw = yaw - dx * sensitivity\n      pitch = pitch - dy * sensitivity\n    end\n    if mouse then\n      lastMouseX = mouse.x\n      lastMouseY = mouse.y\n    end\n  end\n\n  local moveX = 0\n  local moveZ = 0\n  if Input.isKeyPressed(\"W\") then moveZ = moveZ - 1 end\n  if Input.isKeyPressed(\"S\") then moveZ = moveZ + 1 end\n  if Input.isKeyPressed(\"A\") then moveX = moveX - 1 end\n  if Input.isKeyPressed(\"D\") then moveX = moveX + 1 end\n\n  if moveX ~= 0 or moveZ ~= 0 then\n    local forwardX = math.cos(yaw)\n    local forwardZ = math.sin(yaw)\n    local rightX = -math.sin(yaw)\n    local rightZ = math.cos(yaw)\n    local vx = rightX * moveX + forwardX * moveZ\n    local vz = rightZ * moveX + forwardZ * moveZ\n    Transform.translate(vx * speed * dt, 0, vz * speed * dt)\n  end\n\n  Transform.setRotation(0, yaw, 0)\nend\n",
+        "defaultVars": {
+          "moveSpeed": 5.0,
+          "lookSensitivity": 0.15
+        }
+      },
+      "exposed": [
+        { "type": "scriptVar", "key": "moveSpeed" },
+        { "type": "scriptVar", "key": "lookSensitivity" }
+      ]
+    },
+    {
+      "id": "node_mesh",
+      "name": "Mesh",
+      "parentId": "node_root",
+      "transform": {
+        "position": [0.0, 0.0, 0.0],
+        "rotation": [0.0, 0.0, 0.0],
+        "scale": [1.0, 1.0, 1.0]
+      },
+      "components": {
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "meshSource": "assets/meshes/player.mesh",
+          "meshImported": false,
+          "backfaceCulling": false
+        }
+      },
+      "exposed": []
+    },
+    {
+      "id": "node_camera",
+      "name": "Camera",
+      "parentId": "node_root",
+      "transform": {
+        "position": [0.0, 1.6, -2.5],
+        "rotation": [0.0, 0.0, 0.0],
+        "scale": [1.0, 1.0, 1.0]
+      },
+      "components": {
+        "Camera": {
+          "fov": 60.0,
+          "nearPlane": 0.1,
+          "farPlane": 100.0,
+          "isPrimary": true
+        }
+      },
+      "exposed": []
+    }
+  ]
+}
