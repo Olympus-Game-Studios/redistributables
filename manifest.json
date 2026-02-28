@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastUpdated": "2025-12-24T11:30:00Z",
+  "lastUpdated": "2026-02-28T04:30:00Z",
   "products": [
     {
       "name": "HephaestusEngine",
@@ -23,7 +23,7 @@
           "entry": "HephaestusEngine.exe",
           "downloadUrl": "https://github.com/Olympus-Game-Studios/redistributables/releases/download/Release/Hephaestus-Engine-100-win.tar",
           "size": 157286400,
-          "build_date": "2026-2-28T4:30:00Z",
+          "build_date": "2026-02-28T04:30:00Z",
           "tags": ["release", "patch", "windows"]
         }
       ]
