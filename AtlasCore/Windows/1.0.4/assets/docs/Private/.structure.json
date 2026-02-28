@@ -1,0 +1,908 @@
+[
+  {
+    "name": "EXTERNAL_DOCS_SYNC_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "Hephaestus-Engine",
+    "type": "dir",
+    "children": [
+      {
+        "name": "Architecture",
+        "type": "dir",
+        "children": [
+          {
+            "name": "ARCHITECTURE_README.md",
+            "type": "file"
+          },
+          {
+            "name": "ECS_ARCHITECTURE_DIAGRAM.md",
+            "type": "file"
+          },
+          {
+            "name": "ECS_IMPLEMENTATION_SUMMARY.md",
+            "type": "file"
+          },
+          {
+            "name": "ECS_SUCCESS.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "architecture.md",
+        "type": "file"
+      },
+      {
+        "name": "Archive",
+        "type": "dir",
+        "children": [
+          {
+            "name": "C++_scripting_legacy",
+            "type": "dir",
+            "children": [
+              {
+                "name": "ASSET_BROWSER_CREATE_SCRIPT.md",
+                "type": "file"
+              },
+              {
+                "name": "ASSET_BROWSER_CREATE_SCRIPT_README.md",
+                "type": "file"
+              },
+              {
+                "name": "ASSET_BROWSER_CREATE_SCRIPT_SUMMARY.md",
+                "type": "file"
+              },
+              {
+                "name": "ASSET_BROWSER_CREATE_SCRIPT_VISUAL.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPTING_API_REFERENCE.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPTING_COMPLETE_IMPLEMENTATION.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPTING_IMPLEMENTATION_SUMMARY.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPTING_INTEGRATION_GUIDE.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPTING_LAYER_GUIDE.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPTING_LAYER_README.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPTING_MASTER_INDEX.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPTING_QUICK_START.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPTING_VISUAL_GUIDE.md",
+                "type": "file"
+              },
+              {
+                "name": "SCRIPT_DEVELOPMENT_GUIDE.md",
+                "type": "file"
+              },
+              {
+                "name": "SESSION_SUMMARY_SCRIPTING.md",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "CUSTOM_COMPONENTS_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "documentation_root_backup_2025-11-09.zip",
+            "type": "file"
+          },
+          {
+            "name": "ECS_ARCHITECTURE_DIAGRAM.md",
+            "type": "file"
+          },
+          {
+            "name": "ECS_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "ECS_IMPLEMENTATION_SUMMARY.md",
+            "type": "file"
+          },
+          {
+            "name": "ECS_SUCCESS.md",
+            "type": "file"
+          },
+          {
+            "name": "ICON_INTEGRATION.md",
+            "type": "file"
+          },
+          {
+            "name": "IMGUIZMO_INTEGRATION.md",
+            "type": "file"
+          },
+          {
+            "name": "LIGHTING_ADVANCED_EXAMPLES.md",
+            "type": "file"
+          },
+          {
+            "name": "LIGHTING_AND_MATERIALS_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "LIGHTING_VISUAL_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_COMPARISON.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_INTEGRATION.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_QUICKSTART.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_README.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_SUMMARY.md",
+            "type": "file"
+          },
+          {
+            "name": "RAY_PICKING.md",
+            "type": "file"
+          },
+          {
+            "name": "RAY_PICKING_REFERENCE.md",
+            "type": "file"
+          },
+          {
+            "name": "TEXTURE_DROPDOWN_FEATURE.md",
+            "type": "file"
+          },
+          {
+            "name": "TEXTURE_RENDERING_GUIDE.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "coding-guidelines.md",
+        "type": "file"
+      },
+      {
+        "name": "contributing.md",
+        "type": "file"
+      },
+      {
+        "name": "EXPORT_PACKAGING.md",
+        "type": "file"
+      },
+      {
+        "name": "EXPORT_QUICK_REFERENCE.md",
+        "type": "file"
+      },
+      {
+        "name": "Features",
+        "type": "dir",
+        "children": [
+          {
+            "name": "ASSET_BROWSER_CREATE_SCRIPT.md",
+            "type": "file"
+          },
+          {
+            "name": "ASSET_BROWSER_CREATE_SCRIPT_README.md",
+            "type": "file"
+          },
+          {
+            "name": "ASSET_BROWSER_CREATE_SCRIPT_SUMMARY.md",
+            "type": "file"
+          },
+          {
+            "name": "ASSET_BROWSER_CREATE_SCRIPT_VISUAL.md",
+            "type": "file"
+          },
+          {
+            "name": "EDITOR_SHORTCUTS.md",
+            "type": "file"
+          },
+          {
+            "name": "EXPORT_IMPLEMENTATION_SUMMARY.md",
+            "type": "file"
+          },
+          {
+            "name": "EXPORT_PACKAGING.md",
+            "type": "file"
+          },
+          {
+            "name": "EXPORT_QUICK_REFERENCE.md",
+            "type": "file"
+          },
+          {
+            "name": "FEATURES_README.md",
+            "type": "file"
+          },
+          {
+            "name": "HDRI_BACKGROUNDS.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_API_REFERENCE.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_COMPLETE_IMPLEMENTATION.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_IMPLEMENTATION_SUMMARY.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_INTEGRATION_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_LAYER_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_LAYER_README.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_MASTER_INDEX.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_QUICK_START.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_VISUAL_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "TEXTURE_DROPDOWN_FEATURE.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "Guides",
+        "type": "dir",
+        "children": [
+          {
+            "name": "CUSTOM_COMPONENTS_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "ECS_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "EDITOR_SCRIPT_ATTACHMENT.md",
+            "type": "file"
+          },
+          {
+            "name": "GUIDES_README.md",
+            "type": "file"
+          },
+          {
+            "name": "LIGHTING_AND_MATERIALS_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_README.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPT_DEVELOPMENT_GUIDE.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "Integration",
+        "type": "dir",
+        "children": [
+          {
+            "name": "ICON_INTEGRATION.md",
+            "type": "file"
+          },
+          {
+            "name": "IMGUIZMO_INTEGRATION.md",
+            "type": "file"
+          },
+          {
+            "name": "INTEGRATION_README.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "JOLT_INTEGRATION_SUMMARY.md",
+        "type": "file"
+      },
+      {
+        "name": "Lighting",
+        "type": "dir",
+        "children": [
+          {
+            "name": "LIGHTING_ADVANCED_EXAMPLES.md",
+            "type": "file"
+          },
+          {
+            "name": "LIGHTING_README.md",
+            "type": "file"
+          },
+          {
+            "name": "LIGHTING_VISUAL_GUIDE.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "ProjectManager",
+        "type": "dir",
+        "children": [
+          {
+            "name": "PROJECTMANAGER_README.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_COMPARISON.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_QUICKSTART.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_SUMMARY.md",
+            "type": "file"
+          },
+          {
+            "name": "PROJECT_MANAGER_UI_DESIGN.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "README.md",
+        "type": "file"
+      },
+      {
+        "name": "Reference",
+        "type": "dir",
+        "children": [
+          {
+            "name": "REFERENCE_README.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "releasing.md",
+        "type": "file"
+      },
+      {
+        "name": "Roadmaps",
+        "type": "dir",
+        "children": [
+          {
+            "name": "ROADMAP_1-0.md",
+            "type": "file"
+          },
+          {
+            "name": "ROADMAP_1-0_issues_plan.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "Scripting",
+        "type": "dir",
+        "children": [
+          {
+            "name": "CREATE_LUA_SCRIPTS_UI.md",
+            "type": "file"
+          },
+          {
+            "name": "FILE_MANIFEST_SCRIPTING.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_DETECTION_FIXED.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_INSTALLATION_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_INTEGRATION_ROADMAP.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_INTEGRATION_SUMMARY.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_SCRIPTING_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "LUA_SCRIPT_ATTACHMENT_UI.md",
+            "type": "file"
+          },
+          {
+            "name": "README.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_DOCUMENTATION_INDEX.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPTING_QUICK_START.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPT_ATTACHMENT_FIXED.md",
+            "type": "file"
+          },
+          {
+            "name": "SCRIPT_REGISTRATION_GUIDE.md",
+            "type": "file"
+          },
+          {
+            "name": "SESSION_SUMMARY_SCRIPTING.md",
+            "type": "file"
+          },
+          {
+            "name": "WHAT_YOU_CAN_DO_NOW.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "setup.md",
+        "type": "file"
+      },
+      {
+        "name": "Submodules",
+        "type": "dir",
+        "children": [
+          {
+            "name": "Entt",
+            "type": "dir",
+            "children": [
+              {
+                "name": "config.md",
+                "type": "file"
+              },
+              {
+                "name": "container.md",
+                "type": "file"
+              },
+              {
+                "name": "CONTRIBUTING.md",
+                "type": "file"
+              },
+              {
+                "name": "core.md",
+                "type": "file"
+              },
+              {
+                "name": "entity.md",
+                "type": "file"
+              },
+              {
+                "name": "faq.md",
+                "type": "file"
+              },
+              {
+                "name": "graph.md",
+                "type": "file"
+              },
+              {
+                "name": "lib.md",
+                "type": "file"
+              },
+              {
+                "name": "links.md",
+                "type": "file"
+              },
+              {
+                "name": "locator.md",
+                "type": "file"
+              },
+              {
+                "name": "meta.md",
+                "type": "file"
+              },
+              {
+                "name": "poly.md",
+                "type": "file"
+              },
+              {
+                "name": "process.md",
+                "type": "file"
+              },
+              {
+                "name": "README.md",
+                "type": "file"
+              },
+              {
+                "name": "reference.md",
+                "type": "file"
+              },
+              {
+                "name": "resource.md",
+                "type": "file"
+              },
+              {
+                "name": "signal.md",
+                "type": "file"
+              },
+              {
+                "name": "unreal.md",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "Gflw",
+            "type": "dir",
+            "children": [
+              {
+                "name": "build.md",
+                "type": "file"
+              },
+              {
+                "name": "compat.md",
+                "type": "file"
+              },
+              {
+                "name": "compile.md",
+                "type": "file"
+              },
+              {
+                "name": "context.md",
+                "type": "file"
+              },
+              {
+                "name": "CONTRIBUTING.md",
+                "type": "file"
+              },
+              {
+                "name": "CONTRIBUTORS.md",
+                "type": "file"
+              },
+              {
+                "name": "input.md",
+                "type": "file"
+              },
+              {
+                "name": "internal.md",
+                "type": "file"
+              },
+              {
+                "name": "intro.md",
+                "type": "file"
+              },
+              {
+                "name": "LICENSE.md",
+                "type": "file"
+              },
+              {
+                "name": "main.md",
+                "type": "file"
+              },
+              {
+                "name": "monitor.md",
+                "type": "file"
+              },
+              {
+                "name": "moving.md",
+                "type": "file"
+              },
+              {
+                "name": "news.md",
+                "type": "file"
+              },
+              {
+                "name": "quick.md",
+                "type": "file"
+              },
+              {
+                "name": "README.md",
+                "type": "file"
+              },
+              {
+                "name": "SUPPORT.md",
+                "type": "file"
+              },
+              {
+                "name": "vulkan.md",
+                "type": "file"
+              },
+              {
+                "name": "window.md",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "ImExtensions",
+            "type": "dir",
+            "children": [
+              {
+                "name": "ImGuizmo-README.md",
+                "type": "file"
+              },
+              {
+                "name": "ImNodes-README.md",
+                "type": "file"
+              },
+              {
+                "name": "LICENSE.md",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "Imgui",
+            "type": "dir",
+            "children": [
+              {
+                "name": "BACKENDS.md",
+                "type": "file"
+              },
+              {
+                "name": "CHANGELOG.txt",
+                "type": "file"
+              },
+              {
+                "name": "CONTRIBUTING.md",
+                "type": "file"
+              },
+              {
+                "name": "EXAMPLES.md",
+                "type": "file"
+              },
+              {
+                "name": "FAQ.md",
+                "type": "file"
+              },
+              {
+                "name": "FONTS.md",
+                "type": "file"
+              },
+              {
+                "name": "README.md",
+                "type": "file"
+              },
+              {
+                "name": "TODO.txt",
+                "type": "file"
+              }
+            ]
+          },
+          {
+            "name": "JoltPhysics",
+            "type": "dir",
+            "children": [
+              {
+                "name": "APIChanges.md",
+                "type": "file"
+              },
+              {
+                "name": "Architecture.md",
+                "type": "file"
+              },
+              {
+                "name": "ContributorAgreement.md",
+                "type": "file"
+              },
+              {
+                "name": "Images",
+                "type": "dir",
+                "children": [
+                  {
+                    "name": "ActiveEdge.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "ActiveVsInactiveContactNormal.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "CollisionFlow.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "ConvexRadius.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "EllipsoidAABB.png",
+                    "type": "file"
+                  },
+                  {
+                    "name": "GhostCollision.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "LongAndThin.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "MotionQuality.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "MotorDamping.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "MotorFrequency.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "QuadTreeExample.png",
+                    "type": "file"
+                  },
+                  {
+                    "name": "ShapeCenterOfMass.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "SimulationIsland.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "SoftBodySkinnedConstraint.jpg",
+                    "type": "file"
+                  },
+                  {
+                    "name": "Thumbs.db",
+                    "type": "file"
+                  }
+                ]
+              },
+              {
+                "name": "Logo.png",
+                "type": "file"
+              },
+              {
+                "name": "LogoDark.png",
+                "type": "file"
+              },
+              {
+                "name": "LogoSmall.png",
+                "type": "file"
+              },
+              {
+                "name": "PerformanceTest.md",
+                "type": "file"
+              },
+              {
+                "name": "PhysicsSystemUpdate.drawio",
+                "type": "file"
+              },
+              {
+                "name": "PhysicsSystemUpdate.svg",
+                "type": "file"
+              },
+              {
+                "name": "ProjectsUsingJolt.md",
+                "type": "file"
+              },
+              {
+                "name": "README.md",
+                "type": "file"
+              },
+              {
+                "name": "ReleaseNotes.md",
+                "type": "file"
+              },
+              {
+                "name": "Samples.md",
+                "type": "file"
+              },
+              {
+                "name": "SwingTwistConstraint.png",
+                "type": "file"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "testing-and-ci.md",
+        "type": "file"
+      },
+      {
+        "name": "Tutorials",
+        "type": "dir",
+        "children": [
+          {
+            "name": "TUTORIALS_README.md",
+            "type": "file"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "README.md",
+    "type": "file"
+  },
+  {
+    "name": "The-Devil-You-Know",
+    "type": "dir",
+    "children": [
+      {
+        "name": "Overview.md",
+        "type": "file"
+      }
+    ]
+  },
+  {
+    "name": "Website",
+    "type": "dir",
+    "children": [
+      {
+        "name": "APPLY-INTEGRATION.md",
+        "type": "file"
+      },
+      {
+        "name": "APPLY-README.md",
+        "type": "file"
+      },
+      {
+        "name": "DEVLOG-README.md",
+        "type": "file"
+      },
+      {
+        "name": "Devlogs",
+        "type": "dir",
+        "children": [
+          {
+            "name": "Hephaestus Engine — Devlog v0.0.5.md",
+            "type": "file"
+          }
+        ]
+      },
+      {
+        "name": "newsletter-setup.md",
+        "type": "file"
+      },
+      {
+        "name": "POSITIONS-README.md",
+        "type": "file"
+      }
+    ]
+  }
+]

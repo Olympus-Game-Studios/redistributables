@@ -1,0 +1,62 @@
+[
+  {
+    "name": "ASSET_BROWSER_CREATE_SCRIPT.md",
+    "type": "file"
+  },
+  {
+    "name": "ASSET_BROWSER_CREATE_SCRIPT_README.md",
+    "type": "file"
+  },
+  {
+    "name": "ASSET_BROWSER_CREATE_SCRIPT_SUMMARY.md",
+    "type": "file"
+  },
+  {
+    "name": "ASSET_BROWSER_CREATE_SCRIPT_VISUAL.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_API_REFERENCE.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_COMPLETE_IMPLEMENTATION.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_IMPLEMENTATION_SUMMARY.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_INTEGRATION_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_LAYER_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_LAYER_README.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_MASTER_INDEX.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_QUICK_START.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_VISUAL_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPT_DEVELOPMENT_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "SESSION_SUMMARY_SCRIPTING.md",
+    "type": "file"
+  }
+]

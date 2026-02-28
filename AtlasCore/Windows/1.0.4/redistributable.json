@@ -1,0 +1,8 @@
+{
+  "name": "AtlasCore",
+  "version": "1.0.4",
+  "platform": "windows-x64",
+  "entry": "AtlasCore.exe",
+  "build_date": "2026-02-28T08:04:50Z",
+  "tags": ["app","release","Windows"]
+}

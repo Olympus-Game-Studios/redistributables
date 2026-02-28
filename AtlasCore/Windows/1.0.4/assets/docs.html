@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+    <link rel="stylesheet" href="docs.css">
+    <!-- Marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Highlight.js for syntax highlighting (full bundle with all languages) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <!-- Additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/lua.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/glsl.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/hlsl.min.js"></script>
+</head>
+<body>
+    <div class="docs-container">
+        <!-- Sidebar Navigation -->
+        <div class="docs-sidebar">
+            <div class="docs-header">
+                <h2>Documentation</h2>
+                <div class="section-toggle">
+                    <button class="section-btn active" data-section="Public">Public</button>
+                    <button class="section-btn" data-section="Private">Private</button>
+                </div>
+            </div>
+            <nav class="docs-nav" id="docs-nav">
+                <div class="loading">Loading documentation...</div>
+            </nav>
+        </div>
+
+        <!-- Content Area -->
+        <div class="docs-content">
+            <div class="content-header">
+                <h1 id="doc-title">Documentation</h1>
+            </div>
+            <div class="content-area" id="content-area">
+                <div class="welcome-screen">
+                    <div class="welcome-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                    </div>
+                    <h2>Welcome to Documentation</h2>
+                    <p>Select a document from the sidebar to get started.</p>
+                    <div class="welcome-hint">
+                        <span class="hint-icon">💡</span>
+                        <span>Click on folders to expand them and view available documents.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="link-handler.js"></script>
+    <script src="docs.js"></script>
+</body>
+</html>

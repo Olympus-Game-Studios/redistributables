@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlas Core - Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <img src="assets/AtlasLogo.png" class="logo-icon" alt="Atlas Core Logo">
+                <h1 class="logo-text">Atlas Core</h1>
+            </div>
+            
+            <form id="login-form" autocomplete="on">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        autocomplete="username"
+                        placeholder="Enter your username"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        autocomplete="current-password"
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+                
+                <div id="error-message" class="error-message" hidden></div>
+                
+                <button type="submit" id="submit-btn" class="submit-btn">
+                    <span class="btn-text">Sign in</span>
+                    <span class="btn-loading" hidden>
+                        <svg class="spinner" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                </button>
+            </form>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2026 Olympus Games</p>
+        </div>
+    </div>
+    
+    <script src="link-handler.js"></script>
+    <script src="login.js"></script>
+</body>
+</html>

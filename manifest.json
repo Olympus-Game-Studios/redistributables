@@ -72,6 +72,15 @@
           "size": 0,
           "build_date": "2026-01-15T00:00:00Z",
           "tags": ["release"]
+        },
+        {
+          "version": "1.0.4",
+          "platform": "windows-x64",
+          "entry": "AtlasCore.exe",
+          "downloadUrl": "https://github.com/Olympus-Game-Studios/redistributables/releases/download/AtlasCore-1.0.4/AtlasCore-Windows-1.0.4.tar",
+          "size": 0,
+          "build_date": "2026-02-28T08:04:50Z",
+          "tags": ["release"]
         }
       ]
     }

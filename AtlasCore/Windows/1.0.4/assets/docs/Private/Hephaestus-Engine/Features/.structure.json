@@ -1,0 +1,82 @@
+[
+  {
+    "name": "ASSET_BROWSER_CREATE_SCRIPT.md",
+    "type": "file"
+  },
+  {
+    "name": "ASSET_BROWSER_CREATE_SCRIPT_README.md",
+    "type": "file"
+  },
+  {
+    "name": "ASSET_BROWSER_CREATE_SCRIPT_SUMMARY.md",
+    "type": "file"
+  },
+  {
+    "name": "ASSET_BROWSER_CREATE_SCRIPT_VISUAL.md",
+    "type": "file"
+  },
+  {
+    "name": "EDITOR_SHORTCUTS.md",
+    "type": "file"
+  },
+  {
+    "name": "EXPORT_IMPLEMENTATION_SUMMARY.md",
+    "type": "file"
+  },
+  {
+    "name": "EXPORT_PACKAGING.md",
+    "type": "file"
+  },
+  {
+    "name": "EXPORT_QUICK_REFERENCE.md",
+    "type": "file"
+  },
+  {
+    "name": "FEATURES_README.md",
+    "type": "file"
+  },
+  {
+    "name": "HDRI_BACKGROUNDS.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_API_REFERENCE.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_COMPLETE_IMPLEMENTATION.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_IMPLEMENTATION_SUMMARY.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_INTEGRATION_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_LAYER_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_LAYER_README.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_MASTER_INDEX.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_QUICK_START.md",
+    "type": "file"
+  },
+  {
+    "name": "SCRIPTING_VISUAL_GUIDE.md",
+    "type": "file"
+  },
+  {
+    "name": "TEXTURE_DROPDOWN_FEATURE.md",
+    "type": "file"
+  }
+]

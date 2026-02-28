@@ -1,0 +1,22 @@
+[
+  {
+    "name": "PROJECTMANAGER_README.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_COMPARISON.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_QUICKSTART.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_SUMMARY.md",
+    "type": "file"
+  },
+  {
+    "name": "PROJECT_MANAGER_UI_DESIGN.md",
+    "type": "file"
+  }
+]
