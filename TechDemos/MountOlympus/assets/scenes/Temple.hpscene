@@ -1,0 +1,1936 @@
+{
+  "schema": "HephaestusScene",
+  "version": 1,
+  "name": "Temple",
+  "entityCount": 36,
+  "blueprintInstanceCount": 0,
+  "blueprintInstances": [
+  ],
+  "entities": [
+    {
+      "id": 25,
+      "name": "Bound Collider ",
+      "parent": 1048600,
+      "components": {
+        "Transform": {
+          "position": [-6.021624, 5.174163, -4.167130],
+          "rotation": [-0.000000, 0.000000, -0.000000],
+          "scale": [6.061692, 7.638795, 0.297800]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 26,
+      "name": "Bound Collider  (1)",
+      "parent": 1048600,
+      "components": {
+        "Transform": {
+          "position": [1.771136, 5.174163, -8.866469],
+          "rotation": [-0.000000, 1.034835, -0.000000],
+          "scale": [6.061691, 7.638795, 0.297800]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 35,
+      "name": "Bound Collider  (10)",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [11.417951, 11.209415, -72.399971],
+          "rotation": [-0.000000, -0.459371, -0.000000],
+          "scale": [3.648339, 7.638794, 0.297800]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 27,
+      "name": "Bound Collider  (2)",
+      "parent": 1048600,
+      "components": {
+        "Transform": {
+          "position": [3.239200, 5.174163, -19.478401],
+          "rotation": [0.000000, 1.570796, 0.000000],
+          "scale": [24.420977, 13.562759, 0.226398]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 28,
+      "name": "Bound Collider  (3)",
+      "parent": 1048600,
+      "components": {
+        "Transform": {
+          "position": [-15.374918, 5.174163, -19.478401],
+          "rotation": [0.000000, 1.570796, 0.000000],
+          "scale": [24.420977, 13.562759, 0.226398]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 29,
+      "name": "Bound Collider  (4)",
+      "parent": 1048600,
+      "components": {
+        "Transform": {
+          "position": [14.265069, 5.174163, -60.219337],
+          "rotation": [0.000000, 1.570796, 0.000000],
+          "scale": [24.420977, 13.562759, 0.226398]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 30,
+      "name": "Bound Collider  (5)",
+      "parent": 1048600,
+      "components": {
+        "Transform": {
+          "position": [-26.121166, 5.174163, -60.219337],
+          "rotation": [0.000000, 1.570796, 0.000000],
+          "scale": [24.420977, 13.562759, 0.226398]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 31,
+      "name": "Bound Collider  (6)",
+      "parent": 1048600,
+      "components": {
+        "Transform": {
+          "position": [8.918266, 11.095137, -50.632351],
+          "rotation": [-0.000000, 0.902381, -0.000000],
+          "scale": [9.290512, 7.638794, 0.297800]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 32,
+      "name": "Bound Collider  (7)",
+      "parent": 1048600,
+      "components": {
+        "Transform": {
+          "position": [-15.322424, 5.258502, -8.305394],
+          "rotation": [-0.000000, -0.902335, -0.000000],
+          "scale": [9.290512, 7.638794, 0.297800]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 33,
+      "name": "Bound Collider  (8)",
+      "parent": 1048600,
+      "components": {
+        "Transform": {
+          "position": [-21.127079, 11.209415, -51.005875],
+          "rotation": [-0.000000, -0.902335, -0.000000],
+          "scale": [9.290512, 7.638794, 0.297800]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 34,
+      "name": "Bound Collider  (9)",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [-24.331581, 11.209415, -72.510063],
+          "rotation": [-0.000000, 0.459343, -0.000000],
+          "scale": [1.882442, 7.638794, 0.297800]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        },
+        "Selection": {
+          "selected": true
+        }
+      }
+    },
+    {
+      "id": 1048600,
+      "name": "Bounds",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [0.000000, 0.000000, 0.000000],
+          "rotation": [0.000000, 0.000000, 0.000000],
+          "scale": [1.000000, 1.000000, 1.000000]
+        },
+        "Folder": {
+          "isFolder": true
+        }
+      }
+    },
+    {
+      "id": 3145732,
+      "name": "Capsule",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [-6.336646, 2.313493, -8.145988],
+          "rotation": [-0.000000, 0.000000, -0.000000],
+          "scale": [0.659701, 0.659701, 0.659701]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 8,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Capsule.obj",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [-1],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": true,
+          "localBounds": {
+            "min": [-0.999999, -1.000000, -1.000000],
+            "max": [1.000000, 4.019142, 0.999999]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Capsule",
+          "extents": [1.000000, 2.510000, 1.000000],
+          "radius": 1.000000,
+          "height": 3.019000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 80.000000,
+          "isStatic": false,
+          "isTrigger": false,
+          "useGravity": true,
+          "freezeRotation": true,
+          "linearDamping": 0.100000,
+          "angularDamping": 0.500000,
+          "friction": 0.600000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        },
+        "LuaScript": {
+          "scriptPath": "D:/Olympus/TechDemos/MountOlympus-TD/assets/scripts/fp-controller.lua",
+          "scriptSource": "",
+          "functionOnAwake": "",
+          "functionOnUpdate": "",
+          "functionOnDestroy": "",
+          "enabled": true,
+          "variables": {}
+        }
+      }
+    },
+    {
+      "id": 3,
+      "name": "Cube",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [-7.185417, 6.909959, -77.995659],
+          "rotation": [0.000000, 0.000000, 0.000000],
+          "scale": [18.954927, 1.000000, 33.366280]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 10,
+      "name": "Cube (1)",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [-5.891805, 11.349849, -89.861320],
+          "rotation": [0.000000, 0.000000, 0.000000],
+          "scale": [6.994421, 4.853312, 1.000000]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": true,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": [""],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "PhysicsShape": {
+          "type": "Box",
+          "extents": [1.000000, 1.000000, 1.000000],
+          "radius": 0.500000,
+          "height": 1.000000,
+          "offset": [0.000000, 0.000000, 0.000000]
+        },
+        "RigidBody": {
+          "mass": 0.000000,
+          "isStatic": true,
+          "isTrigger": false,
+          "useGravity": false,
+          "freezeRotation": false,
+          "linearDamping": 0.000000,
+          "angularDamping": 0.000000,
+          "friction": 0.500000,
+          "restitution": 0.000000,
+          "linearVelocity": [0.000000, 0.000000, 0.000000],
+          "angularVelocity": [0.000000, 0.000000, 0.000000],
+          "debugDraw": false
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 2097154,
+      "name": "Directional Light",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [1.157140, -4.648750, 6.022480],
+          "rotation": [-0.750492, 0.719076, 0.000000],
+          "scale": [1.000000, 1.000000, 1.000000]
+        },
+        "Light": {
+          "type": "Directional",
+          "enabled": true,
+          "color": [1.000000, 0.947307, 0.896269],
+          "intensity": 3.000000,
+          "range": 10.000000,
+          "attenuation": {
+            "constant": 1.000000,
+            "linear": 0.090000,
+            "quadratic": 0.032000
+          },
+          "spotAngles": {
+            "inner": 0.785398,
+            "outer": 0.958186
+          },
+          "direction": [0.000000, -1.000000, 0.000000],
+          "shadow": {
+            "castShadows": true,
+            "autoFit": true,
+            "bias": 0.000100,
+            "normalBias": 0.010000,
+            "strength": 0.750000,
+            "distance": 40.000000,
+            "extent": 25.000000,
+            "maxDistance": 750.000000
+          }
+        }
+      }
+    },
+    {
+      "id": 1048576,
+      "name": "Environment",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [0.000000, 0.000000, 0.000000],
+          "rotation": [0.000000, 0.000000, 0.000000],
+          "scale": [1.000000, 1.000000, 1.000000]
+        },
+        "Environment": {
+          "type": "HDRI",
+          "solidColor": [0.100000, 0.200000, 0.300000],
+          "hdriPath": "textures/skies/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
+          "hdriIntensity": 4.000000,
+          "rotationYaw": 0.000000,
+          "useAsIBL": true,
+          "enableRenderDistance": false,
+          "renderDistance": 500.000000,
+          "infiniteRenderDistance": false
+        }
+      }
+    },
+    {
+      "id": 1048577,
+      "name": "Island",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [4.136000, -0.045000, -30.957001],
+          "rotation": [1.570796, -0.000000, 0.000000],
+          "scale": [1.500000, 1.500000, 1.500000]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 7,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Island/Island.glb",
+          "meshImported": true,
+          "submeshCount": 2,
+          "materialIndices": [0, 1],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial", "materials/PatchyGrass/PatchyGrass.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-20.594276, -15.499384, -8.331960],
+            "max": [6.741084, 20.401901, 6.821726]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": false,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 1048584,
+      "name": "Logo",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [-7.084772, 19.442467, -67.037376],
+          "rotation": [0.000000, -0.000000, 0.000000],
+          "scale": [2.000000, 2.000000, 1.000000]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 6,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Logo.obj",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [-1],
+          "appliedMaterialPaths": ["materials/LogoMAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-0.683906, -0.329906, -0.176236],
+            "max": [0.719587, 1.051780, 0.164058]
+          }
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "LogoDouble",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [-6.913956, 11.931302, -93.448463],
+          "rotation": [0.000000, 8.327310, 0.000000],
+          "scale": [6.000000, 6.000000, 4.000000]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 5,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/LogoDouble.obj",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [-1],
+          "appliedMaterialPaths": ["materials/Gold.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-0.683906, -0.329906, -0.355849],
+            "max": [0.720040, 1.051780, 0.164058]
+          }
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        },
+        "LuaScript": {
+          "scriptPath": "D:/Olympus/TechDemos/MountOlympus-TD/assets/scripts/UpDownRotate.lua",
+          "scriptSource": "",
+          "functionOnAwake": "",
+          "functionOnUpdate": "",
+          "functionOnDestroy": "",
+          "enabled": true,
+          "variables": {}
+        }
+      }
+    },
+    {
+      "id": 1048581,
+      "name": "PantheonTex",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [-23.520639, 7.866076, -68.083473],
+          "rotation": [0.000000, -0.000000, 0.000000],
+          "scale": [1.430684, 1.500000, 1.500000]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 4,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Temple/PantheonTex.obj",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [-1],
+          "appliedMaterialPaths": ["materials/Windswept.hematerial"],
+          "backfaceCulling": true,
+          "localBounds": {
+            "min": [-0.649420, -0.005987, -21.942745],
+            "max": [23.786398, 9.771103, 0.936849]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": false,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 1048583,
+      "name": "Point Light",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [-6.678548, 16.081770, -86.504776],
+          "rotation": [0.000000, -0.000000, 0.000000],
+          "scale": [1.000000, 1.000000, 1.000000]
+        },
+        "Light": {
+          "type": "Point",
+          "enabled": true,
+          "color": [1.000000, 1.000000, 1.000000],
+          "intensity": 2.000000,
+          "range": 19.500000,
+          "attenuation": {
+            "constant": 1.000000,
+            "linear": 0.090000,
+            "quadratic": 0.032000
+          },
+          "spotAngles": {
+            "inner": 0.785398,
+            "outer": 0.958186
+          },
+          "direction": [0.000000, -1.000000, 0.000000],
+          "shadow": {
+            "castShadows": false,
+            "autoFit": true,
+            "bias": 0.002000,
+            "normalBias": 0.010000,
+            "strength": 0.700000,
+            "distance": 500.000000,
+            "extent": 500.000000,
+            "maxDistance": 500.000000
+          }
+        }
+      }
+    },
+    {
+      "id": 1048587,
+      "name": "Rock1",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [-20.642498, 9.534279, -47.192066],
+          "rotation": [-1.346939, -0.319330, 0.748529],
+          "scale": [2.791808, 2.791807, 2.791807]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 12,
+      "name": "Rock1 (1)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [-23.749411, 9.534279, -54.214287],
+          "rotation": [-1.551964, 1.122311, -3.057490],
+          "scale": [2.791809, 2.791807, 2.791807]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 21,
+      "name": "Rock1 (10)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [-24.051107, 6.465536, -44.756508],
+          "rotation": [-1.404956, -0.352149, 0.572862],
+          "scale": [2.791808, 2.791807, 2.791807]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 22,
+      "name": "Rock1 (11)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [8.460772, 6.465536, -44.756508],
+          "rotation": [-1.814634, -0.304571, -0.571473],
+          "scale": [2.791808, 2.791807, 2.791807]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 13,
+      "name": "Rock1 (2)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [-25.005032, 9.534279, -60.513290],
+          "rotation": [-1.567248, 0.062832, -2.581970],
+          "scale": [2.791809, 2.791807, 2.791807]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 14,
+      "name": "Rock1 (3)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [-27.245516, 9.534279, -67.323174],
+          "rotation": [-1.015405, 0.046239, 3.011510],
+          "scale": [2.791809, 2.791806, 2.791808]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 15,
+      "name": "Rock1 (4)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [-26.955948, 9.534279, -72.177124],
+          "rotation": [-0.054701, 0.602419, 2.675831],
+          "scale": [2.791809, 2.791806, 2.791808]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 16,
+      "name": "Rock1 (5)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [6.073251, 9.534279, -47.419350],
+          "rotation": [-2.531159, -0.713170, -1.036574],
+          "scale": [2.791809, 2.791807, 2.791807]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 17,
+      "name": "Rock1 (6)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [9.868702, 8.218520, -55.261200],
+          "rotation": [2.157706, -1.205585, -2.577934],
+          "scale": [2.791809, 2.791807, 2.791807]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 18,
+      "name": "Rock1 (7)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [11.932449, 8.960090, -62.627434],
+          "rotation": [-2.109570, -0.705015, -0.292072],
+          "scale": [2.791809, 2.791807, 2.791806]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 19,
+      "name": "Rock1 (8)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [13.240517, 8.960090, -69.934135],
+          "rotation": [-1.718573, -0.848758, 0.257169],
+          "scale": [2.791809, 2.791808, 2.791806]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 20,
+      "name": "Rock1 (9)",
+      "parent": 23,
+      "components": {
+        "Transform": {
+          "position": [11.235654, 10.351411, -75.892921],
+          "rotation": [-0.680787, -0.450238, 0.814478],
+          "scale": [2.791809, 2.791807, 2.791806]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 3,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/assets/models/Rocks/Rock1.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Sandstone/SandStone_MAT.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.173064, -2.017430, -0.948106],
+            "max": [1.082428, 1.862558, 1.147234]
+          }
+        },
+        "MeshCollider": {
+          "enabled": true,
+          "isStatic": true,
+          "isTrigger": false,
+          "debugDraw": false,
+          "useComplexCollision": true
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    },
+    {
+      "id": 23,
+      "name": "Rocks",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [0.000000, 0.000000, 0.000000],
+          "rotation": [0.000000, 0.000000, 0.000000],
+          "scale": [1.000000, 1.000000, 1.000000]
+        },
+        "Folder": {
+          "isFolder": true
+        }
+      }
+    },
+    {
+      "id": 9,
+      "name": "Temple Back",
+      "parent": null,
+      "components": {
+        "Transform": {
+          "position": [-7.009107, 8.138778, -98.750671],
+          "rotation": [0.000000, -0.000000, 0.000000],
+          "scale": [6.048820, 14.172891, 1.000000]
+        },
+        "MeshRenderer": {
+          "visible": true,
+          "hideInGame": false,
+          "mesh": 2,
+          "meshSource": "D:/Olympus/TechDemos/MountOlympus-TD/.engine/meshes/Cube.glb",
+          "meshImported": true,
+          "submeshCount": 1,
+          "materialIndices": [0],
+          "appliedMaterialPaths": ["materials/Windswept.hematerial"],
+          "backfaceCulling": false,
+          "localBounds": {
+            "min": [-1.000000, -1.000000, -1.000000],
+            "max": [1.000000, 1.000000, 1.000000]
+          }
+        },
+        "Material": {
+          "albedo": [1.000000, 1.000000, 1.000000],
+          "metallic": 0.000000,
+          "roughness": 0.500000,
+          "ao": 1.000000,
+          "emissive": [0.000000, 0.000000, 0.000000],
+          "emissiveStrength": 0.000000,
+          "useAlbedoTexture": false,
+          "albedoTexturePath": "",
+          "useNormalTexture": false,
+          "normalTexturePath": "",
+          "useRoughnessTexture": false,
+          "roughnessTexturePath": "",
+          "useAoTexture": false,
+          "aoTexturePath": "",
+          "useWorldAlignedTexture": false,
+          "worldTextureScale": 1.000000
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "Pillar",
+  "albedo": [1.0000, 1.0000, 1.0000],
+  "metallic": 0.0000,
+  "roughness": 1.0000,
+  "ao": 1.0000,
+  "emissive": [0.0000, 0.0000, 0.0000],
+  "emissiveStrength": 0.0000,
+  "useAlbedoTexture": true,
+  "albedoTexturePath": "assets/models/Temple/Pillar/PillarColor.png",
+  "useNormalTexture": true,
+  "normalTexturePath": "assets/models/Temple/Pillar/PileNormal.png",
+  "useRoughnessTexture": false,
+  "roughnessTexturePath": "",
+  "useAoTexture": false,
+  "aoTexturePath": "",
+  "graph": {
+    "nodes": [
+      {
+        "id": 1,
+        "type": "MaterialOutput",
+        "displayName": "Material Output",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": ""
+      },
+      {
+        "id": 2,
+        "type": "AlbedoTextureSample",
+        "displayName": "Albedo Texture",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "assets/models/Temple/Pillar/PillarColor.png"
+      },
+      {
+        "id": 3,
+        "type": "RoughnessTextureSample",
+        "displayName": "Roughness Texture",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "assets/models/Temple/Pillar/PileRougness@channels=G.png"
+      },
+      {
+        "id": 4,
+        "type": "NormalTextureSample",
+        "displayName": "Normal Texture",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "assets/models/Temple/Pillar/PileNormal.png"
+      }
+    ],
+    "links": [
+      {
+        "id": 1,
+        "startPin": 8,
+        "endPin": 1
+      },
+      {
+        "id": 2,
+        "startPin": 9,
+        "endPin": 3
+      },
+      {
+        "id": 3,
+        "startPin": 10,
+        "endPin": 5
+      }
+    ]
+  }
+}

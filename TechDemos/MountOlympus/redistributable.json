@@ -1,0 +1,10 @@
+{
+  "name": "MountOlympus",
+  "version": "TechDemo",
+  "platform": "windows-x64",
+  "entry": "MountOlympus.exe",
+  "build_date": "2026-03-11T21:56:53Z",
+  "downloadUrl": "https://github.com/Olympus-Game-Studios/redistributables/releases/download/TechDemo/MountOlympus.tar",
+  "size": 280894946,
+  "tags": ["game", "demo", "release", "Windows"]
+}

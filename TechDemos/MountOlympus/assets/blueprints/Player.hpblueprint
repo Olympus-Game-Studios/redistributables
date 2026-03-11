@@ -1,0 +1,86 @@
+{
+  "schema": "HephaestusBlueprint",
+  "assetVersion": 1,
+  "guid": "69731d38-0",
+  "name": "Player",
+  "rootNodeId": "69769923-0",
+  "nodes": [
+    {
+      "id": "node_root",
+      "name": "Player",
+      "parentId": null,
+      "transform": {
+        "position": [0.000000, 0.000000, 0.000000],
+        "rotation": [0.000000, 0.000000, 0.000000],
+        "scale": [1.000000, 1.000000, 1.000000]
+      },
+      "components": [
+      ],
+      "exposed": []
+    },
+    {
+      "id": "69746d5a-0",
+      "name": "New Node",
+      "parentId": "node_root",
+      "transform": {
+        "position": [0.000000, 0.000000, 0.000000],
+        "rotation": [0.000000, 0.000000, 0.000000],
+        "scale": [1.000000, 1.000000, 1.000000]
+      },
+      "components": [
+      ],
+      "exposed": []
+    },
+    {
+      "id": "69746f53-0",
+      "name": "Capsule",
+      "parentId": null,
+      "transform": {
+        "position": [0.000000, 0.000000, 0.000000],
+        "rotation": [0.000000, 0.000000, 0.000000],
+        "scale": [1.000000, 1.000000, 1.000000]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer",
+          "enabled": true,
+          "data": {"backfaceCulling": false, "hideInGame": false, "localBounds": {"max": [0.5, 0.5, 0.5], "min": [-0.5, -0.5, -0.5]}, "meshImported": false, "meshSource": "models/Capsule.obj", "visible": true}
+        },
+        {
+          "type": "Material",
+          "enabled": true,
+          "data": {"albedo": [1, 1, 1], "albedoTexturePath": "", "ao": 1, "aoTexturePath": "", "emissive": [0, 0, 0], "emissiveStrength": 0, "metallic": 0, "normalTexturePath": "", "roughness": 0.5, "roughnessTexturePath": "", "useAlbedoTexture": false, "useAoTexture": false, "useNormalTexture": false, "useRoughnessTexture": false, "useWorldAlignedTexture": false, "worldTextureScale": 1}
+        }
+      ],
+      "exposed": []
+    },
+    {
+      "id": "69769923-0",
+      "name": "Camera",
+      "parentId": null,
+      "transform": {
+        "position": [8.891247, 4.599183, 8.207021],
+        "rotation": [0.340339, 0.492183, 0.000000],
+        "scale": [1.000000, 1.000000, 1.000000]
+      },
+      "components": [
+        {
+          "type": "MeshRenderer",
+          "enabled": true,
+          "data": {"backfaceCulling": true, "hideInGame": true, "localBounds": {"max": [2.922224998, 0.9568901062, 2.187167883], "min": [-1, -0.9736614823, -2.610207558]}, "meshImported": false, "meshSource": "builtin://camera", "visible": true}
+        },
+        {
+          "type": "Material",
+          "enabled": true,
+          "data": {"albedo": [0.349999994, 0.75, 1], "albedoTexturePath": "", "ao": 1, "aoTexturePath": "", "emissive": [0, 0, 0], "emissiveStrength": 0, "metallic": 0, "normalTexturePath": "", "roughness": 0.6000000238, "roughnessTexturePath": "", "useAlbedoTexture": false, "useAoTexture": false, "useNormalTexture": false, "useRoughnessTexture": false, "useWorldAlignedTexture": false, "worldTextureScale": 1}
+        },
+        {
+          "type": "Camera",
+          "enabled": true,
+          "data": {"farPlane": 1000, "fov": 60, "isActive": true, "isPrimary": true, "nearPlane": 0.1000000015, "projection": "Perspective", "showEditorMesh": true}
+        }
+      ],
+      "exposed": []
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "TempleFloorMat",
+  "albedo": [0.3165, 0.3108, 0.2752],
+  "metallic": 0.0000,
+  "roughness": 0.5000,
+  "ao": 1.0000,
+  "emissive": [0.5000, 0.5000, 1.0000],
+  "emissiveStrength": 0.0000,
+  "useAlbedoTexture": false,
+  "albedoTexturePath": "",
+  "useNormalTexture": false,
+  "normalTexturePath": "",
+  "useRoughnessTexture": false,
+  "roughnessTexturePath": "",
+  "useAoTexture": false,
+  "aoTexturePath": "",
+  "graph": {
+    "nodes": [
+      {
+        "id": 1,
+        "type": "MaterialOutput",
+        "displayName": "Material Output",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "",
+        "worldAlignedScale": 1.0000,
+        "posX": 897.0000,
+        "posY": 301.0000,
+        "inputPins": [1, 2, 3, 4, 5, 6, 7],
+        "outputPins": []
+      },
+      {
+        "id": 2,
+        "type": "ColorParameter",
+        "displayName": "Color",
+        "scalar": 0.0000,
+        "color": [0.3165, 0.3108, 0.2752],
+        "resourcePath": "",
+        "worldAlignedScale": 1.0000,
+        "posX": 588.0000,
+        "posY": 316.0000,
+        "inputPins": [],
+        "outputPins": [8]
+      }
+    ],
+    "links": [
+      {
+        "id": 1,
+        "startPin": 8,
+        "endPin": 1
+      }
+    ]
+  }
+}

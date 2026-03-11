@@ -1,0 +1,86 @@
+{
+  "name": "Gold",
+  "albedo": [1.0000, 0.8936, 0.0000],
+  "metallic": 1.0000,
+  "roughness": 1.0000,
+  "ao": 1.0000,
+  "emissive": [0.5000, 0.5000, 1.0000],
+  "emissiveStrength": 0.0000,
+  "useAlbedoTexture": false,
+  "albedoTexturePath": "",
+  "useNormalTexture": false,
+  "normalTexturePath": "",
+  "useRoughnessTexture": false,
+  "roughnessTexturePath": "",
+  "useAoTexture": false,
+  "aoTexturePath": "",
+  "graph": {
+    "nodes": [
+      {
+        "id": 1,
+        "type": "MaterialOutput",
+        "displayName": "Material Output",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "",
+        "posX": 980.0000,
+        "posY": 533.0000,
+        "inputPins": [1, 2, 3, 4, 5, 6, 7],
+        "outputPins": []
+      },
+      {
+        "id": 8,
+        "type": "ColorParameter",
+        "displayName": "Color",
+        "scalar": 0.0000,
+        "color": [1.0000, 0.8936, 0.0000],
+        "resourcePath": "",
+        "posX": 475.0000,
+        "posY": 324.0000,
+        "inputPins": [],
+        "outputPins": [14]
+      },
+      {
+        "id": 9,
+        "type": "FloatParameter",
+        "displayName": "Metal",
+        "scalar": 1.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "",
+        "posX": 543.0000,
+        "posY": 462.0000,
+        "inputPins": [],
+        "outputPins": [15]
+      },
+      {
+        "id": 10,
+        "type": "FloatParameter",
+        "displayName": "Rough",
+        "scalar": 1.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "",
+        "posX": 529.0000,
+        "posY": 579.0000,
+        "inputPins": [],
+        "outputPins": [16]
+      }
+    ],
+    "links": [
+      {
+        "id": 6,
+        "startPin": 14,
+        "endPin": 1
+      },
+      {
+        "id": 7,
+        "startPin": 15,
+        "endPin": 2
+      },
+      {
+        "id": 8,
+        "startPin": 16,
+        "endPin": 3
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Sky1",
+  "albedo": [1.0000, 1.0000, 1.0000],
+  "metallic": 0.0000,
+  "roughness": 0.5000,
+  "ao": 1.0000,
+  "emissive": [0.5000, 0.5000, 1.0000],
+  "emissiveStrength": 0.0000,
+  "useAlbedoTexture": true,
+  "albedoTexturePath": "assets/textures/skies/sunflowers_puresky_2k.jpg",
+  "useNormalTexture": false,
+  "normalTexturePath": "",
+  "useRoughnessTexture": false,
+  "roughnessTexturePath": "",
+  "useAoTexture": false,
+  "aoTexturePath": "",
+  "graph": {
+    "nodes": [
+      {
+        "id": 1,
+        "type": "MaterialOutput",
+        "displayName": "Material Output",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": ""
+      },
+      {
+        "id": 2,
+        "type": "AlbedoTextureSample",
+        "displayName": "Albedo Texture",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "assets/textures/skies/sunflowers_puresky_2k.jpg"
+      }
+    ],
+    "links": [
+      {
+        "id": 1,
+        "startPin": 8,
+        "endPin": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Dirt1_MAT",
+  "albedo": [1.0000, 1.0000, 1.0000],
+  "metallic": 0.0000,
+  "roughness": 0.5000,
+  "ao": 1.0000,
+  "emissive": [0.5000, 0.5000, 1.0000],
+  "emissiveStrength": 0.0000,
+  "useAlbedoTexture": true,
+  "albedoTexturePath": "assets/materials/Dirt1/dry-dirt2-albedo.png",
+  "useNormalTexture": false,
+  "normalTexturePath": "",
+  "useRoughnessTexture": false,
+  "roughnessTexturePath": "",
+  "useAoTexture": false,
+  "aoTexturePath": "",
+  "useWorldAlignedTexture": true,
+  "worldTextureScale": 0.0710,
+  "graph": {
+    "nodes": [
+      {
+        "id": 1,
+        "type": "MaterialOutput",
+        "displayName": "Material Output",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "",
+        "worldAlignedScale": 1.0000,
+        "posX": 849.0000,
+        "posY": 362.0000,
+        "inputPins": [1, 2, 3, 4, 5, 6, 7],
+        "outputPins": []
+      },
+      {
+        "id": 5,
+        "type": "WorldAlignedTexture",
+        "displayName": "World Aligned Texture",
+        "scalar": 0.0000,
+        "color": [1.0000, 1.0000, 1.0000],
+        "resourcePath": "assets/materials/Dirt1/dry-dirt2-albedo.png",
+        "worldAlignedScale": 0.0710,
+        "posX": 413.0000,
+        "posY": 357.0000,
+        "inputPins": [],
+        "outputPins": [11, 12]
+      }
+    ],
+    "links": [
+      {
+        "id": 4,
+        "startPin": 11,
+        "endPin": 1
+      }
+    ]
+  }
+}
